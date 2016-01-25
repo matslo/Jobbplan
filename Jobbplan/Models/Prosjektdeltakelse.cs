@@ -7,5 +7,6 @@ namespace Jobbplan.Models
 {
     public class Prosjektdeltakelse
     {
+       
     }
 }
