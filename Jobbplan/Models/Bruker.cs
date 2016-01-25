@@ -8,6 +8,14 @@ namespace Jobbplan.Models
 {
     public class Bruker
     {
+            public int BrukerId { get; set; }
+            public string Etternavn { get; set; }
+            public string Fornavn { get; set; }
+            public string Email { get; set; }
+
+
+        }
+
         public class LogInn
         {
             [Required(ErrorMessage = "Du må skrive brukernavn")]
