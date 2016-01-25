@@ -255,8 +255,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Bruker.cs" />
+    <Compile Include="Models\Poststed.cs" />
+    <Compile Include="Models\Prosjekt.cs" />
+    <Compile Include="Models\Prosjektdeltakelse.cs" />
+    <Compile Include="Models\Timeliste.cs" />
     <Compile Include="Models\Vakt.cs" />
+    <Compile Include="Models\Varsler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
