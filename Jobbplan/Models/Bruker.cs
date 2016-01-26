@@ -20,7 +20,7 @@ namespace Jobbplan.Models
             public string Postnr { get; set; }
             public byte[] Passord { get; set; }
 
-            public virtual Poststed Poststed { get; set; }
+           // public virtual Poststed Poststed { get; set; }
 
         }
         public class Registrer

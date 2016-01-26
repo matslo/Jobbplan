@@ -6,15 +6,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity;
 
-
 namespace Jobbplan.Models
 {
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public partial class Dbkontekst : DbContext
     {
         public Dbkontekst()
-            : base("name=JobbplanDb")
+            : base("name=Jobbplan")
         {
-           // Database.CreateIfNotExists();
+           Database.CreateIfNotExists();
         }
         public DbSet<Bruker.dbBruker> Brukere { get; set; }
         public DbSet<Poststed> Poststeder { get; set; }
@@ -22,8 +22,9 @@ namespace Jobbplan.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+          
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
+        
     }
 }
