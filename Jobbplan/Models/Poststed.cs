@@ -9,7 +9,7 @@ namespace Jobbplan.Models
     public class Poststed
     {
         [Key]
-        int Postnummer { get; set; }
-        string PostSted { get; set; }       
+        public string Postnummer { get; set; }
+        public string PostSted { get; set; }       
     }
 }

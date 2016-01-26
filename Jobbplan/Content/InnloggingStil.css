@@ -25,7 +25,7 @@ input, select, textarea{
    margin-left:40px;
 }
 #brukernavntxt{
-    
+    color:wheat;
     margin-bottom:6%;
     width:350px;
     height:40px;
@@ -42,7 +42,6 @@ input, select, textarea{
 
 :-moz-placeholder { /* Firefox 18- */
    text-align: center;  
- 
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
