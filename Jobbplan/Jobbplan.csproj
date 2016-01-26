@@ -264,6 +264,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601261436002_InitialCreate.cs" />
+    <Compile Include="Migrations\201601261436002_InitialCreate.Designer.cs">
+      <DependentUpon>201601261436002_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
@@ -281,6 +286,7 @@
     <None Include="Properties\PublishProfiles\Jobbplan2016.pubxml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Bruker\Registrer.cshtml" />
+    <Content Include="Views\Bruker\LoggetInn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -291,6 +297,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Kunde\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201601261436002_InitialCreate.resx">
+      <DependentUpon>201601261436002_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

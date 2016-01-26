@@ -8,11 +8,10 @@ using System.Data.Entity;
 
 namespace Jobbplan.Models
 {
-    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public partial class Dbkontekst : DbContext
     {
         public Dbkontekst()
-            : base("name=Jobbplan")
+            : base("name=Jpl")
         {
            Database.CreateIfNotExists();
         }
