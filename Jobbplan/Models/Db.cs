@@ -11,11 +11,11 @@ namespace Jobbplan.Models
     public partial class Dbkontekst : DbContext
     {
         public Dbkontekst()
-            : base("name=Jpl")
+            : base("Server = tcp:jobbplantest2016dbserver.database.windows.net, 1433; Database=JobbPlanDB;User ID = AdminAdmin@jobbplantest2016dbserver;Password=Gordo1414;Encrypt=True;TrustServerCertificate=False;Connection Timeout = 30;")
         {
            Database.CreateIfNotExists();
         }
-        public DbSet<Bruker.dbBruker> Brukere { get; set; }
+        public DbSet<dbBruker> Brukere { get; set; }
         public DbSet<Poststed> Poststeder { get; set; }
         public DbSet<Vakt> Vakter { get; set; }
 

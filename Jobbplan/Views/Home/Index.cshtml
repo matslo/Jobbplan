@@ -11,11 +11,11 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
-@model Jobbplan.Models.Bruker.LogInn
+
 @{
     Layout = null;
-}
-
+} 
+@model Jobbplan.Models.LogInn
 <body id="innhold">
 
     @Html.ValidationSummary(true, "Ikke gyldig brukernavn og/ eller passord", new { @class = "text-danger" })

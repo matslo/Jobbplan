@@ -9,17 +9,18 @@ namespace Jobbplan.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
+        // GET: Home 
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(Bruker.LogInn innBruker)
+        public ActionResult Index(LogInn innBruker)
         {
+            var db = new DbTransaksjonerBruker();
            
-            if (BrukerIdb(innBruker))
+            if (db.BrukerIdb(innBruker))
             {
                 Session["LoggetInn"] = true;
                 Session["Brukernavn"] = innBruker.Brukernavn; // legger brukernavnet i session
@@ -34,38 +35,5 @@ namespace Jobbplan.Controllers
                 return RedirectToAction("Registrer", "Bruker");
             }
         }
-        private static bool BrukerIdb(Bruker.LogInn innBruker)
-        {   //Sjekker om bruker er i db
-            using (var db = new Dbkontekst())
-            {
-                byte[] passordDb = lagHash(innBruker.Passord);
-                Bruker.dbBruker funnetBruker = db.Brukere.FirstOrDefault
-                    (b => b.Passord == passordDb && b.Email == innBruker.Brukernavn);
-                if (funnetBruker == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-        private static byte[] lagHash(string innPassord)
-        {
-            //Hash passord
-            byte[] innData, utData;
-            var algoritme = System.Security.Cryptography.SHA256.Create();
-            if (innPassord != null)
-            {
-                innData = System.Text.Encoding.ASCII.GetBytes(innPassord);
-                utData = algoritme.ComputeHash(innData);
-                return utData;
-
-            }
-            return null;
-        }
-
-
     }
 }

@@ -83,6 +83,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -272,6 +273,7 @@
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
+    <Compile Include="Models\DbTransaksjonerBruker.cs" />
     <Compile Include="Models\Poststed.cs" />
     <Compile Include="Models\Prosjekt.cs" />
     <Compile Include="Models\Prosjektdeltakelse.cs" />
@@ -296,7 +298,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Kunde\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201601261436002_InitialCreate.resx">

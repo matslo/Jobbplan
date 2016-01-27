@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+
+namespace Jobbplan.Models
+{
+    public class DbTransaksjonerBruker
+    {
+        public bool RegistrerBruker(Registrer innBruker)
+        {
+            if (innBruker.Fornavn=="")
+            {
+                return false;
+            }
+            byte[] passordDb = lagHash(innBruker.BekreftPassord);
+            var nyBruker = new dbBruker()
+            {
+            Passord = passordDb,
+            Fornavn = innBruker.Fornavn,
+            Etternavn = innBruker.Etternavn,
+            Adresse = innBruker.Adresse,
+            Postnr = innBruker.Postnummer,
+            Email = innBruker.Email,
+            Telefonnummer = innBruker.Telefonnummer
+            };
+            using (var db = new Dbkontekst())
+            {
+                try
+                {
+                    db.Brukere.Add(nyBruker);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception feil)
+                {
+                    return false;
+                }
+
+            }
+        }
+        public bool BrukerIdb(LogInn innBruker)
+        {   //Sjekker om bruker er i db
+            using (var db = new Dbkontekst())
+            {
+                byte[] passordDb = lagHash(innBruker.Passord);
+                dbBruker funnetBruker = db.Brukere.FirstOrDefault
+                    (b => b.Passord == passordDb && b.Email == innBruker.Brukernavn);
+                if (funnetBruker == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        private static byte[] lagHash(string innPassord)
+        {
+            //Hash passord
+            byte[] innData, utData;
+            var algoritme = System.Security.Cryptography.SHA256.Create();
+            if (innPassord != null)
+            {
+                innData = System.Text.Encoding.ASCII.GetBytes(innPassord);
+                utData = algoritme.ComputeHash(innData);
+                return utData;
+
+            }
+            return null;
+        }
+    }
+}

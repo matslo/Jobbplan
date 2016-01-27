@@ -10,6 +10,10 @@ namespace Jobbplan.Models
     {
         [Key]
         public string Postnummer { get; set; }
-        public string PostSted { get; set; }       
+        public string PostSted { get; set; }
+
+       // public List<dbBruker> bruker { get; set; }
+
+
     }
 }

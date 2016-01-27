@@ -8,7 +8,7 @@ namespace Jobbplan.Models
     public class Prosjektdeltakelse
     {
         [Key]
-       public int ProsjektDeltagerId { get; set; }
+        public int ProsjektDeltakerId { get; set; }
         public int BrukerId { get; set; }
         public int ProsjektId { get; set; }
         public DateTime Start { get; set; }

@@ -8,8 +8,8 @@ namespace Jobbplan.Models
     public class Admin
     {
         [Key]
-        public int AbminId { get; set; }
-        public int ProsjektDeltagerId { get; set; }
+        public int AdminId { get; set; }
+        public int ProsjektDeltakerId { get; set; }
         public int ProsjektId { get; set; }
         public string Rettigheter { get; set; }
         public string Tittel { get; set; }

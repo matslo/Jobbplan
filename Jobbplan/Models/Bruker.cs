@@ -6,8 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Jobbplan.Models
 {
-    public class Bruker
-    {
+    
         public class dbBruker
         {
             [Key]
@@ -25,6 +24,7 @@ namespace Jobbplan.Models
         }
         public class Registrer
         {
+            
             public int id { get; set; }
 
             [Required]
@@ -81,5 +81,5 @@ namespace Jobbplan.Models
             public string Passord { get; set; }
 
         }
-    }
+    
 }
