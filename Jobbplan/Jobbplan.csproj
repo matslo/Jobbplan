@@ -260,6 +260,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BrukerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BrukerController.cs" />
     <Compile Include="Global.asax.cs">
@@ -274,6 +275,7 @@
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
     <Compile Include="Models\DbTransaksjonerBruker.cs" />
+    <Compile Include="Models\DbTransaksjonerBrukerStub.cs" />
     <Compile Include="Models\Poststed.cs" />
     <Compile Include="Models\Prosjekt.cs" />
     <Compile Include="Models\Prosjektdeltakelse.cs" />
@@ -289,6 +291,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Bruker\Registrer.cshtml" />
     <Content Include="Views\Bruker\LoggetInn.cshtml" />
+    <Content Include="Views\Bruker\RegistrerAPI.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

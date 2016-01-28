@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-
 namespace Jobbplan.Models
 {
-    public class DbTransaksjonerBruker
+    public class DbTransaksjonerBrukerStub
     {
         public bool RegistrerBruker(Registrer innBruker)
         {
@@ -15,33 +14,8 @@ namespace Jobbplan.Models
                 return false;
             }
 
-            byte[] passordDb = lagHash(innBruker.BekreftPassord);
-
-            var nyBruker = new dbBruker()
+            else
             {
-            Passord = passordDb,
-            Fornavn = innBruker.Fornavn,
-            Etternavn = innBruker.Etternavn,
-            Adresse = innBruker.Adresse,
-            Postnr = innBruker.Postnummer,
-            Email = innBruker.Email,
-            Telefonnummer = innBruker.Telefonnummer
-            };
-
-            using (var db = new Dbkontekst())
-            {
-                try
-                {
-                    
-                        db.Brukere.Add(nyBruker);
-                        db.SaveChanges();
-                        return true;
-                    
-                }
-                catch (Exception feil)
-                {
-                    return false;
-                }
                 return false;
             }
         }

@@ -23,6 +23,8 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, "");
         }
+
+        
         [TestMethod]
         public void RegistrerFeilValideringTest()
         {
@@ -35,12 +37,12 @@ namespace EnhetsTestJobbplan
             Assert.IsTrue(result.ViewData.ModelState.Count == 1);
             Assert.AreEqual(result.ViewName, "");
         }
-
+        /* Skriver inn i Db 
         [TestMethod]
         public void RegistrerPostOK()
         {
             // Arrange
-            var controller = new BrukerController();
+            var controller = new BrukerController(new DbTransaksjonerBrukerStub());
 
             var forventetBruker = new Registrer()
             {
@@ -59,7 +61,7 @@ namespace EnhetsTestJobbplan
             // Assert
             Assert.AreEqual(result.RouteName, "");
         }
-        
+        */
         [TestMethod]
         public void Registrer_Post_DB_feil()
         {
