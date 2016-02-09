@@ -11,7 +11,7 @@ namespace Jobbplan.Models
     public partial class Dbkontekst : DbContext
     {
         public Dbkontekst()
-            : base("Jobbplan")
+            : base("JobbplanD")
         {
             //Database.SetInitializer<Dbkontekst>(null);
             Database.CreateIfNotExists();

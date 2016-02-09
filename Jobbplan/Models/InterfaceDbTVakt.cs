@@ -8,8 +8,8 @@ namespace Jobbplan.Models
 {
     interface InterfaceDbTVakt
     {
-        bool RegistrerVakt(Vakt innVakt);
-        bool LedigVakt(Vakt inn);
-
+        bool RegistrerVakt(Vaktskjema innVakt);
+        bool LedigVakt(Vaktskjema inn);
+        List<Vaktkalender> hentAlleVakter();
     }
 }

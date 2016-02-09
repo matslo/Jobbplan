@@ -56,8 +56,10 @@
 			displayEventEnd: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: {
-				url: '/Fullcalendar/demos/json/events.json', //API senere
-				error: function() {
+			    url: '/api/VaktApi/',
+			    type: 'GET',
+			    dataType: 'json',
+			    error: function () {
 					$('#script-warning').show();
 				}
 			},

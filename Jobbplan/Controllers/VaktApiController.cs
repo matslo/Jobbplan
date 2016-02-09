@@ -10,9 +10,13 @@ namespace Jobbplan.Controllers
     public class VaktApiController : ApiController
     {
         DbTransaksjonerVakt db = new DbTransaksjonerVakt();
-
+        //Get api/KalenderApi
+        public List<Vaktkalender> Get()
+        {
+            return db.hentAlleVakter();
+        }
         // POST api/KalenderApi
-        public void Post(Vakt vaktInn)
+        public void Post(Vaktskjema vaktInn)
         {
             db.RegistrerVakt(vaktInn);
 

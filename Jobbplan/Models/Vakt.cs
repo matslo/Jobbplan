@@ -10,8 +10,8 @@ namespace Jobbplan.Models
     {
         [Key]
         public int VaktId { get; set; }
-        public string start { get; set; }
-        public string end { get; set; }
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
         public string title { get; set; }
         public string color { get; set; }
         public bool Ledig { get; set; }
@@ -21,18 +21,27 @@ namespace Jobbplan.Models
         public int ProsjektId { get; set; } 
 
     }
+    public class Vaktkalender
+    {
+        public string start { get; set; }
+        public string end { get; set; }
+        public string title { get; set; }
+        public string color { get; set; }
+        public bool Ledig { get; set; }
+        public string Beskrivelse { get; set; }
+
+    }
     public class Vaktskjema
     {
-        [ScaffoldColumn(false)]
-        public int id { get; set; }
+        
 
         [Required(ErrorMessage = "Dato må oppgis")]
         [Display(Name = "Fra Dato")]
-        public DateTime start { get; set; }
+        public string start { get; set; }
 
         [Required(ErrorMessage = "Dato må oppgis")]
         [Display(Name = "Til Dato")]
-        public DateTime end { get; set; }
+        public string end { get; set; }
 
         [Display(Name = "Tittel")]
         [StringLength(160)]
