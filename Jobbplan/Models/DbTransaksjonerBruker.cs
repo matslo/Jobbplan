@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Jobbplan.Models
 {
-    public class DbTransaksjonerBruker
+    public class DbTransaksjonerBruker : InterfaceDbTBruker
     {
         public bool RegistrerBruker(Registrer innBruker)
         {
@@ -42,7 +42,7 @@ namespace Jobbplan.Models
                 {
                     return false;
                 }
-                return false;
+               
             }
         }
         public bool BrukerIdb(LogInn innBruker)

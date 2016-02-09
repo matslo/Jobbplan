@@ -128,6 +128,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -235,7 +237,11 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Fullcalendar\demos\json\events.json" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -263,12 +269,14 @@
     <Compile Include="Controllers\BrukerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BrukerController.cs" />
+    <Compile Include="Controllers\VaktApiController.cs" />
+    <Compile Include="Controllers\VaktController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201601261436002_InitialCreate.cs" />
-    <Compile Include="Migrations\201601261436002_InitialCreate.Designer.cs">
-      <DependentUpon>201601261436002_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201602091450122_Initial.cs" />
+    <Compile Include="Migrations\201602091450122_Initial.Designer.cs">
+      <DependentUpon>201602091450122_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -276,6 +284,9 @@
     <Compile Include="Models\Db.cs" />
     <Compile Include="Models\DbTransaksjonerBruker.cs" />
     <Compile Include="Models\DbTransaksjonerBrukerStub.cs" />
+    <Compile Include="Models\DbTransaksjonerVakt.cs" />
+    <Compile Include="Models\InterfaceDbTVakt.cs" />
+    <Compile Include="Models\InterfaceDbTBruker.cs" />
     <Compile Include="Models\Poststed.cs" />
     <Compile Include="Models\Prosjekt.cs" />
     <Compile Include="Models\Prosjektdeltakelse.cs" />
@@ -292,6 +303,8 @@
     <Content Include="Views\Bruker\Registrer.cshtml" />
     <Content Include="Views\Bruker\LoggetInn.cshtml" />
     <Content Include="Views\Bruker\RegistrerAPI.cshtml" />
+    <Content Include="Views\Vakt\Index.cshtml" />
+    <Content Include="Views\Bruker\RegistrerAPI1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -301,10 +314,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\bootstrap\" />
+    <Folder Include="Content\fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601261436002_InitialCreate.resx">
-      <DependentUpon>201601261436002_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602091450122_Initial.resx">
+      <DependentUpon>201602091450122_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

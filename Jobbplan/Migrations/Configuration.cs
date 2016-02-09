@@ -9,8 +9,7 @@ namespace Jobbplan.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "Jobbplan.Models.Dbkontekst";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Jobbplan.Models.Dbkontekst context)

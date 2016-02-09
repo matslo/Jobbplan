@@ -7,6 +7,8 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using System.Data.Entity;
+using Jobbplan.Models;
 
 namespace Jobbplan
 {
@@ -17,6 +19,7 @@ namespace Jobbplan
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
+           // Database.SetInitializer<Dbkontekst>(null);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
     }

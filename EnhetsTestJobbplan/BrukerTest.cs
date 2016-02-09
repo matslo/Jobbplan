@@ -6,11 +6,15 @@ using Jobbplan;
 using Jobbplan.Controllers;
 using Jobbplan.Models;
 using System.Collections.Generic;
+using System.Transactions;
+
 
 
 namespace EnhetsTestJobbplan
 {
+   
     [TestClass]
+
     public class BrukerTest
     {
         [TestMethod]
@@ -56,6 +60,8 @@ namespace EnhetsTestJobbplan
                 Passord = "12345688"
             };
             // Act
+            when(controller.Registrer(any()).thenReturn(forventetBruker)
+
             var result = (RedirectToRouteResult)controller.Registrer(forventetBruker);
 
             // Assert

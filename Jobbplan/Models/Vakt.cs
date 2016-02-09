@@ -10,9 +10,16 @@ namespace Jobbplan.Models
     {
         [Key]
         public int VaktId { get; set; }
-        public string Start { get; set; }
-        public string End { get; set; }
-        public string Title { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public string title { get; set; }
+        public string color { get; set; }
+        public bool Ledig { get; set; }
+        public string Beskrivelse { get; set; }
+
+        public int BrukerId { get; set; }
+        public int ProsjektId { get; set; } 
+
     }
     public class Vaktskjema
     {
@@ -31,5 +38,12 @@ namespace Jobbplan.Models
         [StringLength(160)]
         public string title { get; set; }
 
+        [Display(Name = "Beskrivelse")]
+        [StringLength(400)]
+        public string Beskrivelse { get; set; }
+
+        [Display(Name = "Bruker")]
+        public int BrukerId { get; set; }
+        
     }
 }

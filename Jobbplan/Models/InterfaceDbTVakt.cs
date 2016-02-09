@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL
+namespace Jobbplan.Models
 {
-    public class Class1
+    interface InterfaceDbTVakt
     {
+        bool RegistrerVakt(Vakt innVakt);
+        bool LedigVakt(Vakt inn);
+
     }
 }

@@ -2,6 +2,19 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
+#calendar{
+    width:70%;
+    height:70%;
+    margin:auto;
+ }
+#vaktRegistrering{
+    margin:auto;
+    
+}
+#vaktNed{
+    
+  
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {

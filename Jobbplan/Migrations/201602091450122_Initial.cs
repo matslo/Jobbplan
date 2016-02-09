@@ -3,7 +3,7 @@ namespace Jobbplan.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -32,6 +32,16 @@ namespace Jobbplan.Migrations
                 .PrimaryKey(t => t.Postnummer);
             
             CreateTable(
+                "dbo.Prosjekt",
+                c => new
+                    {
+                        ProsjektId = c.Int(nullable: false, identity: true),
+                        EierId = c.Int(nullable: false),
+                        Arbeidsplass = c.String(),
+                    })
+                .PrimaryKey(t => t.ProsjektId);
+            
+            CreateTable(
                 "dbo.Vakt",
                 c => new
                     {
@@ -39,6 +49,11 @@ namespace Jobbplan.Migrations
                         start = c.String(),
                         end = c.String(),
                         title = c.String(),
+                        color = c.String(),
+                        Ledig = c.Boolean(nullable: false),
+                        Beskrivelse = c.String(),
+                        BrukerId = c.Int(nullable: false),
+                        ProsjektId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.VaktId);
             
@@ -47,6 +62,7 @@ namespace Jobbplan.Migrations
         public override void Down()
         {
             DropTable("dbo.Vakt");
+            DropTable("dbo.Prosjekt");
             DropTable("dbo.Poststed");
             DropTable("dbo.dbBruker");
         }

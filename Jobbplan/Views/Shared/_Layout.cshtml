@@ -6,8 +6,21 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Fullcalendar/fullcalendar.min.css" rel="stylesheet" media="print" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Fullcalendar/lib/moment.min.js"></script>
+    <script src="~/Fullcalendar/lib/jquery.min.js"></script>
+    <script src="~/Fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src='~/Fullcalendar/lang/nb.js'></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -18,7 +31,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @Html.ActionLink("Jobbpla", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Jobbplan", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -35,7 +48,6 @@
         </footer>
     </div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+  
 </body>
 </html>
