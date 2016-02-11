@@ -29,11 +29,39 @@ namespace Jobbplan.Controllers
             }
             else
             {
-                Session["AdminInne"] = false;
                 Session["LoggetInn"] = false;
                 ViewBag.Innlogget = false;
                 return RedirectToAction("Registrer", "Bruker");
             }
+        }
+        public ActionResult Loggut()
+        {
+            Session["LoggetInn"] = false;
+            //Session["Brukernavn"] = null;
+            return RedirectToAction("Index", "Home");
+
+        }
+        [ChildActionOnly]
+        public ActionResult loggetInn()// meny
+        {
+            if (Session["LoggetInn"] != null)
+            {
+                var brukernavn = Session["Brukernavn"];
+                string b = Convert.ToString(brukernavn);
+                ViewData["brukerpå"] = b;
+
+                bool loggetInn = (bool)Session["LoggetInn"];
+                if (loggetInn)
+                {
+                    ViewBag.Innlogget = true;
+                }
+            }
+            else
+            {
+                ViewBag.Innlogget = false;
+            }
+
+            return PartialView();
         }
     }
 }

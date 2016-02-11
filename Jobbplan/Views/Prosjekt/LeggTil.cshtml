@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "LeggTil";
+}
+
+<h2>LeggTil</h2>
+
+@model Jobbplan.Models.Prosjekt
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "Arbeidsplassen ble ikke oprettet. Prøv igjen", new { @class = "text-danger" })
+    <div>
+        <fieldset>
+            <legend>Opprett konto</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Arbeidsplass)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Arbeidsplass)
+                @Html.ValidationMessageFor(m => m.Arbeidsplass, "", new { @class = "text-danger" })
+            </div>
+
+          
+            <br />
+            <p>
+                <input type="submit" value="Registrer" class="btn btn-success" />
+            </p>
+        </fieldset>
+
+    </div>
+}
+

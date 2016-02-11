@@ -1,11 +1,20 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    
 }
+/*#Body{
+background-color:rgb(35,39,47);
+color: rgb(76, 255, 0);
+}*/
 #calendar{
     width:70%;
     height:70%;
     margin:auto;
+    background-color:rgb(255, 255, 255);
+    color:rgb(35,39,47);
+    padding:13px;
+    border-radius:4px;
  }
 #vaktRegistrering{
     margin:auto;

@@ -269,6 +269,8 @@
     <Compile Include="Controllers\BrukerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BrukerController.cs" />
+    <Compile Include="Controllers\ProsjektApiController.cs" />
+    <Compile Include="Controllers\ProsjektController.cs" />
     <Compile Include="Controllers\VaktApiController.cs" />
     <Compile Include="Controllers\VaktController.cs" />
     <Compile Include="Global.asax.cs">
@@ -279,6 +281,7 @@
     <Compile Include="Models\Db.cs" />
     <Compile Include="Models\DbTransaksjonerBruker.cs" />
     <Compile Include="Models\DbTransaksjonerBrukerStub.cs" />
+    <Compile Include="Models\DbTransaksjonerProsjekt.cs" />
     <Compile Include="Models\DbTransaksjonerVakt.cs" />
     <Compile Include="Models\InterfaceDbTVakt.cs" />
     <Compile Include="Models\InterfaceDbTBruker.cs" />
@@ -300,6 +303,8 @@
     <Content Include="Views\Bruker\RegistrerAPI.cshtml" />
     <Content Include="Views\Vakt\Index.cshtml" />
     <Content Include="Views\Bruker\RegistrerAPI1.cshtml" />
+    <Content Include="Views\Prosjekt\Index.cshtml" />
+    <Content Include="Views\Prosjekt\LeggTil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
