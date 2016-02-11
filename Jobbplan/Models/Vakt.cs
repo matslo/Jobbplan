@@ -53,6 +53,7 @@ namespace Jobbplan.Models
 
         [Display(Name = "Bruker")]
         public int BrukerId { get; set; }
-        
+        public int ProsjektId { get; set; }
+
     }
 }

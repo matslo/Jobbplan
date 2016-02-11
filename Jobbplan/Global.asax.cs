@@ -22,5 +22,6 @@ namespace Jobbplan
            // Database.SetInitializer<Dbkontekst>(null);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
+
     }
 }

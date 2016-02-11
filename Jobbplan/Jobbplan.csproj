@@ -305,6 +305,8 @@
     <Content Include="Views\Bruker\RegistrerAPI1.cshtml" />
     <Content Include="Views\Prosjekt\Index.cshtml" />
     <Content Include="Views\Prosjekt\LeggTil.cshtml" />
+    <Content Include="Views\Prosjekt\VisProsjekter.cshtml" />
+    <Content Include="Views\Prosjekt\prosjektMeny.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

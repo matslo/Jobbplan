@@ -11,7 +11,8 @@
             start: $('#datetimepicker4').val(),
             end: $('#datetimepicker5').val(),
             title: $('#Tittel').val(),
-            Beskrivelse: $('#Beskrivelse').val()            
+            Beskrivelse: $('#Beskrivelse').val(),
+            ProsjektId: $('#selectProsjekt').val()
         };
         $.ajax({
             url: '/api/VaktApi/',
@@ -30,8 +31,45 @@
 
 </script>
 <script>
+    function ProId() {
+        var Prosjekt = $('#selectProsjekt').val();
+        return Prosjekt;
+    }
+    function fullcal() {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            editable: false,
+            displayEventEnd: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: {
+                url: '/api/VaktApi/' + ProId(),
+                type: 'GET',
+                dataType: 'json',
+                error: function () {
+                    $('#script-warning').show();
+                }
+            },
+            eventClick: function (event) {
+                if (event.url) {
+                    window.open(event.url, "_blank");
+                    return false;
+                }
 
+                // change the border color just for fun
+                $(this).css('border-color', 'red');
+            },
+            loading: function (bool) {
+                $('#loading').toggle(bool);
+            }
+
+        });
+    }
     $(document).ready(function () {
+        fullcal();
         $("#mer").click(function () {
             var text = $("#vaktRegistrering");
             if (text.is(':hidden')) {
@@ -46,45 +84,17 @@
               }
         });
 
-		$('#calendar').fullCalendar({
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			editable: false,
-			displayEventEnd: true,
-			eventLimit: true, // allow "more" link when too many events
-			events: {
-			    url: '/api/VaktApi/',
-			    type: 'GET',
-			    dataType: 'json',
-			    error: function () {
-					$('#script-warning').show();
-				}
-			},
-			eventClick: function (calEvent, jsEvent, view) {
-
-			    //set the values and open the modal
-			    $("#eventInfo").html(event.description);
-			    $("#eventLink").attr('href', event.url);
-			    $("#eventContent").dialog({ modal: true, title: event.title });
-
-			    // change the border color just for fun
-			    $(this).css('border-color', 'red');
-			},
-			loading: function(bool) {
-				$('#loading').toggle(bool);
-			}
-
-		});
+		
 
     });
     
 
 
 </script>
-
+<select class="form-control" id="selectProsjekt" onchange="fullcal()">
+    <option value="0">DDD</option>
+    @{Html.RenderAction("prosjektMeny", "Prosjekt");}
+</select>
 <div class="container" id="vaktRegistrering">
     <div class="row">
         <div class='col-sm-2'>

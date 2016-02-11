@@ -9,6 +9,7 @@ namespace Jobbplan.Controllers
 {
     public class ProsjektController : Controller
     {
+        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
         // GET: Prosjekt
         public ActionResult Index()
         {
@@ -22,11 +23,27 @@ namespace Jobbplan.Controllers
         [HttpPost]
         public ActionResult LeggTil(Prosjekt p)
         {
-            DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
+           
             string b = (string)Session["Brukernavn"];
             db.RegistrerProsjekt(p, b);
             return View();
         }
         
+        public ActionResult VisProsjekter()
+        {
+            string b = (string)Session["Brukernavn"];
+            
+            List<ProsjektVis> pro = db.HentProsjekter(b);
+            return View(pro);
+        }
+        [ChildActionOnly]
+        public ActionResult prosjektMeny()//Kategori meny
+        {
+            string b = (string)Session["Brukernavn"];
+        
+            List<ProsjektVis> pro = db.HentProsjekter(b);
+
+            return PartialView(pro);
+        }
     }
 }

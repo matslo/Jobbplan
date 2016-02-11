@@ -15,8 +15,8 @@ namespace Jobbplan.Models
                start = Convert.ToDateTime(innVakt.start),
                end = Convert.ToDateTime(innVakt.end),
                title = innVakt.title,
-               Beskrivelse = innVakt.Beskrivelse
-               //ProsjektId = Session ----Kommer
+               Beskrivelse = innVakt.Beskrivelse,
+               ProsjektId = innVakt.ProsjektId
 
             };
             if (LedigVakt(innVakt))
@@ -51,14 +51,16 @@ namespace Jobbplan.Models
             return false;
         }
        
-        public List<Vaktkalender> hentAlleVakter()
+        public List<Vaktkalender> hentAlleVakter(int id)
         {
             Dbkontekst db = new Dbkontekst();
             List<Vakt> vakter = db.Vakter.ToList();
 
             var eventer = (from k in vakter
+                           where k.ProsjektId==id
                            select new Vaktkalender
                            {
+                               
                                start = k.start.ToString("s"),
                                end = k.end.ToString("s"),
                                title = k.title,
