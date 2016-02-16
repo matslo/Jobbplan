@@ -7,20 +7,21 @@ using System.Web;
 using System.Web.Http;
 using Jobbplan.Models;
 
-
 namespace Jobbplan.Controllers
 {
     public class ProsjektApiController : ApiController 
-    {
+    {   
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
       
         public void Get (int id)
         {
          //   db.HentProsjekter(id);
         }
-        public void Post(Prosjekt prosjektInn, string b)
+        public void Post(Prosjekt prosjektInn)
         {
-            db.RegistrerProsjekt(prosjektInn, b); 
+            string userName = User.Identity.Name;
+
+            db.RegistrerProsjekt(prosjektInn, userName); 
         }
     }
 }

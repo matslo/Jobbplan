@@ -31,18 +31,15 @@ namespace Jobbplan.Models
             using (var db = new Dbkontekst())
             {
                 try
-                {
-                    
-                        db.Brukere.Add(nyBruker);
-                        db.SaveChanges();
-                        return true;
-                    
+                {            
+                   db.Brukere.Add(nyBruker);
+                   db.SaveChanges();
+                   return true;   
                 }
                 catch (Exception feil)
                 {
                     return false;
-                }
-               
+                }     
             }
         }
         public bool BrukerIdb(LogInn innBruker)

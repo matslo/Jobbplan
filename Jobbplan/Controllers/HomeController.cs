@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Jobbplan.Models;
+using System.Web.Security;
 
 namespace Jobbplan.Controllers
 {
@@ -19,19 +20,24 @@ namespace Jobbplan.Controllers
         public ActionResult Index(LogInn innBruker)
         {
             var db = new DbTransaksjonerBruker();
-           
-            if (db.BrukerIdb(innBruker))
-            {
-                Session["LoggetInn"] = true;
-                Session["Brukernavn"] = innBruker.Brukernavn; // legger brukernavnet i session
-                ViewBag.Innlogget = true;
-                return RedirectToAction("LoggetInn","Bruker");
-            }
+/*
+            if (Membership.ValidateUser(UsernameTextbox.Text, PasswordTextbox.Text))
+                FormsAuthentication.RedirectFromLoginPage(UsernameTextbox.Text, NotPublicCheckBox.Checked);
             else
-            {
-                Session["LoggetInn"] = false;
-                ViewBag.Innlogget = false;
-                return RedirectToAction("Registrer", "Bruker");
+                Msg.Text = "Login failed. Please check your user name and password and try again.";*/
+             if (db.BrukerIdb(innBruker))
+             {
+                FormsAuthentication.RedirectFromLoginPage(innBruker.Brukernavn,false);
+                Session["LoggetInn"] = true;
+                string userName = HttpContext.User.Identity.Name;
+                ViewBag.Innlogget = true;
+                 return RedirectToAction("LoggetInn","Bruker");
+             }
+             else
+             {
+                 Session["LoggetInn"] = false;
+                 ViewBag.Innlogget = false;
+                 return View();
             }
         }
         public ActionResult Loggut()

@@ -22,7 +22,7 @@ namespace Jobbplan.Models
             if (LedigVakt(innVakt))
             {
                 nyVakt.Ledig = true;
-                nyVakt.color = "#E64759";
+                nyVakt.color = "#5CB85C";
             }
 
             using (var db = new Dbkontekst())

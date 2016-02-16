@@ -15,7 +15,7 @@ namespace Jobbplan.Controllers
         {
             return View();
         }
-       
+       [Authorize]
         public ActionResult LeggTil()
         {
             return View();
@@ -23,25 +23,26 @@ namespace Jobbplan.Controllers
         [HttpPost]
         public ActionResult LeggTil(Prosjekt p)
         {
-           
-            string b = (string)Session["Brukernavn"];
-            db.RegistrerProsjekt(p, b);
+
+            string userName = HttpContext.User.Identity.Name;
+            db.RegistrerProsjekt(p, userName);
             return View();
         }
-        
+        [Authorize]
         public ActionResult VisProsjekter()
         {
-            string b = (string)Session["Brukernavn"];
-            
-            List<ProsjektVis> pro = db.HentProsjekter(b);
+
+            string userName = HttpContext.User.Identity.Name;
+
+            List<ProsjektVis> pro = db.HentProsjekter(userName);
             return View(pro);
         }
         [ChildActionOnly]
         public ActionResult prosjektMeny()//Kategori meny
         {
-            string b = (string)Session["Brukernavn"];
+            string userName = HttpContext.User.Identity.Name;
         
-            List<ProsjektVis> pro = db.HentProsjekter(b);
+            List<ProsjektVis> pro = db.HentProsjekter(userName);
 
             return PartialView(pro);
         }

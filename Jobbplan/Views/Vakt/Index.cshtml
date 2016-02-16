@@ -91,8 +91,8 @@
 
 
 </script>
-<select class="form-control" id="selectProsjekt" onchange="fullcal()">
-    <option value="0">DDD</option>
+<select class="form-control" id="selectProsjekt" >
+    
     @{Html.RenderAction("prosjektMeny", "Prosjekt");}
 </select>
 <div class="container" id="vaktRegistrering">
@@ -138,7 +138,7 @@
         </script>
         <div class='col-sm-2'>
         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><label>OK</label><br />
-        <button onclick="LeggTilVakt()" class="btn btn-success" rows="1" id="LeggTilVakt" >Legg til vakt</button>
+        <button onclick="LeggTilVakt();" class="btn btn-success" rows="1" id="LeggTilVakt" >Legg til vakt</button>
         </div>
         </div>
    
