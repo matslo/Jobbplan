@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "RegistrerAPI1";
+}
+<script type="text/javascript">
+
+    function LeggTilPerson() {
+        var person = {
+            Fornavn: $('#FornavnTxt').val(),
+            Etternavn: $('#EtternavnTxt').val(),
+            Telefonnummerr: $('#TelefonnummerTxt').val(),
+            Email: $('#EmailTxt').val(),
+            Adresse: $('#AdresseTxt').val(),
+            Postnummerr: $('#PostnummerTxt').val(),
+            Poststed: $('#PoststedTxt').val(),
+            Passord: $('#PassordTxt').val()
+        };
+        $.ajax({
+            url: '/api/BrukerApi/',
+            type: 'POST',
+            data: JSON.stringify(person),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+               alert('Godkjent!');
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+
+</script>
+
+
+<div class="container">
+    <h2>Personregister via WEB-API i MVC</h2>
+    <div>
+        <table class="table table-bordered">
+            <tr><td>Fornavn:</td><td><input type="text" id="FornavnTxt" /></td></tr>
+            <tr><td>Etternavn:</td><td><input type="text" id="EtternavnTxt" /></td></tr>
+            <tr><td>Adresse:</td><td><input type="text" id="AdresseTxt" /></td></tr>
+            <tr><td>Postnr:</td><td><input type="text" id="PostnummerTxt" /></td></tr>
+            <tr><td>Poststed:</td><td><input type="text" id="PoststedTxt" /></td></tr>
+            <tr><td>Telefonnr:</td><td><input type="text" id="TelefonnummerTxt" /></td></tr>
+            <tr><td>Epost:</td><td><input type="text" id="EmailTxt" /></td></tr>
+            <tr><td>Passord:</td><td><input type="text" id="PassordTxt" /></td></tr>
+        </table>
+        <button onclick="LeggTilPerson()" class="btn btn-primary">Legg til person</button><br /><br />
+    </div>
+</div>
+

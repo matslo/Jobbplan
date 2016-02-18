@@ -1,0 +1,45 @@
+﻿<script type="text/javascript">
+
+    function LeggTilProsjekt() {
+        var prosjekt = {
+            Arbeidsplass: $('#NavnTxt').val()
+            
+        };
+     
+        $.ajax({
+            url: '/api/ProsjektApi/',
+            type: 'POST',
+            data: JSON.stringify(prosjekt),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+               alert('Godkjent!');
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+
+</script>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Registrer virksomhet</h2>
+    <div>
+        <table class="table table-bordered">
+            <tr><td>Navn</td><td><input type="text" id="NavnTxt" /></td></tr>
+            <tr><td>Bruker</td><td><input type="text" id="BrukerTxt" /></td></tr>
+        </table>
+        <button onclick="LeggTilProsjekt()" class="btn btn-primary">Opprett prosjekt</button><br /><br />
+    </div>
+</div>
+<p>Dine virksomheter</p>
+<div class='col-sm-3'>
+    <select class="form-control" id="selectProsjekt">
+        @{Html.RenderAction("prosjektMeny", "Prosjekt");}
+    </select>
+</div>
+<br />
