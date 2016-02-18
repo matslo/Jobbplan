@@ -23,22 +23,24 @@
         @Html.AntiForgeryToken()
         <div id="logginnskjema">
             <img src="~/Content/jp.jpg" alt="Logo" id="Logo" width="267" height="248" />
-            <div class="input-group">
-                @Html.TextBoxFor(m => m.Brukernavn, new { id = "brukernavntxt", placeholder = "Brukernavn" })
-                @Html.ValidationMessageFor(m => m.Brukernavn, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="input-group">
-                @Html.PasswordFor(m => m.Passord, new { id = "passordtxt", placeholder = "Passord" })
-                @Html.ValidationMessageFor(m => m.Passord, "", new { @class = "text-danger" })
-            </div>
-
-            <input type="submit" id="LogginnKnapp" value="LOGG INN" />
-            <br />
-            <br />
-            @Html.ActionLink("Registrer ny bruker", "Registrer", "Bruker")
-        </div>
-    }
+            
+                
+                    @Html.TextBoxFor(m => m.Brukernavn, new { id = "brukernavntxt", placeholder = "Brukernavn" })
+                    @Html.ValidationMessageFor(m => m.Brukernavn, "", new { @class = "text-danger" })
+                
+          
+          
+                <div class="input-group">
+                    @Html.PasswordFor(m => m.Passord, new { id = "passordtxt", placeholder = "Passord" })
+                    @Html.ValidationMessageFor(m => m.Passord, "", new { @class = "text-danger" })
+                </div>
+        
+                    <input type="submit" id="LogginnKnapp" value="LOGG INN" />
+                    <br />
+                    <br />
+                    <div id="registrerbruker">@Html.ActionLink("Registrer ny bruker", "Registrer", "Bruker")</div>
+                </div>
+                }
 </body>
 </html>
 
