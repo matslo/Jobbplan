@@ -12,7 +12,7 @@ namespace Jobbplan.Models
         public string Postnummer { get; set; }
         public string PostSted { get; set; }
 
-       // public List<dbBruker> bruker { get; set; }
+        public virtual List<dbBruker> bruker { get; set; }
 
 
     }

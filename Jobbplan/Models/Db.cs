@@ -21,6 +21,8 @@ namespace Jobbplan.Models
         public DbSet<Poststed> Poststeder { get; set; }
         public DbSet<Vakt> Vakter { get; set; }
         public DbSet<Prosjekt> Prosjekter { get; set; }
+        public DbSet<Prosjektdeltakelse> Prosjektdeltakelser { get; set; }
+        public DbSet<Prosjektrequest> Prosjektrequester { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

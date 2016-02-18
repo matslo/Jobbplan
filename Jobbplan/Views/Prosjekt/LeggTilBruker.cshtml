@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "LeggTilBruker";
+}
+
+<h2>LeggTil</h2>
+
+<script type="text/javascript">
+
+    function requestBruker() {
+        var reqInn = {
+            TilBruker: $('#TilTxt').val(),
+            ProsjektId: $('#selectProsjekt').val()       
+        };
+        $.ajax({
+            url: '/api/ProsjektreqApi/',
+            type: 'POST',
+            data: JSON.stringify(reqInn),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+               alert('Sendt til: '+reqInn.TilBruker +" " +reqInn.ProsjektId);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+
+</script>
+@{
+    ViewBag.Title = "RegistrerAPI";
+}
+
+<div class="container">
+    <h2>Personregister via WEB-API i MVC</h2>
+    <select class="form-control" id="selectProsjekt" >
+    
+    @{Html.RenderAction("prosjektMeny", "Prosjekt");}
+</select>
+        <table class="table table-bordered">
+            <tr><td>Til:</td><td><input type="text" id="TilTxt" /></td></tr>
+            </table>
+        <button onclick="requestBruker()" class="btn btn-primary">Send forespørsel</button><br /><br />
+    </div>
+
+
+

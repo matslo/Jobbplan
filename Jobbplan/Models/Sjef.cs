@@ -5,13 +5,14 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 namespace Jobbplan.Models
 {
-    public class Admin
+    public class Sjef
     {
         [Key]
-        public int AdminId { get; set; }
+        public int SjefId { get; set; }
         public int ProsjektDeltakerId { get; set; }
-        public int ProsjektId { get; set; }
         public string Rettigheter { get; set; }
         public string Tittel { get; set; }
+
+        public virtual Prosjektdeltakelse Prosjektdeltakelse { get; set; }
     }
 }

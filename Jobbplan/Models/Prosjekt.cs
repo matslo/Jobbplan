@@ -12,8 +12,11 @@ namespace Jobbplan.Models
         public int ProsjektId { get; set; }
         public int EierId { get; set; }
         public string Arbeidsplass { get; set; }
+        
+        public virtual dbBruker dbBruker { get; set; }
+        public virtual List<Prosjektdeltakelse> Prosjektdeltakelse { get; set; }
 
-
+        
     }
     public class ProsjektVis
     {

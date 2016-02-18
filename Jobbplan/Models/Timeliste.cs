@@ -8,7 +8,6 @@ namespace Jobbplan.Models
 {
     public class Timeliste
     {
-        [Key]
         public int BrukerId { get; set; }
         public decimal Timer { get; set; }
         public string Fornavn { get; set; }

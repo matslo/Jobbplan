@@ -15,6 +15,7 @@ namespace Jobbplan.Controllers
         {
             return View();
         }
+
        [Authorize]
         public ActionResult LeggTil()
         {
@@ -36,6 +37,15 @@ namespace Jobbplan.Controllers
 
             List<ProsjektVis> pro = db.HentProsjekter(userName);
             return View(pro);
+        }
+        public ActionResult LeggTilBruker()
+        {
+            return View();
+        }
+
+        public ActionResult Meldingsboks()//Kategori meny
+        {
+           return View();
         }
         [ChildActionOnly]
         public ActionResult prosjektMeny()//Kategori meny

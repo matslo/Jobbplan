@@ -6,22 +6,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Jobbplan.Models
 {
-    
-        public class dbBruker
-        {
-            [Key]
-            public int BrukerId { get; set; }
-            public string Fornavn { get; set; }
-            public string Etternavn { get; set; }
-            public string Email { get; set; }
-            public string Telefonnummer { get; set; }
-            public string Adresse { get; set; }
-            public string Postnr { get; set; }
-            public byte[] Passord { get; set; }
 
-           // public virtual Poststed Poststed { get; set; }
+    public class dbBruker
+    {
+        [Key]
+        public int BrukerId { get; set; }
+        public string Fornavn { get; set; }
+        public string Etternavn { get; set; }
+        public string Email { get; set; }
+        public string Telefonnummer { get; set; }
+        public string Adresse { get; set; }
+        public string Postnr { get; set; }
+        public byte[] Passord { get; set; }
 
-        }
+         public virtual Poststed Poststed { get; set; }
+         public virtual List<Prosjektdeltakelse> Prosjektdeltakelse { get; set; }
+    }
         public class Registrer
         {
             

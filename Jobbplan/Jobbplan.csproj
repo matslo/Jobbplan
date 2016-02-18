@@ -271,13 +271,15 @@
     <Compile Include="Controllers\BrukerController.cs" />
     <Compile Include="Controllers\ProsjektApiController.cs" />
     <Compile Include="Controllers\ProsjektController.cs" />
+    <Compile Include="Controllers\ProsjektDeltakelseApiController.cs" />
+    <Compile Include="Controllers\ProsjektreqApiController.cs" />
     <Compile Include="Controllers\VaktApiController.cs" />
     <Compile Include="Controllers\VaktController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JobbPlanAuthentication.cs" />
-    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Sjef.cs" />
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
     <Compile Include="Models\DbTransaksjonerBruker.cs" />
@@ -308,6 +310,8 @@
     <Content Include="Views\Prosjekt\LeggTil.cshtml" />
     <Content Include="Views\Prosjekt\VisProsjekter.cshtml" />
     <Content Include="Views\Prosjekt\prosjektMeny.cshtml" />
+    <Content Include="Views\Prosjekt\LeggTilBruker.cshtml" />
+    <Content Include="Views\Prosjekt\Meldingsboks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
