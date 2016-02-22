@@ -16,10 +16,17 @@ namespace Jobbplan.Controllers
             string UserName = User.Identity.Name;
             return db.VisRequester(UserName);
         }
+
         public void Post(ProsjektrequestSkjema reqInn)
         {
             string UserName = User.Identity.Name;
             db.LeggTilBrukerRequest(reqInn,UserName);
+        }
+        public List<ProsjektrequestMelding> Delete(int id)
+        {
+            string UserName = User.Identity.Name;
+            db.SlettRequest(id,UserName);
+            return db.VisRequester(UserName);
         }
     }
 }

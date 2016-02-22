@@ -105,32 +105,39 @@ namespace Jobbplan.Models
 
             }
         }
-        public bool RegistrerProsjektdeltakelse(Prosjektrequest preq,string brukernavn)
+        public bool RegistrerProsjektdeltakelse(ProsjektrequestMelding pid,string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();
             int id = BrukerId(brukernavn);
-            var prosjektDeltakelse = (from prosj in dbs.Prosjektrequester
-                                      from b in dbs.Brukere
-                                      from s in dbs.Prosjekter
-                                      where prosj.BrukerIdTil == id && prosj.BrukerIdFra == b.BrukerId && prosj.ProsjektId == s.ProsjektId
-                                      select new ProsjektDeltakelseOverforing
-                                      {
-                                          BrukerId = id,
-                                          ProsjektId = prosj.ProsjektId,
-                                          Start = DateTime.Now,
-
-                                      }).ToList();
+            IEnumerable<ProsjektDeltakelseOverforing> prosjektReq = from prosj in dbs.Prosjektrequester
+                                                                    from b in dbs.Brukere
+                                                                    from s in dbs.Prosjekter
+                                                                    where prosj.BrukerIdTil == id && prosj.BrukerIdFra == b.BrukerId && prosj.ProsjektId == pid.ProsjektId
+                                                                    select new ProsjektDeltakelseOverforing()
+                                                                    {
+                                                                        BrukerId = prosj.BrukerIdTil,
+                                                                        ProsjektId = prosj.ProsjektId
+                                                                        
+                                                                    };
+                                                                            
 
             var prosjektD = new Prosjektdeltakelse();
-             
+            foreach(var a in prosjektReq)
+            {
+                prosjektD.BrukerId = a.BrukerId;
+                prosjektD.ProsjektId = a.ProsjektId;
+                prosjektD.Medlemsdato = DateTime.Now;
+            }
+            
          
             using (var db = new Dbkontekst())
             {
                 try
                 {
                     
-                   db.Prosjektdeltakelser.Add(prosjektD);
+                    db.Prosjektdeltakelser.Add(prosjektD);
                     db.SaveChanges();
+                    SlettRequest(prosjektD.ProsjektId, brukernavn);
                     return true;
 
                 }
@@ -153,6 +160,7 @@ namespace Jobbplan.Models
                                       select
                                           new ProsjektrequestMelding()
                                           {
+                                              ProsjektId = p.ProsjektId,
                                               FraBruker = b.Email,
                                               Melding = " har invitert deg til å bli medlem av: ",
                                               Prosjektnavn = p.Prosjekt.Arbeidsplass,
@@ -181,6 +189,23 @@ namespace Jobbplan.Models
                           where x.Email == brukernavn
                           select x.BrukerId).SingleOrDefault();
             return userId;
+        }
+
+        public bool SlettRequest(int id, string brukernavn)
+        {
+            Dbkontekst db = new Dbkontekst();
+            int bid = BrukerId(brukernavn);
+            try
+            {
+                var SlettRequest = db.Prosjektrequester.FirstOrDefault(p => p.BrukerIdTil == bid && p.ProsjektId == id);
+                db.Prosjektrequester.Remove(SlettRequest);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
         }
        
         public string BrukerNavn (int id)

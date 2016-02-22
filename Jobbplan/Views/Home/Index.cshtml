@@ -27,9 +27,7 @@
                 
                     @Html.TextBoxFor(m => m.Brukernavn, new { id = "brukernavntxt", placeholder = "Brukernavn" })
                     @Html.ValidationMessageFor(m => m.Brukernavn, "", new { @class = "text-danger" })
-                
-          
-          
+                        
                 <div class="input-group">
                     @Html.PasswordFor(m => m.Passord, new { id = "passordtxt", placeholder = "Passord" })
                     @Html.ValidationMessageFor(m => m.Passord, "", new { @class = "text-danger" })

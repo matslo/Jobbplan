@@ -11,11 +11,10 @@ namespace Jobbplan.Controllers
     public class ProsjektDeltakelseApiController : ApiController
     {
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
-        public void Post(Prosjektrequest prosjektInn)
+        public void Post(ProsjektrequestMelding pid )
         {
             string username = User.Identity.Name;
-            db.RegistrerProsjektdeltakelse(username);
-       //     db.RegistrerProsjektdeltakelse(prosjektInn);
+            db.RegistrerProsjektdeltakelse(pid, username);
         }
     }
 }

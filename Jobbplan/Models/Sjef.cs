@@ -13,6 +13,6 @@ namespace Jobbplan.Models
         public string Rettigheter { get; set; }
         public string Tittel { get; set; }
 
-        public virtual Prosjektdeltakelse Prosjektdeltakelse { get; set; }
+       // public virtual Prosjektdeltakelse Prosjektdeltakelse { get; set; }
     }
 }

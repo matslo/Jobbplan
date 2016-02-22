@@ -11,12 +11,11 @@ namespace Jobbplan.Models
         public int ProsjektDeltakerId { get; set; }
         public int BrukerId { get; set; }
         public int ProsjektId { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime Slutt { get; set; }
+        public DateTime Medlemsdato { get; set; }
 
         public virtual Prosjekt Prosjekt { get; set; }
         public virtual dbBruker dbBruker { get; set; }
-        public virtual List<Sjef> Sjef { get; set; }
+        //public virtual List<Sjef> Sjef { get; set; }
 
     }
     public class Prosjektrequest
@@ -55,6 +54,7 @@ namespace Jobbplan.Models
     public class ProsjektrequestMelding
     {
         public DateTime Tid { get; set; }
+        public int ProsjektId { get; set; }
         public string TilBruker { get; set; }
         public string FraBruker { get; set; }
         public string Prosjektnavn { get; set; }

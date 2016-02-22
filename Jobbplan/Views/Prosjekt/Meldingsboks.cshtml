@@ -1,7 +1,31 @@
 ﻿<script type="text/javascript">
       $(document).ready(function () {
-        HentMelding();
-    });
+          HentMelding();    
+          godkjenn();
+          slett();
+      });
+
+
+      function godkjenn() {
+          $("#meldinger").on('click', '.Godkjenn', function () {
+              var ProsjektG = {
+                  ProsjektId: this.id
+              };
+   
+              $.ajax({
+                  url: '/api/ProsjektDeltakelseApi/',
+                  type: 'POST',
+                  data: JSON.stringify(ProsjektG),
+                  contentType: "application/json;charset=utf-8",
+                  success: function (data) {
+                      alert("Ok" + ProsjektG.ProsjektId);
+                  },
+                  error: function (x, y, z) {
+                      alert(x + '\n' + y + '\n' + z);
+                  }
+              });
+          })
+      };
     function HentMelding() {
         $.ajax({
             url: '/api/ProsjektreqApi',
@@ -17,28 +41,33 @@
     }
     function VisAlle(melding) {
         
-var strResult = "Dine meldinger";
+        var strResult = "Dine meldinger";
         $.each(melding, function (i, m) {
-            strResult += "<p> " + m.Tid + " " + m.FraBruker + " "+m.Melding +" "+ m.Prosjektnavn +" <button class='btn btn-primary'>Godta</button></p>";
+            strResult += "<p> " + m.Tid + " " + m.FraBruker + " " + m.Melding + " " + m.Prosjektnavn + "</p> <button class='Godkjenn' id=" + m.ProsjektId + " >Godta</button><button class='Avslag' id=" + m.ProsjektId + " >Avslå</button>";
         });
         $("#meldinger").html(strResult);
  }
 
- /*   function Avslå() {
-        var id = $('#txtSlettId').val()
+    function slett() {
+        $("#meldinger").on('click', '.Avslag', function () {
+            var ProsjektG = {
+                ProsjektId: this.id
+            };
 
-        $.ajax({
-            url: '/api/Person/' + id,
-            type: 'DELETE',
-            contentType: "application/json;charset=utf-8",
-            success: function (data) {
-                VisAlle(data);
-            },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
-            }
-        });
-    }*/
+            $.ajax({
+                url: '/api/ProsjektreqApi/' + ProsjektG.ProsjektId,
+                type: 'DELETE',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Ok");
+                    $("#meldinger").fadeOut();
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        })
+    };
     </script>
 <br />
 <div id="meldinger"></div>
