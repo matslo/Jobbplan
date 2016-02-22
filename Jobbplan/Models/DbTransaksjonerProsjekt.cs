@@ -105,7 +105,7 @@ namespace Jobbplan.Models
 
             }
         }
-        public bool RegistrerProsjektdeltakelse(string brukernavn)
+        public bool RegistrerProsjektdeltakelse(Prosjektrequest preq,string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();
             int id = BrukerId(brukernavn);
@@ -129,7 +129,7 @@ namespace Jobbplan.Models
                 try
                 {
                     
-                 //   db.Prosjektdeltakelser.Add(prosjektDeltakelse);
+                   db.Prosjektdeltakelser.Add(prosjektD);
                     db.SaveChanges();
                     return true;
 

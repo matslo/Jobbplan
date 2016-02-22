@@ -91,10 +91,7 @@
 
 
 </script>
-<select class="form-control" id="selectProsjekt" >
-    
-    @{Html.RenderAction("prosjektMeny", "Prosjekt");}
-</select>
+
 <div class="container" id="vaktRegistrering">
     <div class="row">
         <div class='col-sm-2'>
@@ -147,7 +144,14 @@
 <button id="mer">
     <span class="glyphicon glyphicon-menu-down" aria-hidden="true" id="vaktNed"></span> </button>  
  <hr />
-    <div id='calendar'></div>
+<div class="row">
+    <div class='col-sm-2'>
+        <select class="form-control" id="selectProsjekt">
+            @{Html.RenderAction("prosjektMeny", "Prosjekt");}
+        </select>
+        </div>
+        <div id='calendar'></div>
+    </div>
 
 
 
