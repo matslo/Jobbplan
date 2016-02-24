@@ -258,6 +258,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Vakt.js" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -283,7 +284,6 @@
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
     <Compile Include="Models\DbTransaksjonerBruker.cs" />
-    <Compile Include="Models\DbTransaksjonerBrukerStub.cs" />
     <Compile Include="Models\DbTransaksjonerProsjekt.cs" />
     <Compile Include="Models\DbTransaksjonerVakt.cs" />
     <Compile Include="Models\InterfaceDbTVakt.cs" />
@@ -312,6 +312,8 @@
     <Content Include="Views\Prosjekt\prosjektMeny.cshtml" />
     <Content Include="Views\Prosjekt\LeggTilBruker.cshtml" />
     <Content Include="Views\Prosjekt\Meldingsboks.cshtml" />
+    <Content Include="Views\Bruker\brukerListe.cshtml" />
+    <Content Include="Views\Bruker\Testliste.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -16,8 +16,8 @@ namespace Jobbplan.Models
                end = Convert.ToDateTime(innVakt.end),
                title = innVakt.title,
                Beskrivelse = innVakt.Beskrivelse,
+               BrukerId = innVakt.BrukerId,
                ProsjektId = innVakt.ProsjektId
-
             };
             if (LedigVakt(innVakt))
             {
@@ -29,11 +29,9 @@ namespace Jobbplan.Models
             {
                 try
                 {
-
                     db.Vakter.Add(nyVakt);
                     db.SaveChanges();
                     return true;
-
                 }
                 catch (Exception feil)
                 {

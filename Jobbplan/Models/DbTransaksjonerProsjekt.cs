@@ -17,24 +17,27 @@ namespace Jobbplan.Models
                           where x.Email == brukernavn
                           select x.BrukerId).SingleOrDefault();
 
-
             var nyProsjekt = new Prosjekt()
-            {
-                
+            {          
                 Arbeidsplass = innProsjekt.Arbeidsplass,
                 EierId = userId
                 
+            };
+            var nyProsjektDeltakelse = new Prosjektdeltakelse()
+            {
+                BrukerId = userId,
+                Medlemsdato = DateTime.Now,
+                ProsjektId = nyProsjekt.ProsjektId
             };
             
             using (var db = new Dbkontekst())
             {
                 try
                 {
-
                     db.Prosjekter.Add(nyProsjekt);
+                    db.Prosjektdeltakelser.Add(nyProsjektDeltakelse);
                     db.SaveChanges();
                     return true;
-
                 }
                 catch (Exception feil)
                 {
@@ -190,7 +193,6 @@ namespace Jobbplan.Models
                           select x.BrukerId).SingleOrDefault();
             return userId;
         }
-
         public bool SlettRequest(int id, string brukernavn)
         {
             Dbkontekst db = new Dbkontekst();
@@ -222,8 +224,7 @@ namespace Jobbplan.Models
            {
                 return false;
            }
-        }
-       
+        }   
         public string BrukerNavn (int id)
         {
             string brukernavn = (from x in dbs.Brukere

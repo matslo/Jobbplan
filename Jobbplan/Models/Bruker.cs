@@ -22,6 +22,7 @@ namespace Jobbplan.Models
          public virtual Poststed Poststed { get; set; }
          public virtual List<Prosjektdeltakelse> Prosjektdeltakelse { get; set; }
     }
+   
         public class Registrer
         {
             
@@ -79,7 +80,12 @@ namespace Jobbplan.Models
             [DataType(DataType.Password)]
             [Display(Name = "Passord")]
             public string Passord { get; set; }
-
         }
-    
+    public class BrukerListe
+    {
+        public string Navn { get; set; }
+        public string Brukernavn { get; set; }
+        public int BrukerId { get; set; }
+    }
+
 }

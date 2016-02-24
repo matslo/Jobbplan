@@ -1,96 +1,9 @@
-﻿
+﻿<script src="~/Scripts/Vakt.js"></script>
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Vaktplan</h2>
-<script type="text/javascript">
-
-    function LeggTilVakt() {
-        var vakt = {
-            start: $('#datetimepicker4').val(),
-            end: $('#datetimepicker5').val(),
-            title: $('#Tittel').val(),
-            Beskrivelse: $('#Beskrivelse').val(),
-            ProsjektId: $('#selectProsjekt').val()
-        };
-        $.ajax({
-            url: '/api/VaktApi/',
-            type: 'POST',
-            data: JSON.stringify(vakt),
-            contentType: "application/json;charset=utf-8",
-            success: function (data) {
-               alert('Godkjent!');
-            },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
-            }
-        });
-    }
-
-
-</script>
-<script>
-    function ProId() {
-        var Prosjekt = $('#selectProsjekt').val();
-        return Prosjekt;
-    }
-    function fullcal() {
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            editable: true,
-            displayEventEnd: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: {
-                url: '/api/VaktApi/' + ProId(),
-                type: 'GET',
-                dataType: 'json',
-                error: function () {
-                    $('#script-warning').show();
-                }
-            },
-            eventClick: function (event) {
-                if (event.url) {
-                    window.open(event.url, "_blank");
-                    return false;
-                }
-
-                // change the border color just for fun
-                $(this).css('border-color', 'red');
-            },
-            loading: function (bool) {
-                $('#loading').toggle(bool);
-            }
-
-        });
-    }
-    $(document).ready(function () {
-        fullcal();
-        $("#mer").click(function () {
-            var text = $("#vaktRegistrering");
-            if (text.is(':hidden')) {
-                text.slideDown('500');
-                $("#vaktNed").removeClass('glyphicon glyphicon-menu-up');
-                $("#vaktNed").addClass('glyphicon glyphicon-menu-up');
-              }
-            else {
-                text.slideUp('500');
-                $("#vaktNed").removeClass('glyphicon glyphicon-menu-up');
-                $("#vaktNed").addClass('glyphicon glyphicon-menu-down');
-              }
-        });
-
-		
-
-    });
-    
-
-
-</script>
 
 <div class="container" id="vaktRegistrering">
     <div class="row">
@@ -114,12 +27,8 @@
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             <label for="sel1">Ansatt:</label>
-            <select class="form-control" id="sel1">
-                <option>Ansatt:</option>
-                <option>Mats Løkken</option>
-                <option>Sofie Os</option>
-                <option>Ingrid Oskarsen</option>
-                <option>Atle Aspelien</option>
+            <select class="form-control"  id="brukere">
+               
             </select>
         </div>
 
@@ -151,6 +60,7 @@
         </select>
         </div>
         <div id='calendar'></div>
+    <div id="loading"></div>
     </div>
 
 

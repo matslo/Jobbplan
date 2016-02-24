@@ -58,6 +58,17 @@ namespace Jobbplan.Controllers
             ViewData["brukerpå"] = userName;
             return View();
         }
- 
+        public ActionResult Testliste()
+        {
+            
+            return View();
+        }
+
+        [ChildActionOnly]
+        public ActionResult brukerListe()//Liste med ansatte
+        {
+            return PartialView();
+        }
+
     }
 }

@@ -47,10 +47,7 @@ namespace Jobbplan.Controllers
         {
            return View();
         }
-        public ActionResult TEST()
-        {
-            return View();
-        }
+      
         [ChildActionOnly]
         public ActionResult prosjektMeny()//Kategori meny
         {

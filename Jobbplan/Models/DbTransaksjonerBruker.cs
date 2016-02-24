@@ -42,6 +42,21 @@ namespace Jobbplan.Models
                 }     
             }
         }
+        public List<BrukerListe> HentBrukere (int ProsjektId)
+        {
+            Dbkontekst dbs = new Dbkontekst();
+            List<BrukerListe> pros = (from p in dbs.Prosjektdeltakelser
+                                      from s in dbs.Brukere
+                                      where p.ProsjektId == ProsjektId && p.BrukerId == s.BrukerId
+                                      select
+                                          new BrukerListe()
+                                          {
+                                              Navn = s.Fornavn+" "+s.Etternavn,
+                                              BrukerId = p.BrukerId,
+                                              Brukernavn = s.Email
+                                          }).ToList();
+            return pros;
+        }
         public bool BrukerIdb(LogInn innBruker)
         {   //Sjekker om bruker er i db
             using (var db = new Dbkontekst())
