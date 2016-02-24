@@ -207,6 +207,22 @@ namespace Jobbplan.Models
                 return false;
             }
         }
+        public bool SlettProsjekt (int id)
+        { 
+           Dbkontekst db = new Dbkontekst();
+            
+           try
+           {
+               var SlettProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == id );
+               db.Prosjekter.Remove(SlettProsjekt);
+               db.SaveChanges();
+               return true;
+           }
+           catch (Exception feil)
+           {
+                return false;
+           }
+        }
        
         public string BrukerNavn (int id)
         {

@@ -23,5 +23,10 @@ namespace Jobbplan.Controllers
 
             db.RegistrerProsjekt(prosjektInn, userName); 
         }
+        public void Delete(int id)
+        {
+            db.SlettProsjekt(id);
+            
+        }
     }
 }

@@ -21,6 +21,25 @@
     }
 
 
+
+    function SlettProsjekt() {
+        var Prosjekt = {
+            id: $('#selectProsjekt').val()
+        };
+        
+        $ajax({
+            url: '/api/ProsjektApi/' + Prosjekt.id,
+            type: 'DELETE',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                alert('slettet');
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
 </script>
 @{
     ViewBag.Title = "Index";
@@ -32,8 +51,10 @@
         <table class="table table-bordered">
             <tr><td>Navn</td><td><input type="text" id="NavnTxt" /></td></tr>
             <tr><td>Bruker</td><td><input type="text" id="BrukerTxt" /></td></tr>
+            
         </table>
         <button onclick="LeggTilProsjekt()" class="btn btn-primary">Opprett prosjekt</button><br /><br />
+        <button onclick="SlettProsjekt()" class="btn btn-danger">Slett Prosjekt</button><br /><br />
     </div>
 </div>
 <p>Dine virksomheter</p>
