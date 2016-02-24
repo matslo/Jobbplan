@@ -23,21 +23,20 @@
 
 
     function SlettProsjekt() {
-        var Prosjekt = {
-            id: $('#selectProsjekt').val()
-        };
-        
-        $ajax({
-            url: '/api/ProsjektApi/' + Prosjekt.id,
-            type: 'DELETE',
-            contentType: "application/json;charset=utf-8",
-            success: function (data) {
-                alert('slettet');
-            },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
-            }
-        });
+            var p = {
+                Id: $('#selectProsjekt').val()
+            };
+           $.ajax({
+                url: '/api/ProsjektApi/' + p.Id,
+                type: 'DELETE',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Ok");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            }); 
     }
 
 </script>
