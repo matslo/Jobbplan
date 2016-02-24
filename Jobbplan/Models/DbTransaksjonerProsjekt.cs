@@ -175,13 +175,14 @@ namespace Jobbplan.Models
         public List<ProsjektVis> HentProsjekter (string Brukernavn)
         {
             int id = BrukerId(Brukernavn);
-               List<ProsjektVis> pros = (from p in dbs.Prosjekter 
-                                       where p.EierId == id
+               List<ProsjektVis> pros = (from p in dbs.Prosjektdeltakelser 
+                                         from s in dbs.Prosjekter
+                                         where p.BrukerId==id && p.ProsjektId == s.ProsjektId
                                        select
                                            new ProsjektVis()
                                            {
                                                Id=p.ProsjektId,
-                                               Arbeidsplass = p.Arbeidsplass                                              
+                                               Arbeidsplass = s.Arbeidsplass                                              
                                            }).ToList();
                 return pros;
             
