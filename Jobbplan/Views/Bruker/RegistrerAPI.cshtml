@@ -55,8 +55,8 @@
     <div id="regContainer" class="container">
        
         <div>
-            <table id="registrerSkjema" class="">
-                <tr><td></td><th>REGISTRER DEG</th><td></td></tr>
+            <table id="registrerSkjema" class="table-responsive">
+                <tr><td></td><th id="regDeg">REGISTRER DEG</th><td></td></tr>
                 <tr><td>Fornavn:</td><td><input class="form-control" type="text" id="FornavnTxt" /></td><td></td></tr>
                 <tr><td>Etternavn:</td><td><input class="form-control" type="text" id="EtternavnTxt" /></td><td></td></tr>
                 <tr><td>Adresse:</td><td><input class="form-control" type="text" id="AdresseTxt" /></td><td></td></tr>
@@ -65,10 +65,12 @@
                 <tr><td>Telefonnr:</td><td><input class="form-control" type="text" id="TelefonnummerTxt" /></td><td></td></tr>
                 <tr><td>Epost:</td><td><input class="form-control" type="text" id="EmailTxt" /></td><td></td></tr>
                 <tr><td>Passord:</td><td><input class="form-control" type="password" id="passord" /></td><td></td></tr>
-                <tr><td>Gjenta Passord:</td><td><input class="form-control" type="password" id="passord2" onkeyup="checkPasswordMatch();return false;" /></td><td> <span id="ok" class="" aria-hidden="true"></span></td></tr>
-            </table>
+                <tr><td>Gjenta passord:</td><td><input class="form-control" type="password" id="passord2" onkeyup="checkPasswordMatch();return false;" /></td><td id="oktd"> <span id="ok" class="" aria-hidden="true"></span></td></tr>
+                <tr><td></td><td><button onclick="LeggTilPerson()" class="btn btn-primary">Registrer</button></td> <td></td></tr>
 
-            <button onclick="LeggTilPerson()" class="btn btn-primary">Registrer</button><br /><br />
+             </table>
+
+          <br /><br />
         </div>
     </div>
 </body>

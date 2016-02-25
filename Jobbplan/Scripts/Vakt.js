@@ -67,10 +67,12 @@
                 var end = event.end;
                 $('#modalTitle').html(event.title);
                 $('#modalBody').html(event.title);
+                if (event.Brukernavn == null)
+                { event.Brukernavn = "Ledig vakt";}
                 $('#modalBody').append(": " + event.Brukernavn);
                 $('#modalBody').append(start.format(" HH:mm"+"-"));
                 $('#modalBody').append(end.format("HH:mm"));
-               
+                
                 $('#eventUrl').attr('href',event.url);
                 $('#fullCalModal').modal();
             

@@ -47,8 +47,7 @@ namespace Jobbplan.Models
                 return true;
             }
             return false;
-        }
-       
+        }    
         public List<Vaktkalender> hentAlleVakter(int id)
         {
             Dbkontekst db = new Dbkontekst();
@@ -62,7 +61,8 @@ namespace Jobbplan.Models
                                end = k.end.ToString("s"),
                                Brukernavn = f.BrukerNavn(k.BrukerId),
                                title = k.title,
-                               color = k.color
+                               color = k.color,
+                               VaktId = k.VaktId
                            }).ToList();
             return eventer;
         }

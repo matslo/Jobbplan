@@ -7,14 +7,16 @@
 }
 #registrerSkjema{
     margin:auto;
-    margin-top:auto;
+    margin-top:10%;
 }
 #registrerSkjema, td{
-    padding:1%;
+    padding:4px;
    
 }
-{
-    margin:12%;
+#regDeg{
+    font-size:25px;
+    /*color:rgb(27,201,142);*/
+    color:rgb(230,71,89);
 }
 
 input, select, textarea{

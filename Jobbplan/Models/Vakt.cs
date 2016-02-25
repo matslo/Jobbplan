@@ -27,6 +27,7 @@ namespace Jobbplan.Models
         public string end { get; set; }
         public string title { get; set; }
         public string color { get; set; }
+        public int VaktId { get; set; }
         public string Brukernavn { get; set; }
         public bool Ledig { get; set; }
         public string Beskrivelse { get; set; }

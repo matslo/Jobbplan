@@ -13,6 +13,7 @@ namespace Jobbplan.Controllers
         //Get api/KalenderApi
         public List<Vaktkalender> Get(int id)
         {
+
             return db.hentAlleVakter(id);
         }
         // POST api/KalenderApi
