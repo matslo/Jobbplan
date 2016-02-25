@@ -83,18 +83,18 @@
                 @Html.LabelFor(m => m.Passord)
             </div>
             <div class="editor-field">
-                @Html.PasswordFor(m => m.Passord, new { @id = "PassordTxt" })
+                @Html.PasswordFor(m => m.Passord, new { @id = "passord" })
                 @Html.ValidationMessageFor(m => m.Passord, "", new { @class = "text-danger" })
             </div>
 
             <div class="editor-label">
                 @Html.LabelFor(m => m.BekreftPassord)
             </div>
-            <div class="editor-field">
-                @Html.PasswordFor(m => m.BekreftPassord, new { @id = "BekreftPassordTxt" })
+            <div class="editor-field" onkeyup="checkPasswordMatch();return false;">
+                @Html.PasswordFor(m => m.BekreftPassord, new { @id = "passord2" })
                 @Html.ValidationMessageFor(m => m.BekreftPassord)
             </div>
-           
+            <div id="passordMatch"></div>
             <br />
             <p>
                 <input type="submit" value="Registrer" class="btn btn-success"  onclick="LeggTilPerson()"/>

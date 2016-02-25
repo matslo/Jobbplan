@@ -1,0 +1,11 @@
+﻿@if (ViewData["brukerpå"] != null)
+{
+    <li></li>
+}
+else
+{
+    <li>@Html.ActionLink("Logg inn", "Logginn", "Konto")</li>
+    <li><p class="text-danger" id="ikkePå">(Ikke logget inn)</p></li>
+}
+
+

@@ -53,14 +53,14 @@ namespace Jobbplan.Models
         {
             Dbkontekst db = new Dbkontekst();
             List<Vakt> vakter = db.Vakter.ToList();
-
+            var f = new DbTransaksjonerProsjekt();
             var eventer = (from k in vakter
                            where k.ProsjektId==id
                            select new Vaktkalender
                            {
-                               
                                start = k.start.ToString("s"),
                                end = k.end.ToString("s"),
+                               Brukernavn = f.BrukerNavn(k.BrukerId),
                                title = k.title,
                                color = k.color
                            }).ToList();

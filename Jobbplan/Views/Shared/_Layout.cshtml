@@ -35,9 +35,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Loggut", "Loggut", "Bruker", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("Forespørsler", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    <li>@Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
+                   <li>@Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
+                   <li>@Html.ActionLink("Jobb", "Index", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}</li>
 
                 </ul>
             </div>

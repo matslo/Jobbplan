@@ -1,20 +1,16 @@
-﻿
-@{
-    ViewBag.Title = "LoggetInn";
+﻿@if (ViewBag.Innlogget == true)
+{
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>@ViewData["brukerpå"] <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li>@Html.ActionLink("Min profil", "MinProfil", "Konto")</li>
+            <li>@Html.ActionLink("Inboks", "Meldingsboks", "Prosjekt")</li>
+            <li>@Html.ActionLink("Timeliste", "Index", "Timeliste")</li>
+            <li role="separator" class="divider"></li>
+            <li>@Html.ActionLink("Logg ut", "Loggut", "Bruker")</li>
+        </ul>
+    </li>
 }
 
-<h2>LoggetInn</h2>
-<div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Action
-    </button>
-    <ul class="dropdown-menu">
-        <li class="dropdown-item" >Action</li>
-        <li class="dropdown-item" >Another action</li>
-        <li class="dropdown-item" >Something else here</li>
-        <li class="dropdown-divider"></li>
-        <li class="dropdown-item" >Separated link</li>
-    </ul>
-</div>
-@Html.ActionLink("Registrer ny bedrift", "Index", "Prosjekt")
-<p>@ViewData["brukerPå"]</p>
+
+

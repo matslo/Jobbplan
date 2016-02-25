@@ -1,10 +1,6 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "LeggTilBruker";
 }
-
-<h2>LeggTil</h2>
-
 <script type="text/javascript">
 
     function requestBruker() {
@@ -18,30 +14,37 @@
             data: JSON.stringify(reqInn),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-               alert('Sendt til: '+reqInn.TilBruker +" " +reqInn.ProsjektId);
+                alert("Sendt!");
             },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+            error: function () {
+                alert("bruker ikke funnet");
             }
         });
     }
-
-
 </script>
-@{
-    ViewBag.Title = "RegistrerAPI";
-}
+    <div class="container">
+        <h3>Legg til bruker</h3>
+        <div class="row">
 
-<div class="container">
-    <h2>Personregister via WEB-API i MVC</h2>
-    <select class="form-control" id="selectProsjekt" >
-    
-    @{Html.RenderAction("prosjektMeny", "Prosjekt");}
-</select>
-        <table class="table table-bordered">
-            <tr><td>Til:</td><td><input type="text" id="TilTxt" /></td></tr>
-            </table>
-        <button onclick="requestBruker()" class="btn btn-primary">Send forespørsel</button><br /><br />
+            <div class='col-sm-3'>
+                <p>Jobb</p>
+                <select class="form-control" id="selectProsjekt">
+                    @{Html.RenderAction("prosjektMeny", "Prosjekt");}
+                </select>
+
+            </div>
+
+
+            <div class='col-sm-3'>
+                <p>Epost</p>
+                <input class="form-control" type="text" id="TilTxt" placeholder="E-post" />
+
+            </div>
+            <div class='col-sm-3'>
+                <p>Send</p>
+                <button onclick="requestBruker()" class="btn btn-primary">Send forespørsel</button>
+            </div>
+        </div>
     </div>
 
 

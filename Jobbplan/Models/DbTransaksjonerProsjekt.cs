@@ -52,27 +52,32 @@ namespace Jobbplan.Models
             int bIdTil = BrukerId(pReq.TilBruker);
             int pId = pReq.ProsjektId;
 
-            var nyRequest = new Prosjektrequest()
+            if (bIdTil != 0)
             {
-                BrukerIdFra = bId,
-                BrukerIdTil = bIdTil,
-                ProsjektId = pId,
-                Akseptert = false,
-                Sendt = DateTime.Now
-            };
-            using (var db = new Dbkontekst())
-            {
-                try
+                var nyRequest = new Prosjektrequest()
                 {
-                    db.Prosjektrequester.Add(nyRequest);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch (Exception feil)
+                    BrukerIdFra = bId,
+                    BrukerIdTil = bIdTil,
+                    ProsjektId = pId,
+                    Akseptert = false,
+                    Sendt = DateTime.Now
+                };
+
+                using (var db = new Dbkontekst())
                 {
-                    return false;
+                    try
+                    {
+                        db.Prosjektrequester.Add(nyRequest);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception feil)
+                    {
+                        return false;
+                    }
                 }
             }
+            return false;
         }
         public bool RegistrerProsjektApi(Prosjekt innProsjekt, string brukernavn)
         {

@@ -3,7 +3,6 @@
     function LeggTilProsjekt() {
         var prosjekt = {
             Arbeidsplass: $('#NavnTxt').val()
-            
         };
      
         $.ajax({
@@ -12,7 +11,8 @@
             data: JSON.stringify(prosjekt),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-               alert('Godkjent!');
+                alert('Godkjent!');
+
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -43,22 +43,23 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<div class="container">
-    <h2>Registrer virksomhet</h2>
-    <div>
-        <table class="table table-bordered">
-            <tr><td>Navn</td><td><input type="text" id="NavnTxt" /></td></tr>
-            
-        </table>
-        <button onclick="LeggTilProsjekt()" class="btn btn-primary">Opprett prosjekt</button><br /><br />
-        <button onclick="SlettProsjekt()" class="btn btn-danger">Slett Prosjekt</button><br /><br />
-    </div>
+<br />
+<p>Opprett jobb</p>
+<div class='col-sm-3'>
+    <input class="form-control" type="text" id="NavnTxt" />
 </div>
-<p>Dine virksomheter</p>
+<button onclick="LeggTilProsjekt()" class="btn btn-success">Opprett</button>
+<br />
+<br />
+@Html.ActionLink("Administrer ansatte", "LeggTilBruker", "Prosjekt")
+<br />
+<br />
+
+<p>Dine jobber</p>
 <div class='col-sm-3'>
     <select class="form-control" id="selectProsjekt">
         @{Html.RenderAction("prosjektMeny", "Prosjekt");}
     </select>
 </div>
-<br />
+<button onclick="SlettProsjekt()" class="btn btn-info">Endre Prosjekt</button>
+<button onclick="SlettProsjekt()" class="btn btn-danger">Slett Prosjekt</button>

@@ -10,7 +10,7 @@ namespace Jobbplan.Controllers
 {
     public class BrukerApiController : ApiController
     {
-         DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+       DbTransaksjonerBruker db = new DbTransaksjonerBruker();
        public List<BrukerListe> Get (int id)
        {
             return db.HentBrukere(id);

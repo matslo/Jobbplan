@@ -1,10 +1,13 @@
 ﻿<script src="~/Scripts/Vakt.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Vaktplan</h2>
-
+<p id="feil"></p>
 <div class="container" id="vaktRegistrering">
     <div class="row">
         <div class='col-sm-2'>
@@ -28,7 +31,7 @@
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             <label for="sel1">Ansatt:</label>
             <select class="form-control"  id="brukere">
-               
+               <option></option>
             </select>
         </div>
 
@@ -63,5 +66,19 @@
     <div id="loading"></div>
     </div>
 
-
+<div id="fullCalModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+                <h4 id="modalTitle" class="modal-title"></h4>
+            </div>
+            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary"><a id="eventUrl" target="_blank">Event Page</a></button>
+            </div>
+        </div>
+    </div>
+</div>
 

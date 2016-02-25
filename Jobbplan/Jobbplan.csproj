@@ -136,6 +136,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\InnloggingStil.css" />
     <Content Include="Content\jp.jpg" />
+    <Content Include="Content\registrer.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Fullcalendar\CHANGELOG.txt" />
@@ -258,6 +259,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\passordValidator.js" />
     <Content Include="Scripts\Vakt.js" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -274,6 +276,8 @@
     <Compile Include="Controllers\ProsjektController.cs" />
     <Compile Include="Controllers\ProsjektDeltakelseApiController.cs" />
     <Compile Include="Controllers\ProsjektreqApiController.cs" />
+    <Compile Include="Controllers\TimelisteApiController.cs" />
+    <Compile Include="Controllers\TimelisteController.cs" />
     <Compile Include="Controllers\VaktApiController.cs" />
     <Compile Include="Controllers\VaktController.cs" />
     <Compile Include="Global.asax.cs">
@@ -313,7 +317,8 @@
     <Content Include="Views\Prosjekt\LeggTilBruker.cshtml" />
     <Content Include="Views\Prosjekt\Meldingsboks.cshtml" />
     <Content Include="Views\Bruker\brukerListe.cshtml" />
-    <Content Include="Views\Bruker\Testliste.cshtml" />
+    <Content Include="Views\Bruker\brukerPå.cshtml" />
+    <Content Include="Views\Timeliste\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

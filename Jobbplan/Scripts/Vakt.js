@@ -15,13 +15,13 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 alert('Godkjent!');
+                $('#calendar').fullCalendar('refetchEvents');
             },
             error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+                //alert(x + '\n' + y + '\n' + z);
             }
         });
     }
-
 
     function ProId() {
         var prosjektid =  $('#selectProsjekt').val();
@@ -33,38 +33,55 @@
         return prosjektid;
     }
 
-function fullcal() {
-    
-    $('#calendar').fullCalendar({
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-        editable: true,
-        displayEventEnd: true,
-        eventLimit: true, // allow "more" link when too many events
-        events: {
-            url: '/api/VaktApi/',
-            type: 'GET',
-            dataType: 'json',
-            data : function() { // a function that returns an object
-                return {
-                    id: $('#selectProsjekt').val(),
-                };
-
+    function fullcal() {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
             },
-            error: function () {
-                $('#script-warning').show();
-            }
-        },
-            
-        loading: function (bool) {
-            $('#loading').toggle(bool);
-        }
+            editable: true,
+            displayEventEnd: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: {
+                url: '/api/VaktApi/',
+                type: 'GET',
+                dataType: 'json',
+                data: function () { // a function that returns an object
+                    return {
+                        id: $('#selectProsjekt').val(),
+                    };
 
-    });
-}
+                },
+                error: function () {
+                    $('#feil').text('Du er ikke medlem av noen jobber enda');
+                    $('#script-warning').show();
+                }
+            },
+
+            loading: function (bool) {
+                $('#loading').toggle(bool);
+            },
+            eventClick: function (event, jsEvent, view) {
+                var start = event.start;
+                var end = event.end;
+                $('#modalTitle').html(event.title);
+                $('#modalBody').html(event.title);
+                $('#modalBody').append(": " + event.Brukernavn);
+                $('#modalBody').append(start.format(" HH:mm"+"-"));
+                $('#modalBody').append(end.format("HH:mm"));
+               
+                $('#eventUrl').attr('href',event.url);
+                $('#fullCalModal').modal();
+            
+                // change the border color just for fun
+                $(this).css('border-color', 'red');
+
+            }
+        });
+
+    };
+
 
 function selOnChange() {
     $('#selectProsjekt').on('change', function () {
@@ -83,14 +100,14 @@ function HentBrukere() {
             VisAlle(data);
         },
         error: function (x, y, z) {
-            alert(x + '\n' + y + '\n' + z);
+         
         }
     });
   
 };
 
 function VisAlle(brukere) {
-    var strResult = "";
+    var strResult = "<option value="+0+"></option>";
     $.each(brukere, function (i, p) {
         strResult += "<option value="+p.BrukerId+">"+p.Navn+"</option>";
     });

@@ -31,7 +31,7 @@ namespace Jobbplan.Controllers
                 Session["LoggetInn"] = true;
                 string userName = HttpContext.User.Identity.Name;
                 ViewBag.Innlogget = true;
-                 return RedirectToAction("LoggetInn","Bruker");
+                 return RedirectToAction("Index","Vakt");
              }
              else
              {

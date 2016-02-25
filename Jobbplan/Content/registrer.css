@@ -1,0 +1,61 @@
+﻿body {
+    background-color:rgb(35,39,47);
+    color:white;
+}
+#innhold{
+   background-color:rgb(35,39,47);
+}
+#registrerSkjema{
+    margin:auto;
+    margin-top:auto;
+}
+#registrerSkjema, td{
+    padding:1%;
+   
+}
+{
+    margin:12%;
+}
+
+input, select, textarea{
+    color: white;
+    text-align:center;
+    font-family:Arial;
+   
+}
+
+
+::-webkit-input-placeholder {
+   text-align: center;
+   font-style:italic;
+  
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;
+   
+}
+
+:-ms-input-placeholder {  
+   text-align: center;
+    
+}
+#LogginnKnapp{
+    background-color:rgb(35,39,47);
+    color:white;
+    border:none;
+    font-size:15px;
+    font-family:Arial;
+    margin-left:129px;
+    margin-top:20px;
+}
+#registrerbruker{
+    text-align:center;
+     margin-left:-56px;
+     border:solid 2px;
+}
+

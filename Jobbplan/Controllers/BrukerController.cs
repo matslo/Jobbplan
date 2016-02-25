@@ -11,10 +11,6 @@ namespace Jobbplan.Controllers
     public class BrukerController : Controller
     {
         
-       /* public BrukerController(DbTransaksjonerBrukerStub stub)
-        {
-            var dbStub = stub;
-        }*/
         // GET: Kunde
         public ActionResult Index()   
         {
@@ -51,17 +47,30 @@ namespace Jobbplan.Controllers
 
             return View();
         }
-        [Authorize]
-        public ActionResult LoggetInn()
-        {
-            string userName = HttpContext.User.Identity.Name;
-            ViewData["brukerpå"] = userName;
-            return View();
-        }
+       
         public ActionResult Testliste()
         {
             
             return View();
+        }
+
+        [ChildActionOnly]
+        public ActionResult LoggetInn()// meny
+        {
+            if (HttpContext.User.Identity.Name != null)
+            {
+                string brukernavn = HttpContext.User.Identity.Name;
+             
+                ViewData["brukerpå"] = brukernavn;
+                ViewBag.Innlogget = true;
+                
+            }
+            else
+            {
+                ViewBag.Innlogget = false;
+            }
+
+            return PartialView();
         }
 
         [ChildActionOnly]
