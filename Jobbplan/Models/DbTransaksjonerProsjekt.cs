@@ -253,14 +253,14 @@ namespace Jobbplan.Models
             return brukernavn;
         }
 
-        public bool EndreProsjekt(int id, string NyArbeidsplass)
+        public bool EndreProsjekt(Prosjekt EndreProsjekt)
         {
             Dbkontekst db = new Dbkontekst();
 
             try
             {
-                var EndreProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == id);
-                EndreProsjekt.Arbeidsplass = NyArbeidsplass;
+                var NyEndreProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == EndreProsjekt.ProsjektId);
+                NyEndreProsjekt.Arbeidsplass = EndreProsjekt.Arbeidsplass;
  
 
                db.SaveChanges();

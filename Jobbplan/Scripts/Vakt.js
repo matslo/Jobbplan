@@ -89,6 +89,7 @@ function taLedigVakt() {
                 if (event.Brukernavn == null)
                 { event.Brukernavn = "Ledig vakt";}
                 $('#modalBody').append(": " + event.Brukernavn);
+
                 $('#modalBody').append(start.format(" HH:mm"+"-"));
                 $('#modalBody').append(end.format("HH:mm"));
                 $('.modal-footer').html("<button id='" + event.VaktId + "' class='btn'>Ta vakt</button>");                               

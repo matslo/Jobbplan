@@ -39,30 +39,36 @@
             }); 
     }
 
-
-
     function EndreProsjekt() {
-        var p = {
-            Id: $('#selectProsjekt').val(),
-
+            var EndreProsjekt= {
+            ProsjektId: $('#selectProsjekt').val(),
             Arbeidsplass: $('#Endretxt').val()
         };
-        $.ajax({
-            url: '/api/ProsjektApi/' + p.Id + p.Arbeidsplass,
-            type: 'PUT',
-            contentType: "application/json;charset=utf-8",
-            
-            success: function (data) {
-                alert("Ok");
-            },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
-            }
-        });
- }
-    
-    
-    
+            $.ajax({
+                url: '/api/ProsjektApi',
+                type: 'PUT',
+                data: JSON.stringify(EndreProsjekt),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert('Godkjent!');
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+    };
+    function VisKnapper() {
+        var text = $("#endreskjema");
+        var text2 = $("#visKnapp")
+        if (text.is(':hidden')) {
+            text.slideDown('500');
+            text2.slideUp('500');
+           
+        }
+        else {
+            text.slideUp('500');
+                  }
+    };
 
 </script>
 @{
@@ -89,6 +95,9 @@
 
 <button onclick="SlettProsjekt()" class="btn btn-danger">Slett Prosjekt</button>
 
- <input type="text" id="Endretxt"/> <br>
-  
- <button onclick="EndreProsjekt()" class="btn btn-info" >Endre Prosjekt</button>
+<button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre Prosjekt</button>
+
+<div id="endreskjema" style="display:none">
+    <input type="text" id="Endretxt"  class="form-control"/>
+    <button onclick="EndreProsjekt()" class="btn btn-info">Endre Prosjekt</button>
+</div>
