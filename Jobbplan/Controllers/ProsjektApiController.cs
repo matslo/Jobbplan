@@ -28,5 +28,9 @@ namespace Jobbplan.Controllers
             db.SlettProsjekt(id);
             
         }
+        public void Put(int id, string Arbeidsplass)
+        {
+            db.EndreProsjekt(id, Arbeidsplass);
+        }
     }
 }

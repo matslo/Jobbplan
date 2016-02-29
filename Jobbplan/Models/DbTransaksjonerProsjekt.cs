@@ -252,5 +252,24 @@ namespace Jobbplan.Models
                           select x.Email).SingleOrDefault();
             return brukernavn;
         }
+
+        public bool EndreProsjekt(int id, string NyArbeidsplass)
+        {
+            Dbkontekst db = new Dbkontekst();
+
+            try
+            {
+                var EndreProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == id);
+                EndreProsjekt.Arbeidsplass = NyArbeidsplass;
+ 
+
+               db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
     }
 }

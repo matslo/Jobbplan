@@ -39,6 +39,31 @@
             }); 
     }
 
+
+
+    function EndreProsjekt() {
+        var p = {
+            Id: $('#selectProsjekt').val(),
+
+            Arbeidsplass: $('#Endretxt').val()
+        };
+        $.ajax({
+            url: '/api/ProsjektApi/' + p.Id + p.Arbeidsplass,
+            type: 'PUT',
+            contentType: "application/json;charset=utf-8",
+            
+            success: function (data) {
+                alert("Ok");
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+ }
+    
+    
+    
+
 </script>
 @{
     ViewBag.Title = "Index";
@@ -61,5 +86,9 @@
         @{Html.RenderAction("prosjektMeny", "Prosjekt");}
     </select>
 </div>
-<button onclick="SlettProsjekt()" class="btn btn-info">Endre Prosjekt</button>
+
 <button onclick="SlettProsjekt()" class="btn btn-danger">Slett Prosjekt</button>
+
+ <input type="text" id="Endretxt"/> <br>
+  
+ <button onclick="EndreProsjekt()" class="btn btn-info" >Endre Prosjekt</button>
