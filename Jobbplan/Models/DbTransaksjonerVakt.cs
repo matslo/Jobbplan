@@ -48,24 +48,52 @@ namespace Jobbplan.Models
             }
             return false;
         }    
-        public List<Vaktkalender> hentAlleVakter(int id)
+        public List<Vaktkalender> hentAlleVakter(int id,string brukernavn)
         {
+            
             Dbkontekst db = new Dbkontekst();
+            var dbtB = new DbTransaksjonerProsjekt();
+            var liste = dbtB.SjekkTilgangProsjekt(brukernavn);
+
+            
+
             List<Vakt> vakter = db.Vakter.ToList();
-            var f = new DbTransaksjonerProsjekt();
             var eventer = (from k in vakter
-                           where k.ProsjektId==id
+                           from s in liste
+                           where k.ProsjektId==id && k.ProsjektId==s.Id
                            select new Vaktkalender
                            {
                                start = k.start.ToString("s"),
                                end = k.end.ToString("s"),
-                               Brukernavn = f.BrukerNavn(k.BrukerId),
+                               Brukernavn = dbtB.BrukerNavn(k.BrukerId),
                                title = k.title,
                                color = k.color,
                                VaktId = k.VaktId
                            }).ToList();
             return eventer;
         }
+        public void taLedigVakt(int id, string brukernavn)
+        {
+            var dbt = new DbTransaksjonerProsjekt();
+            var db = new Dbkontekst();
+            try
+            {
+                // finn personen i databasen
+                Vakt taVakt = db.Vakter.FirstOrDefault(p => p.VaktId == id);
+
+                // oppdater vakt fra databasen
+                taVakt.BrukerId = dbt.BrukerId(brukernavn);
+                taVakt.Ledig = false;
+                taVakt.color = "#3A87AD";
+
+                db.SaveChanges();
+            }
+            catch (Exception feil)
+            {
+
+            }
+        }
+
     }
 
 }

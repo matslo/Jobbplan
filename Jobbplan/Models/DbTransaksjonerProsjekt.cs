@@ -199,6 +199,20 @@ namespace Jobbplan.Models
                           select x.BrukerId).SingleOrDefault();
             return userId;
         }
+        public List<ProsjektVis> SjekkTilgangProsjekt (string brukernavn)
+        {
+            int id = BrukerId(brukernavn);
+            List<ProsjektVis> pros = (from p in dbs.Prosjektdeltakelser
+                                      from s in dbs.Prosjekter
+                                      where p.BrukerId == id && p.ProsjektId == s.ProsjektId
+                                      select
+                                          new ProsjektVis()
+                                          {
+                                              Id = p.ProsjektId,
+                                          }).ToList();
+            return pros;
+
+        }
         public bool SlettRequest(int id, string brukernavn)
         {
             Dbkontekst db = new Dbkontekst();

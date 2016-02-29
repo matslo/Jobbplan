@@ -13,14 +13,19 @@ namespace Jobbplan.Controllers
         //Get api/KalenderApi
         public List<Vaktkalender> Get(int id)
         {
-
-            return db.hentAlleVakter(id);
+            string brukernavn = User.Identity.Name;
+            return db.hentAlleVakter(id, brukernavn);
         }
         // POST api/KalenderApi
         public void Post(Vaktskjema vaktInn)
         {
             db.RegistrerVakt(vaktInn);
 
+        }
+        public void Put(int id)
+        {
+            string brukernavn = User.Identity.Name;
+            db.taLedigVakt(id, brukernavn);
         }
     }
 }

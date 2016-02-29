@@ -1,4 +1,22 @@
 ﻿
+function taLedigVakt() {
+
+    $('body').on('click', '.btn', function () {
+        var id = this.id;
+        $.ajax({
+            url: '/api/VaktApi/' + id,
+            type: 'PUT',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                alert('Godkjent!');
+                $('#calendar').fullCalendar('refetchEvents');
+            },
+            error: function (x, y, z) {
+                //alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    })
+};
     function LeggTilVakt() {
         var vakt = {
             start: $('#datetimepicker4').val(),
@@ -54,7 +72,8 @@
 
                 },
                 error: function () {
-                    $('#feil').text('Du er ikke medlem av noen jobber enda');
+                    $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
+
                     $('#script-warning').show();
                 }
             },
@@ -72,7 +91,7 @@
                 $('#modalBody').append(": " + event.Brukernavn);
                 $('#modalBody').append(start.format(" HH:mm"+"-"));
                 $('#modalBody').append(end.format("HH:mm"));
-                
+                $('.modal-footer').html("<button id='" + event.VaktId + "' class='btn'>Ta vakt</button>");                               
                 $('#eventUrl').attr('href',event.url);
                 $('#fullCalModal').modal();
             
@@ -120,6 +139,7 @@ $(document).ready(function () {
     fullcal();
     HentBrukere();
     selOnChange();
+    taLedigVakt();
     $("#mer").click(function () {
         var text = $("#vaktRegistrering");
         if (text.is(':hidden')) {

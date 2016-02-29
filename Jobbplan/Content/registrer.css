@@ -7,7 +7,7 @@
 }
 #registrerSkjema{
     margin:auto;
-    margin-top:10%;
+    margin-top:5%;
 }
 #registrerSkjema, td{
     padding:4px;
@@ -45,15 +45,6 @@ input, select, textarea{
 :-ms-input-placeholder {  
    text-align: center;
     
-}
-#LogginnKnapp{
-    background-color:rgb(35,39,47);
-    color:white;
-    border:none;
-    font-size:15px;
-    font-family:Arial;
-    margin-left:129px;
-    margin-top:20px;
 }
 #registrerbruker{
     text-align:center;
