@@ -278,6 +278,7 @@
     <Compile Include="Controllers\ProsjektreqApiController.cs" />
     <Compile Include="Controllers\TimelisteApiController.cs" />
     <Compile Include="Controllers\TimelisteController.cs" />
+    <Compile Include="Controllers\VaktApi2Controller.cs" />
     <Compile Include="Controllers\VaktApiController.cs" />
     <Compile Include="Controllers\VaktController.cs" />
     <Compile Include="Global.asax.cs">

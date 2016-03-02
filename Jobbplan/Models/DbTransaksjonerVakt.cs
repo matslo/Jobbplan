@@ -93,6 +93,38 @@ namespace Jobbplan.Models
 
             }
         }
+        public bool EndreVakt(Vaktskjema EndreVakt)
+        {
+            Dbkontekst db = new Dbkontekst();
+
+            try
+            {
+                var NyEndreVakt = db.Vakter.FirstOrDefault(p => p.VaktId == EndreVakt.Vaktid);
+                NyEndreVakt.Beskrivelse = EndreVakt.Beskrivelse;
+                NyEndreVakt.BrukerId = EndreVakt.BrukerId;
+                NyEndreVakt.start = Convert.ToDateTime(EndreVakt.start);
+                NyEndreVakt.end = Convert.ToDateTime(EndreVakt.end);
+                NyEndreVakt.title = EndreVakt.title;             
+
+               if (LedigVakt(EndreVakt))
+                {
+                    NyEndreVakt.Ledig = true;
+                    NyEndreVakt.color = "#5CB85C";
+                }
+               else
+                {
+                    NyEndreVakt.Ledig = false;
+                    NyEndreVakt.color = "#3A87AD";
+                }
+
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
 
     }
 

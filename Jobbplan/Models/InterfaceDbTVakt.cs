@@ -11,5 +11,7 @@ namespace Jobbplan.Models
         bool RegistrerVakt(Vaktskjema innVakt);
         bool LedigVakt(Vaktskjema inn);
         List<Vaktkalender> hentAlleVakter(int id, string b);
+        bool EndreVakt(Vaktskjema EndreVakt);
+        
     }
 }

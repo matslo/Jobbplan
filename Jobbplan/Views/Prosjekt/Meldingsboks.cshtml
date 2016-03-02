@@ -41,10 +41,14 @@
     }
     function VisAlle(melding) {
         
-        var strResult = "Dine meldinger";
+        var strResult = "";
+        var antallMeldinger = 0;
+        
         $.each(melding, function (i, m) {
-            strResult += "<p> " + m.Tid + " " + m.FraBruker + " " + m.Melding + " " + m.Prosjektnavn + "</p> <button class='Godkjenn' id=" + m.ProsjektId + " >Godta</button><button class='Avslag' id=" + m.ProsjektId + " >Avslå</button>";
+            antallMeldinger+=antallMeldinger+1;
+            strResult += "<p> " + m.Tid + " " + m.FraBruker + " " + m.Melding + " " + m.Prosjektnavn + "</p> <button class='Godkjenn btn btn-success' id=" + m.ProsjektId + " >Godta</button><button class='Avslag btn btn-danger' id=" + m.ProsjektId + " >Avslå</button>";
         });
+        $('#antallmeldinger').html("Du har <span class='badge'>"+ parseInt(antallMeldinger) + "</span> meldinger")
         $("#meldinger").html(strResult);
  }
 
@@ -70,4 +74,6 @@
     };
     </script>
 <br />
+<div id="antallmeldinger"></div>
+<hr />
 <div id="meldinger"></div>

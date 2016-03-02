@@ -36,7 +36,7 @@ namespace Jobbplan.Models
     public class Vaktskjema
     {
         
-
+        public int Vaktid { get; set; }
         [Required(ErrorMessage = "Dato må oppgis")]
         [Display(Name = "Fra Dato")]
         public string start { get; set; }

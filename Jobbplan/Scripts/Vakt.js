@@ -1,7 +1,7 @@
 ﻿
 function taLedigVakt() {
 
-    $('body').on('click', '.btn', function () {
+    $('body').on('click', '.btnTavakt', function () {
         var id = this.id;
         $.ajax({
             url: '/api/VaktApi/' + id,
@@ -40,7 +40,45 @@ function taLedigVakt() {
             }
         });
     }
+    function EndreVakt() {
+        $('body').on('click', '.btnEndreVakt', function () {
+            var id = this.id;
+            var endrevakt = {
+                VaktId: id,
+                start: $('#datetimepicker1').val(),
+                end: $('#datetimepicker2').val(),
+                title: $('#eTittel').val(),
+                Beskrivelse: $('#eBeskrivelse').val(),
+                ProsjektId: $('#selectProsjekt').val(),
+                BrukerId: $('#ebrukere').val()
+            };
+            $.ajax({
+                url: '/api/VaktApi2/',
+                type: 'PUT',
+                data: JSON.stringify(endrevakt),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert('Godkjent!');
+                    $('#calendar').fullCalendar('refetchEvents');
+                },
+                error: function (x, y, z) {
+                    //alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        })
+    }
+    function VisKnapper() {
+        var text = $("#vaktEndring");
+        var text2 = $("#visKnapp")
+        if (text.is(':hidden')) {
+            text.slideDown('500');
+           
 
+        }
+        else {
+            text.slideUp('500');
+           }
+    };
     function ProId() {
         var prosjektid =  $('#selectProsjekt').val();
         if ($("#selectProsjekt:selected").length) {
@@ -81,23 +119,30 @@ function taLedigVakt() {
             loading: function (bool) {
                 $('#loading').toggle(bool);
             },
-            eventClick: function (event, jsEvent, view) {
+            eventClick: function (event, jsEvent, view) {              
                 var start = event.start;
                 var end = event.end;
                 $('#modalTitle').html(event.title);
                 $('#modalBody').html(event.title);
                 if (event.Brukernavn == null)
-                { event.Brukernavn = "Ledig vakt";}
+                {
+                    event.Brukernavn = "Ledig vakt";
+                    $('#tavakt').html("<button id='" + event.VaktId + "' class='btn btn-primary btnTavakt'>Ta vakt</button>");
+                }
+               
                 $('#modalBody').append(": " + event.Brukernavn);
 
                 $('#modalBody').append(start.format(" HH:mm"+"-"));
                 $('#modalBody').append(end.format("HH:mm"));
-                $('.modal-footer').html("<button id='" + event.VaktId + "' class='btn'>Ta vakt</button>");                               
-                $('#eventUrl').attr('href',event.url);
+                
+                $('#endrevakt').html("<button id='" + event.VaktId + "' class='btn btn-warning btnEndreVakt'>Endre vakt</button>");
+                $('#slettvakt').html("<button id='" + event.VaktId + "' class='btn btn-danger btnSlettVakt'>Slett vakt</button>");
+                $('#eventUrl').attr('href', event.url);
                 $('#fullCalModal').modal();
-            
+               // $("#fullCalModal").html("");
                 // change the border color just for fun
                 $(this).css('border-color', 'red');
+               
 
             }
         });
@@ -133,7 +178,7 @@ function VisAlle(brukere) {
     $.each(brukere, function (i, p) {
         strResult += "<option value="+p.BrukerId+">"+p.Navn+"</option>";
     });
-    $("#brukere").html(strResult);
+    $(".brukere").html(strResult);
 }
 
 $(document).ready(function () {  
@@ -141,6 +186,8 @@ $(document).ready(function () {
     HentBrukere();
     selOnChange();
     taLedigVakt();
+    EndreVakt();
+
     $("#mer").click(function () {
         var text = $("#vaktRegistrering");
         if (text.is(':hidden')) {
