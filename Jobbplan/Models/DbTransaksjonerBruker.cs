@@ -42,12 +42,20 @@ namespace Jobbplan.Models
                 }     
             }
         }
-        public List<BrukerListe> HentBrukere (int ProsjektId)
+        public List<BrukerListe> HentBrukere (int ProsjektId, string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();
+            DbTransaksjonerProsjekt dbtp = new DbTransaksjonerProsjekt();
+
+            int ProsjektidTilgang = dbtp.BrukerId(brukernavn);
+            Prosjekt funnetTilgang = dbs.Prosjekter.FirstOrDefault
+                   (b => b.EierId == ProsjektidTilgang && b.ProsjektId == ProsjektId);
+
+            if (funnetTilgang != null)
+            { 
             List<BrukerListe> pros = (from p in dbs.Prosjektdeltakelser
                                       from s in dbs.Brukere
-                                      where p.ProsjektId == ProsjektId && p.BrukerId == s.BrukerId
+                                      where p.ProsjektId == ProsjektId && p.BrukerId == s.BrukerId 
                                       select
                                           new BrukerListe()
                                           {
@@ -55,7 +63,14 @@ namespace Jobbplan.Models
                                               BrukerId = p.BrukerId,
                                               Brukernavn = s.Email
                                           }).ToList();
-            return pros;
+                return pros;
+            }
+            else
+            {
+                List<BrukerListe> prosFeil = null;
+                return prosFeil;
+            }
+          
         }
         public bool BrukerIdb(LogInn innBruker)
         {   //Sjekker om bruker er i db

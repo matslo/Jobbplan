@@ -16,7 +16,8 @@ namespace Jobbplan.Controllers
         // GET api/BrukerApi/4
         public List<BrukerListe> Get (int id)
        {
-            return db.HentBrukere(id);
+            string brukernavn = User.Identity.Name;
+            return db.HentBrukere(id,brukernavn);
        }
         // POST api/BrukerApi
         public HttpResponseMessage Post(Registrer personInn)
