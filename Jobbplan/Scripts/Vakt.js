@@ -148,8 +148,7 @@ function taLedigVakt() {
         });
 
     };
-
-
+   
 function selOnChange() {
     $('#selectProsjekt').on('change', function () {
         HentBrukere();
@@ -181,12 +180,31 @@ function VisAlle(brukere) {
     $(".brukere").html(strResult);
 }
 
+    
 $(document).ready(function () {  
-    fullcal();
+    
     HentBrukere();
     selOnChange();
     taLedigVakt();
     EndreVakt();
+    fullcal();
+/*
+    $("#visAlleVakter").click(function () {
+        
+        $('#calendar').fullCalendar('removeEventSource', '/api/VaktApi2/');
+        $('#calendar').fullCalendar('refetchEvents');
+        $('#calendar').fullCalendar('addEventSource', '/api/VaktApi/');
+        $('#calendar').fullCalendar('refetchEvents');
+
+    });
+    $("#visMineVakter").click(function () {
+       
+        $('#calendar').fullCalendar('removeEventSource', '/api/VaktApi/');
+        $('#calendar').fullCalendar('refetchEvents');
+        $('#calendar').fullCalendar('addEventSource', '/api/VaktApi/');
+        $('#calendar').fullCalendar('refetchEvents');
+    });
+    */
 
     $("#mer").click(function () {
         var text = $("#vaktRegistrering");

@@ -72,6 +72,30 @@ namespace Jobbplan.Models
                            }).ToList();
             return eventer;
         }
+        public List<Vaktkalender> hentAlleVakterBruker(int id, string brukernavn)
+        {
+
+            Dbkontekst db = new Dbkontekst();
+            var dbtB = new DbTransaksjonerProsjekt();
+            var liste = dbtB.SjekkTilgangProsjekt(brukernavn);
+            int brukerId = dbtB.BrukerId(brukernavn);
+
+
+            List<Vakt> vakter = db.Vakter.ToList();
+            var eventer = (from k in vakter
+                           from s in liste
+                           where k.ProsjektId == id && k.ProsjektId == s.Id && k.BrukerId == brukerId
+                           select new Vaktkalender
+                           {
+                               start = k.start.ToString("s"),
+                               end = k.end.ToString("s"),
+                               Brukernavn = dbtB.BrukerNavn(k.BrukerId),
+                               title = k.title,
+                               color = k.color,
+                               VaktId = k.VaktId
+                           }).ToList();
+            return eventer;
+        }
         public void taLedigVakt(int id, string brukernavn)
         {
             var dbt = new DbTransaksjonerProsjekt();

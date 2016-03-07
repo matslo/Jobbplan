@@ -18,9 +18,7 @@ namespace Jobbplan.Controllers
         // POST api/BrukerApi
         public void Post(Registrer personInn)
         {
-            
-            db.RegistrerBruker(personInn);
-            
+            db.RegistrerBruker(personInn);   
         }
        
     }

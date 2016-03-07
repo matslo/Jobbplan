@@ -320,6 +320,7 @@
     <Content Include="Views\Bruker\brukerListe.cshtml" />
     <Content Include="Views\Bruker\brukerPå.cshtml" />
     <Content Include="Views\Timeliste\Index.cshtml" />
+    <Content Include="Views\Vakt\MinVaktplan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -26,6 +26,16 @@ footer{
     padding:13px;
     border-radius:4px;
  }
+#calendarBruker{
+    width:70%;
+    height:70%;
+    margin:auto;
+    background-color:white;
+    color:black;
+    padding:13px;
+    border-radius:4px;
+ }
+
 #vaktRegistrering{
     margin:auto;  
 }
