@@ -24,8 +24,7 @@ namespace Jobbplan.Models
     }
    
         public class Registrer
-        {
-            
+        {    
             public int id { get; set; }
 
             [Required]
@@ -59,15 +58,10 @@ namespace Jobbplan.Models
             [Display(Name = "Poststed")]
             public string Poststed { get; set; }
 
+        
             [Required]
-            [StringLength(100, ErrorMessage = "Passordet må være minst seks tegn", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Passord")]
-            public string Passord { get; set; }
-
             [DataType(DataType.Password)]
             [Display(Name = "Bekreft Passord")]
-            [Compare("Passord", ErrorMessage = "Passordene er ikke like.")]
             public string BekreftPassord { get; set; }
         }
         public class LogInn

@@ -5,21 +5,43 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Jobbplan.Models;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 
 namespace Jobbplan.Controllers
 {
     public class BrukerApiController : ApiController
     {
        DbTransaksjonerBruker db = new DbTransaksjonerBruker();
-       public List<BrukerListe> Get (int id)
+        // GET api/BrukerApi/4
+        public List<BrukerListe> Get (int id)
        {
             return db.HentBrukere(id);
        }
         // POST api/BrukerApi
-        public void Post(Registrer personInn)
+        public HttpResponseMessage Post(Registrer personInn)
         {
-            db.RegistrerBruker(personInn);   
-        }
+            if (ModelState.IsValid)
+            {
+               
+                bool ok = db.RegistrerBruker(personInn);   
+                 if (ok)
+                 {
+                 return  new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK,    
+                    };
+
+                 }
+            }
+
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke sette inn kunden i DB")
+            };
+       }
        
     }
 }

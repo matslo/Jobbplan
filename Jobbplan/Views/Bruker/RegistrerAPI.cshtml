@@ -16,13 +16,10 @@
     <script src="~/Scripts/passordValidator.js"></script>
 </head>
 <body>
-
-
-
     <script type="text/javascript">
-
+       
         function LeggTilPerson() {
-            var person = {
+            var personInn = {
                 Fornavn: $('#FornavnTxt').val(),
                 Etternavn: $('#EtternavnTxt').val(),
                 Telefonnummer: $('#TelefonnummerTxt').val(),
@@ -30,18 +27,20 @@
                 Adresse: $('#AdresseTxt').val(),
                 Postnummer: $('#PostnummerTxt').val(),
                 Poststed: $('#PoststedTxt').val(),
-                BekreftPassord: $('#PassordTxt').val()
+                BekreftPassord: $('#passord2').val()
             };
             $.ajax({
                 url: '/api/BrukerApi/',
                 type: 'POST',
-                data: JSON.stringify(person),
+                data: JSON.stringify(personInn),
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     alert('Godkjent!');
+                    location.href = "/Home/Index";
                 },
-                error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
+                error: function (data,status) {
+                    alert(status + data.content);
+
                 }
             });
         }
