@@ -9,8 +9,7 @@ using System.Web.Security;
 namespace Jobbplan.Controllers
 {   
     public class BrukerController : Controller
-    {
-        
+    {   
         // GET: Kunde
         public ActionResult Index()   
         {
@@ -30,8 +29,7 @@ namespace Jobbplan.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index","Home");
-        }
-        
+        }        
         [HttpPost]
         public ActionResult Registrer(Registrer innBruker)
         {
@@ -46,8 +44,7 @@ namespace Jobbplan.Controllers
             }
 
             return View();
-        }
-       
+        }       
         public ActionResult Testliste()
         {
             

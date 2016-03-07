@@ -10,7 +10,7 @@ namespace Jobbplan.Models
     {
         public bool RegistrerBruker(Registrer innBruker)
         {
-            if (innBruker.Fornavn == "")
+            if (EmailDb(innBruker))
             {
                 return false;
             }
