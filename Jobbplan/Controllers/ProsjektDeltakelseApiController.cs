@@ -8,6 +8,7 @@ using Jobbplan.Models;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class ProsjektDeltakelseApiController : ApiController
     {
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();

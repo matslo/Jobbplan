@@ -20,13 +20,11 @@ namespace Jobbplan.Controllers
         public void Post(Prosjekt prosjektInn)
         {
             string userName = User.Identity.Name;
-
             db.RegistrerProsjekt(prosjektInn, userName); 
         }
         public void Delete(int id)
         {
-            db.SlettProsjekt(id);
-            
+            db.SlettProsjekt(id);       
         }
         public void Put(Prosjekt EndreProsjekt)
         {

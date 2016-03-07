@@ -17,12 +17,28 @@ namespace Jobbplan.Controllers
             return db.hentAlleVakter(id, brukernavn);
         }
         // POST api/KalenderApi
-        public void Post(Vaktskjema vaktInn)
+        public HttpResponseMessage Post(Vaktskjema vaktInn)
         {
-            db.RegistrerVakt(vaktInn);
-
+            if (ModelState.IsValid)
+            {
+                bool ok = db.RegistrerVakt(vaktInn);
+                if (ok)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                    };
+                }
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke opprette vakt")
+            };
         }
-        public void Put(int id)
+
+    
+    public void Put(int id)
         {
             string brukernavn = User.Identity.Name;
             db.taLedigVakt(id, brukernavn);

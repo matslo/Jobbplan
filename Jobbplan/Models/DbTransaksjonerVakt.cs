@@ -9,7 +9,13 @@ namespace Jobbplan.Models
     {
         public bool RegistrerVakt (Vaktskjema innVakt)
         {
-            
+            DateTime d1 = Convert.ToDateTime(innVakt.start);
+            DateTime d2 = Convert.ToDateTime(innVakt.end);
+            int result = DateTime.Compare(d1, d2);
+            if (result > 0)
+            {
+                return false;
+            }
             var nyVakt = new Vakt()
             {
                start = Convert.ToDateTime(innVakt.start),

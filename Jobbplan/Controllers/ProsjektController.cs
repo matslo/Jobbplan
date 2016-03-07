@@ -7,6 +7,7 @@ using Jobbplan.Models;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class ProsjektController : Controller
     {
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
@@ -16,7 +17,7 @@ namespace Jobbplan.Controllers
             return View();
         }
 
-       [Authorize]
+        
         public ActionResult LeggTil()
         {
             return View();
@@ -29,7 +30,7 @@ namespace Jobbplan.Controllers
             db.RegistrerProsjekt(p, userName);
             return View();
         }
-        [Authorize]
+       
         public ActionResult VisProsjekter()
         {
 
