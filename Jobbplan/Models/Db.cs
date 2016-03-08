@@ -11,7 +11,7 @@ namespace Jobbplan.Models
     public partial class Dbkontekst : DbContext
     {
         public Dbkontekst()
-            : base("JobbplanDTEST")
+            : base("JobbplanDBT")
         {
             //Database.SetInitializer<Dbkontekst>(null);
             Database.CreateIfNotExists();
@@ -23,6 +23,7 @@ namespace Jobbplan.Models
         public DbSet<Prosjekt> Prosjekter { get; set; }
         public DbSet<Prosjektdeltakelse> Prosjektdeltakelser { get; set; }
         public DbSet<Prosjektrequest> Prosjektrequester { get; set; }
+        public DbSet<VaktRequest> Vaktrequester { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

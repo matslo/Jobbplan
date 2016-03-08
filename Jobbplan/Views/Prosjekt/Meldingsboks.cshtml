@@ -3,6 +3,8 @@
           HentMelding();    
           godkjenn();
           slett();
+          HentVaktMelding();
+          godkjennVakt();
       });
 
 
@@ -72,8 +74,51 @@
             });
         })
     };
+
+
+    function godkjennVakt() {
+        $("#vaktEndringer").on('click', '.GodkjennVakt', function () {
+            var MeldingId = this.id;
+
+            $.ajax({
+                url: '/api/VaktApi3/'+MeldingId,
+                type: 'PUT',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Ok");
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        })
+    };
+
+    function HentVaktMelding() {
+        $.ajax({
+            url: '/api/VaktApi3',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                VisAlleVaktReq(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+    function VisAlleVaktReq(melding) {
+
+        var strResult = "";
+        $.each(melding, function (i, m) {
+            strResult += "<p> "+ m.Tid + " " + m.FraBruker + " " + m.Melding + " "+m.start + m.end +" "+ m.Prosjektnavn + "</p> <button class='GodkjennVakt btn btn-success' id=" + m.MeldingId + " >Godta</button><button class='Avslag btn btn-danger' id=" + m.MeldingId + " >Avslå</button>";
+        });
+        $("#vaktEndringer").html(strResult);
+    }
+  
     </script>
 <br />
 <div id="antallmeldinger"></div>
 <hr />
+<div id="vaktEndringer"></div>
 <div id="meldinger"></div>

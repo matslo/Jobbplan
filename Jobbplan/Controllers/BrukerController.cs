@@ -7,7 +7,8 @@ using Jobbplan.Models;
 using System.Web.Security;
 
 namespace Jobbplan.Controllers
-{   
+{
+    [AllowAnonymous]
     public class BrukerController : Controller
     {   
         // GET: Kunde
@@ -15,12 +16,10 @@ namespace Jobbplan.Controllers
         {
             return View();
         } 
-        [AllowAnonymous]
         public ActionResult RegistrerAPI()
         {
             return View();
-        }
-        [AllowAnonymous]
+        }    
         public ActionResult Registrer()
         {
             return View();
@@ -50,7 +49,6 @@ namespace Jobbplan.Controllers
             
             return View();
         }
-
         [ChildActionOnly]
         public ActionResult LoggetInn()// meny
         {
@@ -69,12 +67,10 @@ namespace Jobbplan.Controllers
 
             return PartialView();
         }
-
         [ChildActionOnly]
         public ActionResult brukerListe()//Liste med ansatte
         {
             return PartialView();
         }
-
     }
 }

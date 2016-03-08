@@ -36,9 +36,8 @@ namespace Jobbplan.Controllers
                 Content = new StringContent("Kunne ikke opprette vakt")
             };
         }
-
-    
-    public void Put(int id)
+   
+        public void Put(int id)
         {
             string brukernavn = User.Identity.Name;
             db.taLedigVakt(id, brukernavn);

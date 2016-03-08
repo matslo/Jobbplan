@@ -58,6 +58,7 @@
             });
     };
     function VisKnapper() {
+       
         var text = $("#vaktEndring");
         var text2 = $("#visKnapp")
         if (text.is(':hidden')) {
@@ -98,7 +99,7 @@
 
 <button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre Prosjekt</button>
 
-<div id="endreskjema" style="display:none">
+<div id="vaktEndring" style="display:none">
     <input type="text" id="Endretxt"  class="form-control"/>
     <button onclick="EndreProsjekt()" class="btn btn-info">Endre Prosjekt</button>
     <button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button>

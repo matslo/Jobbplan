@@ -11,8 +11,7 @@ namespace Jobbplan.Controllers
 {
     public class ProsjektApiController : ApiController 
     {   
-        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
-      
+        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();    
         public void Get (int id)
         {
          //   db.HentProsjekter(id);

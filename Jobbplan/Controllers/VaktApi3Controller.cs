@@ -8,19 +8,23 @@ using Jobbplan.Models;
 
 namespace Jobbplan.Controllers
 {
-    public class VaktApi2Controller : ApiController
+    public class VaktApi3Controller : ApiController
     {
         DbTransaksjonerVakt db = new DbTransaksjonerVakt();
         //Get api/KalenderApi
-        public List<Vaktkalender> Get(int id)
+        public List<VaktRequestMelding> Get()
         {
             string brukernavn = User.Identity.Name;
-            return db.hentAlleVakterBruker(id, brukernavn);
+            return db.visVaktRequester(brukernavn);
         }
-      
-        public void Put(Vaktskjema endrevakt)
+        public void Post(int id)
         {
-           db.EndreVakt(endrevakt);
+            string brukernavn = User.Identity.Name;
+            db.taLedigVakt(id, brukernavn);
+        }
+        public bool Put(int id)
+        {
+            return db.requestOk(id);
         }
     }
 }

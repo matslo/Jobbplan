@@ -140,6 +140,7 @@
     <Content Include="Content\barc.jpg" />
     <Content Include="Content\registrer.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\stock-photo-93933531.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Fullcalendar\CHANGELOG.txt" />
     <Content Include="Fullcalendar\CONTRIBUTING.txt" />
@@ -263,7 +264,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\passordValidator.js" />
     <Content Include="Scripts\Vakt.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -281,6 +284,7 @@
     <Compile Include="Controllers\TimelisteApiController.cs" />
     <Compile Include="Controllers\TimelisteController.cs" />
     <Compile Include="Controllers\VaktApi2Controller.cs" />
+    <Compile Include="Controllers\VaktApi3Controller.cs" />
     <Compile Include="Controllers\VaktApiController.cs" />
     <Compile Include="Controllers\VaktController.cs" />
     <Compile Include="Global.asax.cs">

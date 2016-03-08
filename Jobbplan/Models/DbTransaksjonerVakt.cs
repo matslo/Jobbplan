@@ -102,7 +102,7 @@ namespace Jobbplan.Models
                            }).ToList();
             return eventer;
         }
-        public void taLedigVakt(int id, string brukernavn)
+        public bool taLedigVakt(int id, string brukernavn)
         {
             var dbt = new DbTransaksjonerProsjekt();
             var db = new Dbkontekst();
@@ -111,16 +111,25 @@ namespace Jobbplan.Models
                 // finn personen i databasen
                 Vakt taVakt = db.Vakter.FirstOrDefault(p => p.VaktId == id);
 
+                VaktRequest nyRequest = new VaktRequest();
                 // oppdater vakt fra databasen
-                taVakt.BrukerId = dbt.BrukerId(brukernavn);
-                taVakt.Ledig = false;
-                taVakt.color = "#3A87AD";
 
+                var pId = taVakt.ProsjektId;
+                Prosjekt prosjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == pId);
+
+                nyRequest.VaktId = taVakt.VaktId;
+                nyRequest.Sendt = DateTime.Now;
+                nyRequest.BrukerIdFra = dbt.BrukerId(brukernavn);
+                nyRequest.BrukerIdTil = prosjekt.EierId;
+                nyRequest.ProsjektId = prosjekt.ProsjektId;
+                db.Vaktrequester.Add(nyRequest);
+                
                 db.SaveChanges();
+                return true;
             }
             catch (Exception feil)
             {
-
+                return false;
             }
         }
         public bool EndreVakt(Vaktskjema EndreVakt)
@@ -155,7 +164,51 @@ namespace Jobbplan.Models
                 return false;
             }
         }
-
+        public List<VaktRequestMelding> visVaktRequester(string Brukernavn)
+        {
+            var dbt = new DbTransaksjonerProsjekt();
+            int id = dbt.BrukerId(Brukernavn);
+            var dbs = new Dbkontekst();
+            List<VaktRequestMelding> req = (from p in dbs.Vaktrequester
+                                            from b in dbs.Brukere
+                                            from s in dbs.Vakter
+                                            where p.BrukerIdTil == id && p.BrukerIdFra == b.BrukerId && p.VaktId == s.VaktId
+                                            select
+                                                new VaktRequestMelding()
+                                                {
+                                                    MeldingId = p.MeldingId,
+                                                    ProsjektId = p.ProsjektId,
+                                                    FraBruker = b.Email,
+                                                    Melding = " vil ta vakten: ",
+                                                    title = p.Vakt.title,
+                                                    start = p.Vakt.start,
+                                                    end = p.Vakt.end,
+                                                    VaktId = p.VaktId,
+                                                    Prosjektnavn = p.Prosjekt.Arbeidsplass,
+                                                    Tid = p.Sendt,
+                                                    TilBruker = Brukernavn
+                                                }).ToList();
+            return req;
+        }
+        public bool requestOk(int id)
+        {
+            Dbkontekst db = new Dbkontekst();
+            try
+            {
+                var Requester = db.Vaktrequester.FirstOrDefault(p => p.MeldingId == id);
+                var OppdaterVakt = db.Vakter.FirstOrDefault(p => p.VaktId == Requester.VaktId);
+                OppdaterVakt.BrukerId = Requester.BrukerIdFra;
+                OppdaterVakt.Ledig = false;
+                OppdaterVakt.color = "#3A87AD";
+                db.Vaktrequester.Remove(Requester);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
     }
 
 }
