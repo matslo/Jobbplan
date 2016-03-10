@@ -12,7 +12,7 @@ namespace Jobbplan.Models
             DateTime d1 = Convert.ToDateTime(innVakt.start);
             DateTime d2 = Convert.ToDateTime(innVakt.end);
             int result = DateTime.Compare(d1, d2);
-            if (result > 0)
+            if (result > 0 || result==0)
             {
                 return false;
             }
