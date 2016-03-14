@@ -42,6 +42,29 @@ namespace Jobbplan.Models
                 }     
             }
         }
+        public bool GiBrukerAdminTilgang(Sjef innBruker)
+        {
+            
+            var nySjef = new Sjef()
+            {
+                BrukerId = innBruker.BrukerId,
+                ProsjektId = innBruker.ProsjektId
+            };
+
+            using (var db = new Dbkontekst())
+            {
+                try
+                {
+                    db.Sjefer.Add(nySjef);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception feil)
+                {
+                    return false;
+                }
+            }
+        }
         public List<BrukerListe> HentBrukere (int ProsjektId, string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();

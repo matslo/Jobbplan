@@ -17,35 +17,39 @@
 </head>
 <body>
     <script type="text/javascript">
+        $(document).ready(function () {
+            leggTilBruker();
+        });
+
+        function leggTilBruker() {
+            $("body").on('click', '#leggTilBruker', function () {
+                var personInn = {
+                    Fornavn: $('#FornavnTxt').val(),
+                    Etternavn: $('#EtternavnTxt').val(),
+                    Telefonnummer: $('#TelefonnummerTxt').val(),
+                    Email: $('#EmailTxt').val(),
+                    Adresse: $('#AdresseTxt').val(),
+                    Postnummer: $('#PostnummerTxt').val(),
+                    Poststed: $('#PoststedTxt').val(),
+                    BekreftPassord: $('#passord2').val()
+                };
+                $.ajax({
+                    url: '/api/BrukerApi/',
+                    type: 'POST',
+                    data: JSON.stringify(personInn),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {
+                        alert('Godkjent!');
+                        location.href = "/Home/Index";
+                    },
+                    error: function (data, status) {
+                        alert(status + data.content);
+
+                    }
+                });
+            })
+        };
        
-        function LeggTilPerson() {
-            var personInn = {
-                Fornavn: $('#FornavnTxt').val(),
-                Etternavn: $('#EtternavnTxt').val(),
-                Telefonnummer: $('#TelefonnummerTxt').val(),
-                Email: $('#EmailTxt').val(),
-                Adresse: $('#AdresseTxt').val(),
-                Postnummer: $('#PostnummerTxt').val(),
-                Poststed: $('#PoststedTxt').val(),
-                BekreftPassord: $('#passord2').val()
-            };
-            $.ajax({
-                url: '/api/BrukerApi/',
-                type: 'POST',
-                data: JSON.stringify(personInn),
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    alert('Godkjent!');
-                    location.href = "/Home/Index";
-                },
-                error: function (data,status) {
-                    alert(status + data.content);
-
-                }
-            });
-        }
-
-
     </script>
     @{
         ViewBag.Title = "RegistrerAPI";
@@ -65,7 +69,7 @@
                 <tr><td>Epost:</td><td><input class="form-control" type="text" id="EmailTxt" /></td><td></td></tr>
                 <tr><td>Passord:</td><td><input class="form-control" type="password" id="passord" /></td><td></td></tr>
                 <tr><td>Gjenta passord:</td><td><input class="form-control" type="password" id="passord2" onkeyup="checkPasswordMatch();return false;" /></td><td id="oktd"> <span id="ok" class="" aria-hidden="true"></span></td></tr>
-                <tr><td></td><td><button onclick="LeggTilPerson()" class="btn btn-primary">Registrer</button></td> <td></td></tr>
+                <tr><td></td><td><button id="leggTilBruker" class="btn btn-primary">Registrer</button></td> <td></td></tr>
 
              </table>
 

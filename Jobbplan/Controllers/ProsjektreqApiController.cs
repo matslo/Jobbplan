@@ -16,6 +16,11 @@ namespace Jobbplan.Controllers
             string UserName = User.Identity.Name;
             return db.VisRequester(UserName);
         }
+        public List<ProsjektrequestMelding> Get(int id)
+        {
+            string UserName = User.Identity.Name;
+            return db.VisRequesterForProsjekt(id,UserName);
+        }
 
         public IHttpActionResult Post(ProsjektrequestSkjema reqInn)
         {

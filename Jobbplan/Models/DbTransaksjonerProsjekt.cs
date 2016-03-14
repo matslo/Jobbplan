@@ -177,6 +177,23 @@ namespace Jobbplan.Models
                                           }).ToList();
             return pros;
         }
+        public List<ProsjektrequestMelding> VisRequesterForProsjekt(int id,string brukernavn)
+        {
+            Dbkontekst db = new Dbkontekst();
+
+            var tilganger = SjekkTilgangProsjekt(brukernavn);
+           
+            List<Prosjektrequest> proReq = db.Prosjektrequester.ToList();
+            var eventer = (from k in proReq
+                           from s in tilganger
+                           where k.ProsjektId == id && k.ProsjektId == s.Id
+                           select new ProsjektrequestMelding
+                           {
+                               TilBruker = BrukerNavn(k.BrukerIdTil),
+                               Tid = k.Sendt
+                           }).ToList();
+            return eventer;
+        }
         public List<ProsjektVis> HentProsjekter (string Brukernavn)
         {
             int id = BrukerId(Brukernavn);

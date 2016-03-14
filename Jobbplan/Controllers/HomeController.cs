@@ -15,23 +15,23 @@ namespace Jobbplan.Controllers
         {
             return View();
         }
-
+        /*
         [HttpPost]
         public ActionResult Index(LogInn innBruker)
         {
             var db = new DbTransaksjonerBruker();
-/*
+
             if (Membership.ValidateUser(UsernameTextbox.Text, PasswordTextbox.Text))
                 FormsAuthentication.RedirectFromLoginPage(UsernameTextbox.Text, NotPublicCheckBox.Checked);
             else
-                Msg.Text = "Login failed. Please check your user name and password and try again.";*/
+                Msg.Text = "Login failed. Please check your user name and password and try again.";
              if (db.BrukerIdb(innBruker))
              {
                 FormsAuthentication.RedirectFromLoginPage(innBruker.Brukernavn,false);
                 Session["LoggetInn"] = true;
                 string userName = HttpContext.User.Identity.Name;
                 ViewBag.Innlogget = true;
-                 return RedirectToAction("Index","Vakt");
+                return RedirectToAction("Index","Vakt");
              }
              else
              {
@@ -39,7 +39,7 @@ namespace Jobbplan.Controllers
                  ViewBag.Innlogget = false;
                  return View();
             }
-        }
+        }*/
         public ActionResult Loggut()
         {
             Session["LoggetInn"] = false;
@@ -47,27 +47,6 @@ namespace Jobbplan.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-        [ChildActionOnly]
-        public ActionResult loggetInn()// meny
-        {
-            if (Session["LoggetInn"] != null)
-            {
-                var brukernavn = Session["Brukernavn"];
-                string b = Convert.ToString(brukernavn);
-                ViewData["brukerpå"] = b;
-
-                bool loggetInn = (bool)Session["LoggetInn"];
-                if (loggetInn)
-                {
-                    ViewBag.Innlogget = true;
-                }
-            }
-            else
-            {
-                ViewBag.Innlogget = false;
-            }
-
-            return PartialView();
-        }
+        
     }
 }

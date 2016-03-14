@@ -12,9 +12,10 @@ namespace Jobbplan.Controllers
     public class ProsjektApiController : ApiController 
     {   
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();    
-        public void Get (int id)
+        public List<ProsjektVis> Get()
         {
-         //   db.HentProsjekter(id);
+           string userName = User.Identity.Name;
+           return db.HentProsjekter(userName);
         }
         public void Post(Prosjekt prosjektInn)
         {

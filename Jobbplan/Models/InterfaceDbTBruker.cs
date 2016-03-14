@@ -9,6 +9,7 @@ namespace Jobbplan.Models
     interface InterfaceDbTBruker
     {
         bool RegistrerBruker(Registrer innBruker);
+        bool GiBrukerAdminTilgang(Sjef innBruker);
         List<BrukerListe> HentBrukere(int ProsjektId, string b);
         bool BrukerIdb(LogInn innBruker);
         bool EmailDb(Registrer innBruker);

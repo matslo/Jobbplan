@@ -2,28 +2,123 @@
     ViewBag.Title = "LeggTilBruker";
 }
 <script type="text/javascript">
+    function HentRequester() {
 
-    function requestBruker() {
-        var reqInn = {
-            TilBruker: $('#TilTxt').val(),
-            ProsjektId: $('#selectProsjekt').val()       
-        };
         $.ajax({
-            url: '/api/ProsjektreqApi/',
-            type: 'POST',
-            data: JSON.stringify(reqInn),
-            contentType: "application/json;charset=utf-8",
+            url: '/api/ProsjektreqApi/' + ProId(),
+            type: 'GET',
+            dataType: 'json',
             success: function (data) {
-                alert("Sendt!");
+                VisAlleReq(data);
             },
-            error: function () {
-                alert("bruker ikke funnet");
+            error: function (x, y, z) {
+
             }
         });
+    };
+
+    function VisAlleReq(brukere) {
+        var strResult = "<table class='table table-hover'>";
+        $.each(brukere, function (i, p) {
+            strResult += "<tr><td>" + p.TilBruker + "</td></tr>";
+        });
+        strResult += "</table>";
+        $(".requester").html(strResult);
     }
+    function GiAdminTilgang() {
+        $('body').on('click', '#adminTilgang', function () {
+
+            var adminInn = {
+                BrukerId: $(this).attr("value"),
+                ProsjektId: $('#selectProsjekt').val()
+            };
+            $.ajax({
+                url: '/api/Sjef/',
+                type: 'POST',
+                data: JSON.stringify(adminInn),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Ok!");
+                },
+                error: function () {
+                    alert("bruker ikke funnet");
+                }
+            });
+        })
+    };
+   function sendRequest() {
+       $('body').on('click', '#sendReq', function () {
+           
+            var reqInn = {
+                TilBruker: $('#TilTxt').val(),
+                ProsjektId: $('#selectProsjekt').val()
+            };
+            $.ajax({
+                url: '/api/ProsjektreqApi/',
+                type: 'POST',
+                data: JSON.stringify(reqInn),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Sendt!");
+                    HentRequester();
+                },
+                error: function () {
+                    alert("bruker ikke funnet");
+                }
+            });
+        })
+    };
+   function ProId() {
+       var prosjektid = $('#selectProsjekt').val();
+       if ($("#selectProsjekt:selected").length) {
+           prosjektid = ($(this).find(":selected").val());
+
+       }
+
+       return prosjektid;
+   }
+
+   function HentBrukere() {
+
+        $.ajax({
+            url: '/api/BrukerApi/' + ProId(),
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                VisAlle(data);
+            },
+            error: function (x, y, z) {
+
+            }
+        });
+
+    };
+
+    function VisAlle(brukere) {
+        var strResult = "<table class='table table-hover'>";
+        $.each(brukere, function (i, p) {
+            strResult += "<tr><td>" + p.Navn + "</td><td><button type='button' id='adminTilgang' class='btn btn-info' value="+p.BrukerId+"><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Administrator</button></td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
+        });
+        strResult += "</table>";
+        $(".brukere").html(strResult);
+    }
+    function selOnChange() {
+        $('#selectProsjekt').on('change', function () {
+            HentBrukere();
+           });
+    };
+    $(document).ready(function () {
+        sendRequest();
+        HentBrukere();
+        selOnChange();
+        GiAdminTilgang();
+        HentRequester();
+    });
+
 </script>
+
     <div class="container">
-        <h3>Legg til bruker</h3>
+       
         <div class="row">
 
             <div class='col-sm-3'>
@@ -31,10 +126,7 @@
                 <select class="form-control" id="selectProsjekt">
                     @{Html.RenderAction("prosjektMeny", "Prosjekt");}
                 </select>
-
             </div>
-
-
             <div class='col-sm-3'>
                 <p>Epost</p>
                 <input class="form-control" type="text" id="TilTxt" placeholder="E-post" />
@@ -42,10 +134,17 @@
             </div>
             <div class='col-sm-3'>
                 <p>Send</p>
-                <button onclick="requestBruker()" class="btn btn-primary">Send forespørsel</button>
+                <button id="sendReq" class="btn btn-primary"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send forespørsel</button>
             </div>
         </div>
     </div>
-
+<br />
+<h2>Ansatte</h2><button type="button" class="btn btn-block btn-success btn-sm" style="position:center;">
+    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Legg til bruker
+</button>
+<div class="brukere"></div>
+<hr />
+Venter på godkjenning
+<div class="requester"></div>
 
 

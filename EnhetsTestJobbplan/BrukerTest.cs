@@ -35,7 +35,8 @@ namespace EnhetsTestJobbplan
             //Arrange
             var controller = new BrukerController();
             var innBruker = new Registrer();
-            controller.ViewData.ModelState.AddModelError("Fornavn", "Ikke oppgitt fornavn");            //Act
+            controller.ViewData.ModelState.AddModelError("Fornavn", "Ikke oppgitt fornavn");
+            //Act
             var result = (ViewResult)controller.Registrer(innBruker);
             //Assert
             Assert.IsTrue(result.ViewData.ModelState.Count == 1);

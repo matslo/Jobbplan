@@ -274,6 +274,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AuthenticateController.cs" />
     <Compile Include="Controllers\BrukerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BrukerController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Controllers\ProsjektController.cs" />
     <Compile Include="Controllers\ProsjektDeltakelseApiController.cs" />
     <Compile Include="Controllers\ProsjektreqApiController.cs" />
+    <Compile Include="Controllers\SjefController.cs" />
     <Compile Include="Controllers\TimelisteApiController.cs" />
     <Compile Include="Controllers\TimelisteController.cs" />
     <Compile Include="Controllers\VaktApi2Controller.cs" />

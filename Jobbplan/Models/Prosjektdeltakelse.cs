@@ -25,7 +25,6 @@ namespace Jobbplan.Models
         public int BrukerIdFra { get; set; }
         public int BrukerIdTil { get; set; }
         public int ProsjektId { get; set; }
-        public string Melding { get; set; }
         public bool Akseptert { get; set; }
         public DateTime Sendt { get; set; }
 

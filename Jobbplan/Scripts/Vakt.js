@@ -72,7 +72,6 @@ function taLedigVakt() {
         var text2 = $("#visKnapp")
         if (text.is(':hidden')) {
             text.slideDown('500');
-           
 
         }
         else {
@@ -88,6 +87,18 @@ function taLedigVakt() {
         
         return prosjektid;
     }
+   
+
+    function ProIdTEST() {
+        var prosjektid = $("#radioProsjekt :radio:checked").val();
+        if ($("#radioProsjekt:checked").length) {
+            prosjektid = $("#radioProsjekt :radio:checked").val();
+
+        }
+
+        return prosjektid;
+    }
+
 
     function fullcal() {
         $('#calendar').fullCalendar({
@@ -105,7 +116,7 @@ function taLedigVakt() {
                 dataType: 'json',
                 data: function () { // a function that returns an object
                     return {
-                        id: $('#selectProsjekt').val(),
+                        id:$('#selectProsjekt').val()
                     };
 
                 },
@@ -154,8 +165,14 @@ function selOnChange() {
         HentBrukere();
         $('#calendar').fullCalendar('refetchEvents');
     });
-};
-
+};/*
+    function selOnChangeTEST() {
+       
+    $('#radioProsjekt').on('change', function () {    
+             HentBrukere();
+        $('#calendar').fullCalendar('refetchEvents');
+    });
+};*/
 function HentBrukere() {
       
     $.ajax({
@@ -180,6 +197,29 @@ function VisAlle(brukere) {
     $(".brukere").html(strResult);
 }
 
+function HentProsjekter() {
+    $.ajax({
+        url: '/api/ProsjektApi/',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            VisAlleProsjekter(data);
+        },
+        error: function (x, y, z) {
+
+        }
+    });
+
+};
+
+function VisAlleProsjekter(prosjekter) {
+    var strResult = "";
+    $.each(prosjekter, function (i, p) {
+        strResult += "<input type='radio' name='prosjekter' value="+ p.Id+" checked>"+ p.Arbeidsplass + "<br>";
+    });
+    $(".prosjekterTest").html(strResult);
+    //$("input:radio[name=prosjekter]:first").attr('checked', true);
+}
     
 $(document).ready(function () {  
     
@@ -187,8 +227,12 @@ $(document).ready(function () {
     selOnChange();
     taLedigVakt();
     EndreVakt();
+    HentProsjekter();
     fullcal();
-/*
+    
+   // selOnChangeTEST();
+    
+/* 
     $("#visAlleVakter").click(function () {
         
         $('#calendar').fullCalendar('removeEventSource', '/api/VaktApi2/');

@@ -9,10 +9,64 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Fullcalendar/lib/jquery.min.js"></script>
 </head>
+<body>
+<script type="text/javascript">
+        $(document).ready(function () {
+            loggInn();
+          
+        });
+
+        function loggInn() {
+            $("body").on('click', '#LogginnKnapp', function () {
+               
+                var loggInn = {
+                    Brukernavn: $('#brukernavntxt').val(),
+                    Passord: $('#passordtxt').val()
+                };
+                $.ajax({
+                    url: '/api/Authenticate/',
+                    type: 'POST',
+                    data: JSON.stringify(loggInn),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (data) {                     
+                        location.href = "/Vakt/Index";
+                    },
+                    error: function (data, status) {
+                        alert("Ugyldig brukernavn/ passord");
+
+                    }
+                });
+            })
+        };
+      
+</script>
+
+<div id="regContainer" class="container">
+
+    <div id="logginnskjema">
+        <img src="~/Content/jp.jpg" class="img-circle" alt="Logo" id="Logo" width="250" height="250"/>
+        <table id="registrerSkjema" class="table-responsive">
+           
+            <tr><td></td><td><input class="form-control" type="text" id="brukernavntxt" placeholder="Brukernavn" /></td><td></td></tr>
+            <tr><td></td><td><input class="form-control" type="password" id="passordtxt" placeholder="Passord"/></td><td></td></tr>
+            <tr><td></td><td><button id="LogginnKnapp" class="btn btn-primary" style="color:wheat;">Logg inn</button></td> <td></td></tr>
+
+        </table>
+        <a id="registrer" href="~/Bruker/RegistrerAPI">Registrer deg</a>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+    
+<!--
 @{
     Layout = null;
-} 
+}
 @model Jobbplan.Models.LogInn
 <body id="innhold">
     @Html.ValidationSummary(true, "Ikke gyldig brukernavn og/ eller passord", new { @class = "text-danger" })
@@ -21,20 +75,18 @@
     {
         @Html.AntiForgeryToken()
         <div id="logginnskjema">
-            <img src="~/Content/jp.jpg" alt="Logo" id="Logo" width="267" height="248" />                
+            <img src="~/Content/jp.jpg" alt="Logo" id="Logo" width="267" height="248" />
              @Html.TextBoxFor(m => m.Brukernavn, new { id = "brukernavntxt", placeholder = "Brukernavn" })
-             @Html.ValidationMessageFor(m => m.Brukernavn, "", new { @class = "text-danger" })              
+             @Html.ValidationMessageFor(m => m.Brukernavn, "", new { @class = "text-danger" })
             <div class="input-group">
              @Html.PasswordFor(m => m.Passord, new { id = "passordtxt", placeholder = "Passord" })
              @Html.ValidationMessageFor(m => m.Passord, "", new { @class = "text-danger" })
             </div>
-        
+
             <input type="submit" id="LogginnKnapp" value="LOGG INN" />
             <br />
             <br />
             <div id="registrerbruker">@Html.ActionLink("Registrer ny bruker", "RegistrerAPI", "Bruker")</div>
         </div>
     }
-</body>
-</html>
-
+    -->

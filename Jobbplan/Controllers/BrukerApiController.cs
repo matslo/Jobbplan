@@ -18,7 +18,8 @@ namespace Jobbplan.Controllers
        {
             string brukernavn = User.Identity.Name;
             return db.HentBrukere(id,brukernavn);
-       }
+          
+        }
         // POST api/BrukerApi
         public HttpResponseMessage Post(Registrer personInn)
         {

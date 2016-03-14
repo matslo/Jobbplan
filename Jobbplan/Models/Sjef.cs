@@ -9,10 +9,11 @@ namespace Jobbplan.Models
     {
         [Key]
         public int SjefId { get; set; }
-        public int ProsjektDeltakerId { get; set; }
-        public string Rettigheter { get; set; }
+        public int BrukerId { get; set; }
+        public int ProsjektId { get; set; }
         public string Tittel { get; set; }
 
-       // public virtual Prosjektdeltakelse Prosjektdeltakelse { get; set; }
+        public virtual Prosjekt Prosjekt { get; set; }
+        public virtual dbBruker dbBruker { get; set; }
     }
 }
