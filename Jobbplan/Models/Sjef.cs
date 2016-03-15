@@ -16,4 +16,9 @@ namespace Jobbplan.Models
         public virtual Prosjekt Prosjekt { get; set; }
         public virtual dbBruker dbBruker { get; set; }
     }
+    public class AdminSjekk
+    {
+        public int BrukerId { get; set; }
+        public int ProsjektId { get; set; }
+    }
 }

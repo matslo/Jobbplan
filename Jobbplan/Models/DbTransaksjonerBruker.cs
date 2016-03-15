@@ -162,7 +162,6 @@ namespace Jobbplan.Models
             }
             return null;
         }
-
         public List<Timeliste> HentVakter(string Brukernavn)
         {
             var db = new Dbkontekst();

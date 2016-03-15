@@ -50,7 +50,7 @@
 
 
     </script>
-    <div class="navbar navbar-default navbar-fixed-top" id="HovedNav">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -68,7 +68,7 @@
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}<span class="badge " id="antallInnboks" style=""></span></li>
+                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}<span class="badge alert-info" id="antallInnboks" style=""></span></li>
                 </ul>
             </div>
         </div>

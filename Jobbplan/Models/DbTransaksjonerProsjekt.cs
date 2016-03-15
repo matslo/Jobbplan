@@ -46,6 +46,10 @@ namespace Jobbplan.Models
 
             }
         }
+        public bool FjernAnsatt (int id, string brukernavn)
+        {
+
+        }
         public bool LeggTilBrukerRequest(ProsjektrequestSkjema pReq, string brukernavn)
         {
             int bId = BrukerId(brukernavn);
@@ -209,6 +213,48 @@ namespace Jobbplan.Models
                 return pros;
             
         }
+        public bool FjernBrukerFraProsjekt (string brukernavn, int PId)
+        {
+            if (ErAdmin(brukernavn, PId) == true || ErEier(brukernavn, PId) == true)
+            {
+
+            }
+
+            int SjekkTilgang = (from x in dbs.Sjefer
+                                where x.BrukerId == id && x.ProsjektId == PId
+                                select x.BrukerId).SingleOrDefault();
+            if (SjekkTilgang != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool ErAdmin (string brukernavn, int PId)
+        {
+            int id = BrukerId(brukernavn);
+          
+            int SjekkTilgang = (from x in dbs.Sjefer
+                          where x.BrukerId == id && x.ProsjektId == PId
+                          select x.BrukerId).SingleOrDefault();
+            if (SjekkTilgang != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool ErEier (string brukernavn, int PId)
+        {
+            int id = BrukerId(brukernavn);
+
+            int SjekkTilgang = (from x in dbs.Prosjekter
+                                where x.EierId == id && x.ProsjektId == PId
+                                select x.EierId).SingleOrDefault();
+            if (SjekkTilgang != 0)
+            {
+                return true;
+            }
+            return false;
+        }
         public int BrukerId (string brukernavn)
         {
             int userId = (from x in dbs.Brukere
@@ -246,21 +292,26 @@ namespace Jobbplan.Models
                 return false;
             }
         }
-        public bool SlettProsjekt (int id)
+        public bool SlettProsjekt (string Brukernavn, int id)
         { 
            Dbkontekst db = new Dbkontekst();
-            
-           try
-           {
-               var SlettProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == id );
-               db.Prosjekter.Remove(SlettProsjekt);
-               db.SaveChanges();
-               return true;
-           }
-           catch (Exception feil)
-           {
-                return false;
-           }
+            if (ErEier(Brukernavn, id) == true)
+            {
+                try
+                {
+                    var SlettProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == id);
+                    db.Prosjekter.Remove(SlettProsjekt);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception feil)
+                {
+                    return false;
+                }
+
+            }
+           return false;
+           
         }   
         public string BrukerNavn (int id)
         {
@@ -269,7 +320,6 @@ namespace Jobbplan.Models
                           select x.Email).SingleOrDefault();
             return brukernavn;
         }
-
         public bool EndreProsjekt(Prosjekt EndreProsjekt)
         {
             Dbkontekst db = new Dbkontekst();

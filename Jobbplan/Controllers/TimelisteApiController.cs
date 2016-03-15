@@ -12,9 +12,10 @@ namespace Jobbplan.Controllers
     public class TimelisteApiController : ApiController
     {
         DbTransaksjonerBruker db = new DbTransaksjonerBruker();
-        public IHttpActionResult Get (int id)
+        public List<Timeliste> Get ()
         {
-            return db.HentVakter(id);
+            string username = User.Identity.Name;
+            return db.HentVakter(username);
         }
 
     }

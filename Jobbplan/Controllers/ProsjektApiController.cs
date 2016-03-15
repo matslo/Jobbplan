@@ -24,7 +24,8 @@ namespace Jobbplan.Controllers
         }
         public void Delete(int id)
         {
-            db.SlettProsjekt(id);       
+            string userName = User.Identity.Name;
+            db.SlettProsjekt(userName,id);       
         }
         public void Put(Prosjekt EndreProsjekt)
         {
