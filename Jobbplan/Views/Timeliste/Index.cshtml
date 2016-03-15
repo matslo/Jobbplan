@@ -1,151 +1,25 @@
-﻿
-<script src="~/Scripts/Vakt.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+﻿ 
+
+<script type="text/javascript">
 
 
-@{
-    ViewBag.Title = "Index";
+function Hentvakter() {
+        $.ajax({
+            url: '/api/ProsjektApi' + Brukerid,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                Vis(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
 }
 
-<h2>Vaktplan</h2>
-<div id="feil">
-    <button id="mer">
-        <span class="glyphicon glyphicon-menu-down" aria-hidden="true" id="vaktNed"></span>
-    </button>
-</div>
-<div class="container" id="vaktRegistrering">
-    <div class="row">
-        <div class='col-sm-2'>
-            <label>Fra:</label>
-            <div class="input-group">
-                
-                <input type="text" class="form-control input-sm" id='datetimepicker4' aria-describedby="start-date">
-                <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-        </div>
-        <div class='col-sm-2'>
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
-            <input type='text' class="form-control input-sm" id='datetimepicker5' />
-        </div>
-        <div class='col-sm-2'>
-            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Tittel:</label>
-            <input type='text' class="form-control input-sm" id='Tittel' />
-        </div>
 
-        <div class='col-sm-2'>
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            <label for="sel1">Ansatt:</label>
-            <select class="form-control input-sm brukere" id="brukere">
-               <option></option>
-            </select>
-        </div>
-
-        <div class='col-sm-2'>
-            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Beskrivelse:</label>
-            <textarea class="form-control input-sm" rows="1" id="Beskrivelse"></textarea>
-        </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker4').datetimepicker();
-                $('#datetimepicker5').datetimepicker();
-            });
-        </script>
-        <div class='col-sm-2'>
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><label>OK</label><br />
-        <button onclick="LeggTilVakt();" class="btn btn-success btn-sm" rows="1" id="LeggTilVakt" >Legg til vakt</button>
-            
-        </div>
-        
-        </div>
-   
-    </div>
-
-  
- <hr />
-<div class="row">
-    <div class='col-sm-2'>
-        <select class="form-control input-sm" id="selectProsjekt">
-            @{Html.RenderAction("prosjektMeny", "Prosjekt");}
-        </select>
-        </div>
-  
-        <button class="btn btn-default btn-sm" rows="1" id="visAlleVakter" >Se alle vakter</button>
-        <button class="btn btn-default btn-sm" rows="1" id="visBrukerVakter">Se mine vakter</button>
-   
-    <div id='calendarbruker'></div>
-        <div id='calendar'></div>
-    
-    <div id="loading"></div>
-    </div>
-
-<div id="fullCalModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                <h4 id="modalTitle" class="modal-title"></h4>
-            </div>
-            <div id="modalBody" class="modal-body">
+</script>
 
 
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-            <div id="tavakt"></div>
-            <button onclick="VisKnapper();" class="btn btn-warning" rows="1" id="EndreVakt">Endre vakt</button>
-            <div id="slettvakt"></div>
-            <div class="container" id="vaktEndring" style="display:none;">
-                <div class="row">
-                    <div class='col-sm-2'>
-                        <label>Fra:</label>
-                        <div class="input-group">
-
-                            <input type="text" class="form-control" id='datetimepicker1' aria-describedby="start-date">
-                            <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                    </div>
-                    <div class='col-sm-2'>
-                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
-                        <input type='text' class="form-control" id='datetimepicker2' />
-                    </div>
-                    <div class='col-sm-2'>
-                        <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Tittel:</label>
-                        <input type='text' class="form-control" id='eTittel' />
-                    </div>
-                    </div>
-                <div class="row">
-                    <div class='col-sm-2'>
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <label for="sel1">Ansatt:</label>
-                        <select class="form-control brukere" id="ebrukere">
-                            <option></option>
-                        </select>
-                    </div>
-
-                    <div class='col-sm-2'>
-                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Beskrivelse:</label>
-                        <textarea class="form-control" rows="1" id="eBeskrivelse"></textarea>
-                    </div>
-                    <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-                $('#datetimepicker2').datetimepicker();
-            });
-                    </script>
-                    <div class='col-sm-1'>
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><label>OK</label><br />
-                        <div id="endrevakt"></div>
-                    </div>
-                    <div class="col-sm-1">
-                        <button onclick="VisKnapper();" class="btn btn-danger" rows="1" id="visKnapp">Avbryt</button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+<button onclick="HentVakter()"> Alle vakter</button>
