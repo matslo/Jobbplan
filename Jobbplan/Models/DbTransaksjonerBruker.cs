@@ -162,5 +162,23 @@ namespace Jobbplan.Models
             }
             return null;
         }
+
+        public List<Timeliste> HentVakter(string Brukernavn)
+        {
+            var db = new Dbkontekst();
+            var dbtb = new DbTransaksjonerProsjekt();
+
+            int id = dbtb.BrukerId(Brukernavn);
+            List<Timeliste> pros = (from p in db.Vakter
+                                    where p.BrukerId == id
+                                    select
+                                        new Timeliste()
+                                        {                                                                                      
+                                            PeriodeStart = p.start,
+                                            PeriodeSlutt = p.end
+                                        }).ToList();
+            return pros;
+
+        } 
     }
 }
