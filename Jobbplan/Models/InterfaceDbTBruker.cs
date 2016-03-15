@@ -13,6 +13,7 @@ namespace Jobbplan.Models
         List<BrukerListe> HentBrukere(int ProsjektId, string b);
         bool BrukerIdb(LogInn innBruker);
         bool EmailDb(Registrer innBruker);
+        int AntallMeldinger(string brukernavn);
 
     }
 }

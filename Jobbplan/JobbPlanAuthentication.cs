@@ -14,6 +14,7 @@ namespace Jobbplan
 
         public void Init(HttpApplication context)
         {
+            
             throw new NotImplementedException();
         }
     }

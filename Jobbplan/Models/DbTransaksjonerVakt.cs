@@ -72,7 +72,7 @@ namespace Jobbplan.Models
                                start = k.start.ToString("s"),
                                end = k.end.ToString("s"),
                                Brukernavn = dbtB.BrukerNavn(k.BrukerId),
-                               title = k.title,
+                               title = k.title +": "+ dbtB.BrukerNavn(k.BrukerId),
                                color = k.color,
                                VaktId = k.VaktId
                            }).ToList();

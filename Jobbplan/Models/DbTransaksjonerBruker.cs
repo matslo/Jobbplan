@@ -128,6 +128,26 @@ namespace Jobbplan.Models
                 }
             }
         }
+        public int AntallMeldinger(string brukernavn)
+        {
+            var db = new Dbkontekst();
+            var dbTP = new DbTransaksjonerProsjekt();
+            var dbTV = new DbTransaksjonerVakt();
+            var ProsjektReq = dbTP.VisRequester(brukernavn);
+            var VaktReq = dbTV.visVaktRequester(brukernavn);
+            int AntallMeldinger = 0;
+
+
+            foreach(var a in ProsjektReq)
+            {
+                AntallMeldinger++;
+            }
+            foreach(var a in VaktReq)
+            {
+                AntallMeldinger++;
+            }
+            return AntallMeldinger;
+        }
         private static byte[] lagHash(string innPassord)
         {
             //Hash passord

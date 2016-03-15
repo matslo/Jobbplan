@@ -18,9 +18,9 @@
     };
 
     function VisAlleReq(brukere) {
-        var strResult = "<table class='table table-hover'>";
+        var strResult = "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
-            strResult += "<tr><td>" + p.TilBruker + "</td></tr>";
+            strResult += "<tr><td>" + p.TilBruker + "</td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
         strResult += "</table>";
         $(".requester").html(strResult);
@@ -95,7 +95,7 @@
     };
 
     function VisAlle(brukere) {
-        var strResult = "<table class='table table-hover'>";
+        var strResult = "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
             strResult += "<tr><td>" + p.Navn + "</td><td><button type='button' id='adminTilgang' class='btn btn-info' value="+p.BrukerId+"><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Administrator</button></td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
@@ -144,7 +144,7 @@
 </button>
 <div class="brukere"></div>
 <hr />
-Venter på godkjenning
+<h2>Venter på godkjenning</h2>
 <div class="requester"></div>
 
 

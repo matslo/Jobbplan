@@ -118,7 +118,6 @@ function taLedigVakt() {
                     return {
                         id:$('#selectProsjekt').val()
                     };
-
                 },
                 error: function () {
                     $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
@@ -154,10 +153,8 @@ function taLedigVakt() {
                 // change the border color just for fun
                 $(this).css('border-color', 'red');
                
-
             }
         });
-
     };
    
 function selOnChange() {

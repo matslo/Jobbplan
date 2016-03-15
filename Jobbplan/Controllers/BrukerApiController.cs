@@ -12,7 +12,12 @@ namespace Jobbplan.Controllers
 {
     public class BrukerApiController : ApiController
     {
-       DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+        DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+        public int Get()
+        {
+            string Username = User.Identity.Name;
+            return db.AntallMeldinger(Username);
+        }
         // GET api/BrukerApi/4
         public List<BrukerListe> Get (int id)
        {
@@ -25,7 +30,6 @@ namespace Jobbplan.Controllers
         {
             if (ModelState.IsValid)
             {
-               
                 bool ok = db.RegistrerBruker(personInn);   
                  if (ok)
                  {
@@ -33,7 +37,6 @@ namespace Jobbplan.Controllers
                     {
                         StatusCode = HttpStatusCode.OK,    
                     };
-
                  }
             }
 

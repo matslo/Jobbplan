@@ -22,6 +22,34 @@
 </head>
 
 <body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            HentAntallMeldinger();
+            
+        });  
+        function HentAntallMeldinger() {
+            $.ajax({
+                url: '/api/BrukerApi',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    VisAntall(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        }
+        function VisAntall(meldinger) {
+            $('#antallInnboks').html(meldinger);
+            $('#antallInnboks2').html(meldinger);
+        }
+
+       
+       
+
+
+    </script>
     <div class="navbar navbar-default navbar-fixed-top" id="HovedNav">
         <div class="container">
             <div class="navbar-header">
@@ -40,8 +68,7 @@
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}</li>
-
+                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}<span class="badge " id="antallInnboks" style=""></span></li>
                 </ul>
             </div>
         </div>
