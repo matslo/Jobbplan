@@ -82,6 +82,7 @@ namespace Jobbplan.Models
                                       select
                                           new BrukerListe()
                                           {
+                                              ProsjektDeltakerId = p.ProsjektDeltakerId,
                                               Navn = s.Fornavn+" "+s.Etternavn,
                                               BrukerId = p.BrukerId,
                                               Brukernavn = s.Email

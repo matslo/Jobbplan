@@ -8,7 +8,7 @@ using Jobbplan.Models;
 
 namespace Jobbplan.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class ProsjektDeltakelseApiController : ApiController
     {
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
@@ -16,6 +16,11 @@ namespace Jobbplan.Controllers
         {
             string username = User.Identity.Name;
             db.RegistrerProsjektdeltakelse(pid, username);
+        }
+        public void Delete(int id)
+        {
+            string username = User.Identity.Name;
+            db.SlettBrukerFraProsjekt(username, id);
         }
     }
 }
