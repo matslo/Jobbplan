@@ -15,7 +15,12 @@ namespace Jobbplan.Controllers
         public ActionResult Index()   
         {
             return View();
-        } 
+        }
+
+        public ActionResult MinProfil()
+        {
+            return View();
+        }
         public ActionResult RegistrerAPI()
         {
             return View();

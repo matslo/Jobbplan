@@ -279,6 +279,7 @@
     <Compile Include="Controllers\BrukerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BrukerController.cs" />
+    <Compile Include="Controllers\ProfilController.cs" />
     <Compile Include="Controllers\ProsjektApiController.cs" />
     <Compile Include="Controllers\ProsjektController.cs" />
     <Compile Include="Controllers\ProsjektDeltakelseApiController.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Views\Timeliste\Index.cshtml" />
     <Content Include="Views\Vakt\MinVaktplan.cshtml" />
     <Content Include="Views\Vakt\VaktPlanTest.cshtml" />
+    <Content Include="Views\Bruker\MinProfil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

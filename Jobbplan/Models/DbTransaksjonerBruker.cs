@@ -19,32 +19,32 @@ namespace Jobbplan.Models
 
             var nyBruker = new dbBruker()
             {
-            Passord = passordDb,
-            Fornavn = innBruker.Fornavn,
-            Etternavn = innBruker.Etternavn,
-            Adresse = innBruker.Adresse,
-            Postnr = innBruker.Postnummer,
-            Email = innBruker.Email,
-            Telefonnummer = innBruker.Telefonnummer
+                Passord = passordDb,
+                Fornavn = innBruker.Fornavn,
+                Etternavn = innBruker.Etternavn,
+                Adresse = innBruker.Adresse,
+                Postnr = innBruker.Postnummer,
+                Email = innBruker.Email,
+                Telefonnummer = innBruker.Telefonnummer
             };
 
             using (var db = new Dbkontekst())
             {
                 try
-                {            
-                   db.Brukere.Add(nyBruker);
-                   db.SaveChanges();
-                   return true;   
+                {
+                    db.Brukere.Add(nyBruker);
+                    db.SaveChanges();
+                    return true;
                 }
                 catch (Exception feil)
                 {
                     return false;
-                }     
+                }
             }
         }
         public bool GiBrukerAdminTilgang(Sjef innBruker)
         {
-            
+
             var nySjef = new Sjef()
             {
                 BrukerId = innBruker.BrukerId,
@@ -65,7 +65,7 @@ namespace Jobbplan.Models
                 }
             }
         }
-        public List<BrukerListe> HentBrukere (int ProsjektId, string brukernavn)
+        public List<BrukerListe> HentBrukere(int ProsjektId, string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();
             DbTransaksjonerProsjekt dbtp = new DbTransaksjonerProsjekt();
@@ -75,18 +75,18 @@ namespace Jobbplan.Models
                    (b => b.EierId == ProsjektidTilgang && b.ProsjektId == ProsjektId);
 
             if (funnetTilgang != null)
-            { 
-            List<BrukerListe> pros = (from p in dbs.Prosjektdeltakelser
-                                      from s in dbs.Brukere
-                                      where p.ProsjektId == ProsjektId && p.BrukerId == s.BrukerId 
-                                      select
-                                          new BrukerListe()
-                                          {
-                                              ProsjektDeltakerId = p.ProsjektDeltakerId,
-                                              Navn = s.Fornavn+" "+s.Etternavn,
-                                              BrukerId = p.BrukerId,
-                                              Brukernavn = s.Email
-                                          }).ToList();
+            {
+                List<BrukerListe> pros = (from p in dbs.Prosjektdeltakelser
+                                          from s in dbs.Brukere
+                                          where p.ProsjektId == ProsjektId && p.BrukerId == s.BrukerId
+                                          select
+                                              new BrukerListe()
+                                              {
+                                                  ProsjektDeltakerId = p.ProsjektDeltakerId,
+                                                  Navn = s.Fornavn + " " + s.Etternavn,
+                                                  BrukerId = p.BrukerId,
+                                                  Brukernavn = s.Email
+                                              }).ToList();
                 return pros;
             }
             else
@@ -94,7 +94,7 @@ namespace Jobbplan.Models
                 List<BrukerListe> prosFeil = null;
                 return prosFeil;
             }
-          
+
         }
         public bool BrukerIdb(LogInn innBruker)
         {   //Sjekker om bruker er i db
@@ -139,11 +139,11 @@ namespace Jobbplan.Models
             int AntallMeldinger = 0;
 
 
-            foreach(var a in ProsjektReq)
+            foreach (var a in ProsjektReq)
             {
                 AntallMeldinger++;
             }
-            foreach(var a in VaktReq)
+            foreach (var a in VaktReq)
             {
                 AntallMeldinger++;
             }
@@ -173,12 +173,31 @@ namespace Jobbplan.Models
                                     where p.BrukerId == id
                                     select
                                         new Timeliste()
-                                        {                                                                                      
+                                        {
                                             PeriodeStart = p.start,
                                             PeriodeSlutt = p.end
                                         }).ToList();
             return pros;
 
-        } 
+        }
+
+        public List<dbBruker> HentBruker(string Brukernavn)
+        {
+            var db = new Dbkontekst();
+            var dbtb = new DbTransaksjonerProsjekt();
+
+            int id = dbtb.BrukerId(Brukernavn);
+            List<dbBruker> pros = (from p in db.Brukere
+                                   where p.BrukerId == id
+                                   select
+                                      new dbBruker()
+                                      {
+                                          Fornavn = p.Fornavn,
+                                          Etternavn = p.Etternavn,
+                                          Email = p.Email,
+                                          Adresse = p.Adresse,
+                                      }).ToList();
+            return pros;
+        }
     }
 }
