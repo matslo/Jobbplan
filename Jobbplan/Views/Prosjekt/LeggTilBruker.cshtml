@@ -4,9 +4,7 @@
 <script type="text/javascript">
     function slettRequest() {
         $("body").on('click', '#slettRequest', function () {
-
             var MeldingId = $(this).attr("value");
-
             $.ajax({
                 url: '/api/Sjef/' + MeldingId,
                 type: 'DELETE',
@@ -21,6 +19,7 @@
             });
         })
     };
+
     function slettBrukerFraProsjekt() {
         $("body").on('click', '#slettBruker', function () {
 
@@ -58,7 +57,7 @@
     function VisAlleReq(brukere) {
         var strResult = "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
-            strResult += "<tr><td>" + p.TilBruker + "</td><td><button type='button' class='btn btn-danger' id='slettRequest' value=" + p.MeldingId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
+            strResult += "<tr class='danger'><td>" + p.TilBruker + "</td><td><button type='button' class='btn btn-danger' id='slettRequest' value=" + p.MeldingId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
         strResult += "</table>";
         $(".requester").html(strResult);
@@ -134,7 +133,10 @@
     };
 
     function VisAlle(brukere) {
-        var strResult = "<table class='table table-hover table-bordered'>";
+        var strResult = "<table id='sendemeldingSkjema'  class='table table-hover table-bordered' style='display:none;'>";
+        strResult += "<tr ><td><input class='form-control' type='text' id='TilTxt' placeholder='E-post'/></td><td><button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button></td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button></td></tr>";
+        strResult += "</table>";
+        strResult += "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
             strResult += "<tr><td>" + p.Navn + "</td><td><button type='button' id='adminTilgang' class='btn btn-info' value="+p.BrukerId+"><span class='glyphicon glyphicon-user' aria-hidden='true'></span> Administrator</button></td><td><button type='button' class='btn btn-danger' id='slettBruker' value="+p.ProsjektDeltakerId+"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
@@ -155,6 +157,17 @@
         HentRequester();
         slettBrukerFraProsjekt();
         slettRequest();
+
+        $("#leggTilBruker").click(function () {
+            var text = $("#sendemeldingSkjema");
+            if (text.is(':hidden')) {
+                text.slideDown();
+            }
+            else {
+                text.slideUp();
+                
+            }
+        });
     });
 
 </script>
@@ -172,7 +185,6 @@
             <div class='col-sm-3'>
                 <p>Epost</p>
                 <input class="form-control" type="text" id="TilTxt" placeholder="E-post" />
-
             </div>
             <div class='col-sm-3'>
                 <p>Send</p>
@@ -181,7 +193,7 @@
         </div>
     </div>
 <br />
-<h2>Ansatte</h2><button type="button" class="btn btn-block btn-success btn-sm" style="position:center;">
+<h2>Ansatte</h2><button type="button" id="leggTilBruker" class="btn btn-block btn-success btn-sm" style="position:center;">
     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Legg til bruker
 </button>
 <div class="brukere"></div>

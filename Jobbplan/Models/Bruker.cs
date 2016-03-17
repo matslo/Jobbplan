@@ -82,5 +82,16 @@ namespace Jobbplan.Models
         public string Brukernavn { get; set; }
         public int BrukerId { get; set; }
     }
+    public class Profil
+    {
+        public string Fornavn { get; set; }
+        public string Etternavn { get; set; }
+        public string Email { get; set; }
+        public string Telefonnummer { get; set; }
+        public string Adresse { get; set; }
+        public string Postnummer { get; set; }
+        public string Poststed { get; set; }
+       
+    }
 
 }

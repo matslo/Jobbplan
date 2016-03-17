@@ -140,7 +140,7 @@ function taLedigVakt() {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
-            editable: true,
+        
             displayEventEnd: true,
             eventLimit: true, // allow "more" link when too many events
             eventSources: [kalendere.alle, kalendere.brukers],

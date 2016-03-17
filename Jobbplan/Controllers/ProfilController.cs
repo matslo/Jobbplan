@@ -13,7 +13,7 @@ namespace Jobbplan.Controllers
     {
         DbTransaksjonerBruker db = new DbTransaksjonerBruker();
 
-        public List<dbBruker> Get()
+        public List<Profil> Get()
         {
             string brukernavn = User.Identity.Name;
             return db.HentBruker(brukernavn);

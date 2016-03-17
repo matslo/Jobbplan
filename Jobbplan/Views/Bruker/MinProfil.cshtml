@@ -24,7 +24,7 @@
         {
             var strResult = "<table class='table table-hover table-bordered'>";
             $.each(dbBruker, function(i, p) {
-                strResult += "<tr><td> Fornavn: " + p.Fornavn + "</td><td>Etternavn: " + p.Etternavn + "</td><td>Adresse: " + p.Adresse + "</td><td>Email: " + p.Email + "</td>td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
+                strResult += "<tr><td> Fornavn: " + p.Fornavn + "</td></tr><tr><td>Etternavn: " + p.Etternavn + "</td></tr><tr><td>Adresse: " + p.Adresse + "</td></tr><tr><td>Email: " + p.Email + "</td></tr><tr><td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
             });
             strResult += "</table>";
             $("#brukerliste").html(strResult);
@@ -34,7 +34,7 @@
 
 </script>
 
-<div id="brukerliste"></div>
+
 
 @{
     ViewBag.Title = "MinProfil";
@@ -42,3 +42,4 @@
 
 <h2>MinProfil</h2>
 
+<div id="brukerliste"></div>

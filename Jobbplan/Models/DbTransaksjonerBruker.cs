@@ -181,16 +181,16 @@ namespace Jobbplan.Models
 
         }
 
-        public List<dbBruker> HentBruker(string Brukernavn)
+        public List<Profil> HentBruker(string Brukernavn)
         {
             var db = new Dbkontekst();
             var dbtb = new DbTransaksjonerProsjekt();
 
             int id = dbtb.BrukerId(Brukernavn);
-            List<dbBruker> pros = (from p in db.Brukere
+            List<Profil> pros = (from p in db.Brukere
                                    where p.BrukerId == id
                                    select
-                                      new dbBruker()
+                                      new Profil()
                                       {
                                           Fornavn = p.Fornavn,
                                           Etternavn = p.Etternavn,
