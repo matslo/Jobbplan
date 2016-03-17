@@ -6,13 +6,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Vaktplan</h2>
+
 <div id="feil">
-    <button id="mer">
+    <button id="mer" class="btn btn-primary btn-block" style="margin-top:2px;">Legg til vakt
         <span class="glyphicon glyphicon-menu-down" aria-hidden="true" id="vaktNed"></span>
     </button>
 </div>
-<div class="container" id="vaktRegistrering">
+<div class="container" id="vaktRegistrering" style="display:none;">
     <div class="row">
         <div class='col-sm-2'>
             <label>Fra:</label>
@@ -69,18 +69,13 @@
             @{Html.RenderAction("prosjektMeny", "Prosjekt");}
         </select>
         </div>
-        <a class="btn btn-default btn-sm" href="/Vakt/MinVaktplan">Se mine vakter</a>
-
-        <button class="btn btn-default btn-sm" rows="1" id="visMineVakter">Se mine vakter</button>
-        <button class="btn btn-default btn-sm" rows="1" id="visAlleVakter" >Se alle vakter</button>
-        
-   
-    
-        <div id='calendar'></div>
-    
+    <button class="btn btn-primary btn-sm" id="mineVakter">Se mine vakter</button>
+    <button class="btn btn-primary btn-sm" disabled="disabled" id="visAlleVakter">Se alle vakter</button>
+    <button class="btn btn-success btn-sm" href="#">Se ledige vakter</button>
     <div id="loading"></div>
-    </div>
+    <div id='calendar'></div>
 
+    </div>
 <div id="fullCalModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">

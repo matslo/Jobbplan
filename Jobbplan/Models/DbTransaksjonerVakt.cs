@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Data.SqlClient;
 namespace Jobbplan.Models
 {
     public class DbTransaksjonerVakt : InterfaceDbTVakt
@@ -60,10 +60,8 @@ namespace Jobbplan.Models
             Dbkontekst db = new Dbkontekst();
             var dbtB = new DbTransaksjonerProsjekt();
             var liste = dbtB.SjekkTilgangProsjekt(brukernavn);
-
-            
-
             List<Vakt> vakter = db.Vakter.ToList();
+
             var eventer = (from k in vakter
                            from s in liste
                            where k.ProsjektId==id && k.ProsjektId==s.Id
@@ -72,7 +70,7 @@ namespace Jobbplan.Models
                                start = k.start.ToString("s"),
                                end = k.end.ToString("s"),
                                Brukernavn = dbtB.BrukerNavn(k.BrukerId),
-                               title = k.title +": "+ dbtB.BrukerNavn(k.BrukerId),
+                               title = k.title +": "+ dbtB.FultNavn(k.BrukerId),
                                color = k.color,
                                VaktId = k.VaktId
                            }).ToList();
@@ -169,12 +167,12 @@ namespace Jobbplan.Models
             var dbt = new DbTransaksjonerProsjekt();
             int id = dbt.BrukerId(Brukernavn);
             var dbs = new Dbkontekst();
+          
             List<VaktRequestMelding> req = (from p in dbs.Vaktrequester
                                             from b in dbs.Brukere
                                             from s in dbs.Vakter
                                             where p.BrukerIdTil == id && p.BrukerIdFra == b.BrukerId && p.VaktId == s.VaktId
-                                            select
-                                                new VaktRequestMelding()
+                                            select new VaktRequestMelding()
                                                 {
                                                     MeldingId = p.MeldingId,
                                                     ProsjektId = p.ProsjektId,
@@ -188,6 +186,7 @@ namespace Jobbplan.Models
                                                     Tid = p.Sendt,
                                                     TilBruker = Brukernavn
                                                 }).ToList();
+            
             return req;
         }
         public bool requestOk(int id)
@@ -201,6 +200,21 @@ namespace Jobbplan.Models
                 OppdaterVakt.Ledig = false;
                 OppdaterVakt.color = "#3A87AD";
                 db.Vaktrequester.Remove(Requester);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
+        public bool SlettVaktRequest (int Meldingid)
+        {
+            Dbkontekst db = new Dbkontekst();
+            try
+            {
+                var SlettRequest = db.Vaktrequester.FirstOrDefault(p => p.MeldingId == Meldingid);
+                db.Vaktrequester.Remove(SlettRequest);
                 db.SaveChanges();
                 return true;
             }

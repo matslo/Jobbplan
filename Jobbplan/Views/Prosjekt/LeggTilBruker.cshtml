@@ -2,7 +2,25 @@
     ViewBag.Title = "LeggTilBruker";
 }
 <script type="text/javascript">
+    function slettRequest() {
+        $("body").on('click', '#slettRequest', function () {
 
+            var MeldingId = $(this).attr("value");
+
+            $.ajax({
+                url: '/api/Sjef/' + MeldingId,
+                type: 'DELETE',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Ok");
+                    HentRequester();
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        })
+    };
     function slettBrukerFraProsjekt() {
         $("body").on('click', '#slettBruker', function () {
 
@@ -40,7 +58,7 @@
     function VisAlleReq(brukere) {
         var strResult = "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
-            strResult += "<tr><td>" + p.TilBruker + "</td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
+            strResult += "<tr><td>" + p.TilBruker + "</td><td><button type='button' class='btn btn-danger' id='slettRequest' value=" + p.MeldingId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
         strResult += "</table>";
         $(".requester").html(strResult);
@@ -136,6 +154,7 @@
         GiAdminTilgang();
         HentRequester();
         slettBrukerFraProsjekt();
+        slettRequest();
     });
 
 </script>

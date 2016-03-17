@@ -47,6 +47,10 @@ namespace Jobbplan.Controllers
                 Content = new StringContent("Kunne ikke sette inn kunden i DB")
             };
        }
+        public void Delete (int id)
+        {
+
+        }
        
     }
 }

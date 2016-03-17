@@ -52,6 +52,7 @@ namespace Jobbplan.Models
     }
     public class ProsjektrequestMelding
     {
+        public int MeldingId { get; set; }
         public DateTime Tid { get; set; }
         public int ProsjektId { get; set; }
         public string TilBruker { get; set; }

@@ -77,6 +77,20 @@
     ViewBag.Title = "Index";
 }
 <br />
+<div class="row">
+    <div class="btn-group btn-group-justified " role="group" aria-label="..." style="margin-top:40px;">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" style="height:300px;">Opprett ny jobb<br /><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="font-size:150px;"></span></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" style="height:300px;">Endre jobb<br /><span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:150px;"></span></button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" style="height:300px;">Ansatte <br /><span class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:150px;"></span></button>
+        </div>
+    </div>
+</div>
+
 <p>Opprett jobb</p>
 <div class='col-sm-3'>
     <input class="form-control" type="text" id="NavnTxt" />
@@ -95,9 +109,9 @@
     </select>
 </div>
 
-<button onclick="SlettProsjekt()" class="btn btn-danger">Slett Prosjekt</button>
+<button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre jobb</button>
 
-<button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre Prosjekt</button>
+<button onclick="SlettProsjekt()" class="btn btn-danger">Slett jobb</button>
 
 <div id="vaktEndring" style="display:none">
     <input type="text" id="Endretxt"  class="form-control"/>

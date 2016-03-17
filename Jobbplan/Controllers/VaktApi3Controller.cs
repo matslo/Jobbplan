@@ -26,5 +26,9 @@ namespace Jobbplan.Controllers
         {
             return db.requestOk(id);
         }
+        public bool Delete (int id)
+        {
+            return db.SlettVaktRequest(id);
+        }
     }
 }

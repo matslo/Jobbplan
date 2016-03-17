@@ -99,6 +99,39 @@ function taLedigVakt() {
         return prosjektid;
     }
 
+    var kalendere = {
+        alle: {
+            url: '/api/VaktApi/',
+            type: 'GET',
+            dataType: 'json',
+            data: function () { // a function that returns an object
+                return {
+                    id: $('#selectProsjekt').val()
+                };
+            },
+            error: function () {
+                $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
+
+                $('#script-warning').show();
+            }
+
+        },
+        brukers: {
+            url: '/api/VaktApi2/',
+            type: 'GET',
+            dataType: 'json',
+            data: function () { // a function that returns an object
+                return {
+                    id: $('#selectProsjekt').val()
+                };
+            },
+            error: function () {
+                $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
+
+                $('#script-warning').show();
+            }
+        }
+    };
 
     function fullcal() {
         $('#calendar').fullCalendar({
@@ -110,53 +143,37 @@ function taLedigVakt() {
             editable: true,
             displayEventEnd: true,
             eventLimit: true, // allow "more" link when too many events
-            events: {
-                url: '/api/VaktApi/',
-                type: 'GET',
-                dataType: 'json',
-                data: function () { // a function that returns an object
-                    return {
-                        id:$('#selectProsjekt').val()
-                    };
-                },
-                error: function () {
-                    $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
-
-                    $('#script-warning').show();
-                }
-            },
+            eventSources: [kalendere.alle, kalendere.brukers],
 
             loading: function (bool) {
                 $('#loading').toggle(bool);
             },
-            eventClick: function (event, jsEvent, view) {              
+            eventClick: function (event, jsEvent, view) {
                 var start = event.start;
                 var end = event.end;
                 $('#modalTitle').html(event.title);
                 $('#modalBody').html(event.title);
-                if (event.Brukernavn == null)
-                {
+                if (event.Brukernavn == null) {
                     event.Brukernavn = "Ledig vakt";
                     $('#tavakt').html("<button id='" + event.VaktId + "' class='btn btn-primary btnTavakt'>Ta vakt</button>");
                 }
-               
+
                 $('#modalBody').append(": " + event.Brukernavn);
 
-                $('#modalBody').append(start.format(" HH:mm"+"-"));
+                $('#modalBody').append(start.format(" HH:mm" + "-"));
                 $('#modalBody').append(end.format("HH:mm"));
-                
+
                 $('#endrevakt').html("<button id='" + event.VaktId + "' class='btn btn-warning btnEndreVakt'>Endre vakt</button>");
                 $('#slettvakt').html("<button id='" + event.VaktId + "' class='btn btn-danger btnSlettVakt'>Slett vakt</button>");
                 $('#eventUrl').attr('href', event.url);
                 $('#fullCalModal').modal();
-               // $("#fullCalModal").html("");
+                // $("#fullCalModal").html("");
                 // change the border color just for fun
                 $(this).css('border-color', 'red');
-               
+
             }
         });
     };
-   
 function selOnChange() {
     $('#selectProsjekt').on('change', function () {
         HentBrukere();
@@ -226,26 +243,28 @@ $(document).ready(function () {
     EndreVakt();
     HentProsjekter();
     fullcal();
-    
+    $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
+    $('#calendar').fullCalendar('refetchEvents');
    // selOnChangeTEST();
     
-/* 
     $("#visAlleVakter").click(function () {
-        
-        $('#calendar').fullCalendar('removeEventSource', '/api/VaktApi2/');
+        $('#visAlleVakter').prop('disabled', true);
+        $('#mineVakter').prop('disabled', false);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
         $('#calendar').fullCalendar('refetchEvents');
-        $('#calendar').fullCalendar('addEventSource', '/api/VaktApi/');
+        $('#calendar').fullCalendar('addEventSource', kalendere.alle);
         $('#calendar').fullCalendar('refetchEvents');
 
     });
-    $("#visMineVakter").click(function () {
-       
-        $('#calendar').fullCalendar('removeEventSource', '/api/VaktApi/');
+    $("#mineVakter").click(function () {
+        $('#visAlleVakter').prop('disabled', false);
+        $('#mineVakter').prop('disabled', true);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.alle);
         $('#calendar').fullCalendar('refetchEvents');
-        $('#calendar').fullCalendar('addEventSource', '/api/VaktApi/');
+        $('#calendar').fullCalendar('addEventSource', kalendere.brukers);
         $('#calendar').fullCalendar('refetchEvents');
     });
-    */
+
 
     $("#mer").click(function () {
         var text = $("#vaktRegistrering");

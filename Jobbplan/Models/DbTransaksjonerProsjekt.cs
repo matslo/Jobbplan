@@ -168,7 +168,7 @@ namespace Jobbplan.Models
                                       where p.BrukerIdTil == id && p.BrukerIdFra == b.BrukerId && p.ProsjektId == s.ProsjektId
                                       select
                                           new ProsjektrequestMelding()
-                                          {
+                                          {   
                                               ProsjektId = p.ProsjektId,
                                               FraBruker = b.Email,
                                               Melding = " har invitert deg til å bli medlem av: ",
@@ -190,6 +190,7 @@ namespace Jobbplan.Models
                            where k.ProsjektId == id && k.ProsjektId == s.Id
                            select new ProsjektrequestMelding
                            {
+                               MeldingId = k.MeldingId,
                                TilBruker = BrukerNavn(k.BrukerIdTil),
                                Tid = k.Sendt
                            }).ToList();
@@ -263,6 +264,14 @@ namespace Jobbplan.Models
                           select x.BrukerId).SingleOrDefault();
             return userId;
         }
+        public string FultNavn(int brukerId)
+        {
+
+            string navn = (from x in dbs.Brukere
+                          where x.BrukerId == brukerId
+                          select x.Fornavn +" "+x.Etternavn).SingleOrDefault();
+            return navn;
+        }
         public List<ProsjektVis> SjekkTilgangProsjekt (string brukernavn)
         {
             int id = BrukerId(brukernavn);
@@ -293,8 +302,28 @@ namespace Jobbplan.Models
                 return false;
             }
         }
+        public bool SlettRequestSomAdmin (string brukernavn,int id)
+        {
+            Dbkontekst db = new Dbkontekst();
+            var SlettRequest = db.Prosjektrequester.FirstOrDefault(p => p.MeldingId == id);
+            int bid = BrukerId(brukernavn);
 
-        public bool SlettProsjekt (string Brukernavn, int id)
+            if (ErAdmin(brukernavn, SlettRequest.ProsjektId) || ErEier (brukernavn, SlettRequest.ProsjektId))
+            { 
+                try
+                {
+                    db.Prosjektrequester.Remove(SlettRequest);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception feil)
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        public bool SlettProsjekt (string Brukernavn, int id) //Mangler å slette vakter, deltakelser, requester, admin 
         { 
            Dbkontekst db = new Dbkontekst();
             if (ErEier(Brukernavn, id) == true)

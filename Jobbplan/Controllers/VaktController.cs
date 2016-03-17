@@ -17,5 +17,9 @@ namespace Jobbplan.Controllers
         {
             return View();
         }
+        public ActionResult VaktPlanTest()
+        {
+            return View();
+        }
     }
 }

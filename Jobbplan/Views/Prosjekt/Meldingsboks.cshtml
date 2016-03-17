@@ -5,13 +5,14 @@
           slett();
           HentVaktMelding();
           godkjennVakt();
+          slettVaktRequest();
       });
 
 
       function godkjenn() {
           $("#meldinger").on('click', '.Godkjenn', function () {
               var ProsjektG = {
-                  ProsjektId: this.id
+                  ProsjektId: $(this).attr("value")
               };
    
               $.ajax({
@@ -53,7 +54,24 @@
         $('#antallmeldinger').html("Du har <span class='badge'>"+ parseInt(antallMeldinger) + "</span> meldinger")
         $("#meldinger").html(strResult);
  }
-
+    function slettVaktRequest() {
+        $("body").on('click', '#SlettReq', function () {
+            var MeldingId = $(this).attr("value");
+            
+            $.ajax({
+                url: '/api/VaktApi3/' + MeldingId,
+                type: 'DELETE',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert("Ok");
+                   
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        })
+    };
     function slett() {
         $("#meldinger").on('click', '.Avslag', function () {
             var ProsjektG = {
@@ -109,10 +127,11 @@
     }
     function VisAlleVaktReq(melding) {
 
-        var strResult = "";
+        var strResult = "<table class='table table-hover table-bordered'>";
         $.each(melding, function (i, m) {
-            strResult += "<p> "+ m.Tid + " " + m.FraBruker + " " + m.Melding + " "+m.start + m.end +" "+ m.Prosjektnavn + "</p> <button class='GodkjennVakt btn btn-success' id=" + m.MeldingId + " >Godta</button><button class='Avslag btn btn-danger' id=" + m.MeldingId + " >Avslå</button>";
+            strResult += "<th>Sendt</th><th>Fra</th><th>Melding</th><th>Jobb</th><th>+-</th><tr><td> " + m.Tid + "</td><td> " + m.FraBruker + "</td><td> " + m.Melding + " " + m.start + m.end + " <td>" + m.Prosjektnavn + "</td><td> <button class='GodkjennVakt btn btn-success' id='GodtaVakt' value=" + m.MeldingId + " >Godta</button><button class='Avslag btn btn-danger' id='SlettReq' value=" + m.MeldingId + " >Avslå</button></td></tr>";
         });
+        strResult += "</table>";
         $("#vaktEndringer").html(strResult);
     }
   
