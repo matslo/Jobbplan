@@ -129,7 +129,22 @@
 
                 $('#script-warning').show();
             }
-        }
+        },ledige: {
+        url: '/api/VaktApi3/',
+        type: 'GET',
+    dataType: 'json',
+    data: function () { // a function that returns an object
+        return {
+            id: $('#selectProsjekt').val()
+        };
+    },
+    error: function () {
+        $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
+
+        $('#script-warning').show();
+    }
+
+    }
     };
     
     function fullcal() {
@@ -139,7 +154,7 @@
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
-            editable: true,
+            editable: false,
             displayEventEnd: true,
             eventLimit: true, // allow "more" link when too many events
             eventSources: [kalendere.alle, kalendere.brukers],

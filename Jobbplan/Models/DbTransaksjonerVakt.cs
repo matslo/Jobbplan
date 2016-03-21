@@ -7,8 +7,13 @@ namespace Jobbplan.Models
 {
     public class DbTransaksjonerVakt : InterfaceDbTVakt
     {
-        public bool RegistrerVakt (Vaktskjema innVakt)
+        public bool RegistrerVakt (Vaktskjema innVakt, string brukernavn)
         {
+            var dbtp = new DbTransaksjonerProsjekt();
+            if (!dbtp.ErAdmin(brukernavn, innVakt.ProsjektId) || !dbtp.ErEier(brukernavn, innVakt.ProsjektId))
+            {
+                return false;
+            }
             DateTime d1 = Convert.ToDateTime(innVakt.start);
             DateTime d2 = Convert.ToDateTime(innVakt.end);
             int result = DateTime.Compare(d1, d2);
@@ -45,6 +50,7 @@ namespace Jobbplan.Models
                 }
 
             }
+
         }
         public bool LedigVakt (Vaktskjema innVakt)
         {
@@ -54,13 +60,22 @@ namespace Jobbplan.Models
             }
             return false;
         }    
+        public List<Vakt> VakterProsjekt (int id)
+        {
+            Dbkontekst db = new Dbkontekst();
+            var eventer = (from k in db.Vakter
+                           where k.ProsjektId == id
+                           select k
+                           ).ToList();
+            return eventer;
+        }
         public List<Vaktkalender> hentAlleVakter(int id,string brukernavn)
         {
             
             Dbkontekst db = new Dbkontekst();
             var dbtB = new DbTransaksjonerProsjekt();
             var liste = dbtB.SjekkTilgangProsjekt(brukernavn);
-            List<Vakt> vakter = db.Vakter.ToList();
+            List<Vakt> vakter = VakterProsjekt(id);
 
             var eventer = (from k in vakter
                            from s in liste
@@ -89,6 +104,30 @@ namespace Jobbplan.Models
             var eventer = (from k in vakter
                            from s in liste
                            where k.ProsjektId == id && k.ProsjektId == s.Id && k.BrukerId == brukerId
+                           select new Vaktkalender
+                           {
+                               start = k.start.ToString("s"),
+                               end = k.end.ToString("s"),
+                               Brukernavn = dbtB.BrukerNavn(k.BrukerId),
+                               title = k.title,
+                               color = k.color,
+                               VaktId = k.VaktId
+                           }).ToList();
+            return eventer;
+        }
+        public List<Vaktkalender> hentAlleLedigeVakter(int id, string brukernavn)
+        {
+
+            Dbkontekst db = new Dbkontekst();
+            var dbtB = new DbTransaksjonerProsjekt();
+            var liste = dbtB.SjekkTilgangProsjekt(brukernavn);
+            int brukerId = dbtB.BrukerId(brukernavn);
+
+
+            List<Vakt> vakter = db.Vakter.ToList();
+            var eventer = (from k in vakter
+                           from s in liste
+                           where k.ProsjektId == id && k.ProsjektId == s.Id && k.BrukerId == 0
                            select new Vaktkalender
                            {
                                start = k.start.ToString("s"),

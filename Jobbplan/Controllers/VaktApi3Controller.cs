@@ -17,6 +17,11 @@ namespace Jobbplan.Controllers
             string brukernavn = User.Identity.Name;
             return db.visVaktRequester(brukernavn);
         }
+        public List<Vaktkalender> Get(int id)
+        {
+            string brukernavn = User.Identity.Name;
+            return db.hentAlleLedigeVakter(id, brukernavn);
+        }
         public void Post(int id)
         {
             string brukernavn = User.Identity.Name;

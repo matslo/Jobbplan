@@ -19,9 +19,10 @@ namespace Jobbplan.Controllers
         // POST api/KalenderApi
         public HttpResponseMessage Post(Vaktskjema vaktInn)
         {
+            string userName = User.Identity.Name;
             if (ModelState.IsValid)
             {
-                bool ok = db.RegistrerVakt(vaktInn);
+                bool ok = db.RegistrerVakt(vaktInn, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()

@@ -15,7 +15,7 @@
 <script type="text/javascript">
         $(document).ready(function () {
             loggInn();
-          
+        
         });
 
         function loggInn() {
@@ -43,21 +43,27 @@
       
 </script>
 
-<div id="regContainer" class="container">
-    <div id="logginnskjema">
+<div class="container" id="logginnskjema">
+    <div class="row" >
         <img src="~/Content/jp.jpg" class="img-circle" alt="Logo" id="Logo" width="250" height="250"/>
-        <table id="registrerSkjema" class="table-responsive">          
-            <tr><td></td><td><input class="form-control" type="text" id="brukernavntxt" placeholder="Brukernavn" /></td><td></td></tr>
-            <tr><td></td><td><input class="form-control" type="password" id="passordtxt" placeholder="Passord"/></td><td></td></tr>
-            <tr><td></td><td><button id="LogginnKnapp" class="btn btn-primary" style="color:wheat;"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Logg inn</button></td> <td></td></tr>
-        </table>
-        <a id="registrer" href="~/Bruker/RegistrerAPI">Registrer deg</a>
+      </div>       
+   
+    <div class="row">   
+       <input class="form-control" type="text" id="brukernavntxt" placeholder="Brukernavn" />
+    </div>
+    <div class="row">
+        <input class="form-control" type="password" id="passordtxt" placeholder="Passord" />
+    </div>
+    <div class="row">
+        <button id="LogginnKnapp" class="btn btn-primary" style="color:wheat;"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Logg inn</button>
+
+        <a id="registrer" class="btn btn-primary" href="~/Bruker/RegistrerAPI">Registrer deg</a>
     </div>
 </div>
 
 </body>
 </html>
-    
+
 <!--
 @{
     Layout = null;

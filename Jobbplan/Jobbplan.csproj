@@ -128,6 +128,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ajax-loader %281%29.gif" />
+    <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\bakg.jpg" />
     <Content Include="Content\bakgrunn.jpg" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -295,6 +297,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JobbPlanAuthentication.cs" />
+    <Compile Include="Migrations\201603141425405_InitialCreate.cs" />
+    <Compile Include="Migrations\201603141425405_InitialCreate.Designer.cs">
+      <DependentUpon>201603141425405_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Sjef.cs" />
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
@@ -344,6 +351,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\bootstrap\" />
     <Folder Include="Content\fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603141425405_InitialCreate.resx">
+      <DependentUpon>201603141425405_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -14,6 +14,7 @@
               var ProsjektG = {
                   ProsjektId: $(this).attr("value")
               };
+              alert($(this).attr("value"));
    
               $.ajax({
                   url: '/api/ProsjektDeltakelseApi/',
@@ -21,7 +22,8 @@
                   data: JSON.stringify(ProsjektG),
                   contentType: "application/json;charset=utf-8",
                   success: function (data) {
-                      alert("Ok" + ProsjektG.ProsjektId);
+                      alert("Ok");
+                      HentMelding();
                   },
                   error: function (x, y, z) {
                       alert(x + '\n' + y + '\n' + z);
@@ -49,7 +51,7 @@
         
         $.each(melding, function (i, m) {
             antallMeldinger+=antallMeldinger+1;
-            strResult += "<p> " + m.Tid + " " + m.FraBruker + " " + m.Melding + " " + m.Prosjektnavn + "</p> <button class='Godkjenn btn btn-success' id=" + m.ProsjektId + " >Godta</button><button class='Avslag btn btn-danger' id=" + m.ProsjektId + " >Avslå</button>";
+            strResult += "<p> " + m.Tid + " " + m.FraBruker + " " + m.Melding + " " + m.Prosjektnavn + "</p> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button><button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button>";
         });
         $('#antallmeldinger').html("Du har <span class='badge'>"+ parseInt(antallMeldinger) + "</span> meldinger")
         $("#meldinger").html(strResult);
@@ -76,7 +78,7 @@
     function slett() {
         $("#meldinger").on('click', '.Avslag', function () {
             var ProsjektG = {
-                ProsjektId: this.id
+                ProsjektId:$(this).attr("value")
             };
 
             $.ajax({
@@ -85,7 +87,7 @@
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     alert("Ok");
-                    $("#meldinger").fadeOut();
+                    HentVaktMelding();
                 },
                 error: function (x, y, z) {
                     alert(x + '\n' + y + '\n' + z);
@@ -97,7 +99,7 @@
 
     function godkjennVakt() {
         $("#vaktEndringer").on('click', '.GodkjennVakt', function () {
-            var MeldingId = this.id;
+            var MeldingId = $(this).attr("value");
 
             $.ajax({
                 url: '/api/VaktApi3/'+MeldingId,
@@ -105,6 +107,7 @@
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     alert("Ok");
+                    HentVaktMelding();
                 },
                 error: function (x, y, z) {
                     alert(x + '\n' + y + '\n' + z);
