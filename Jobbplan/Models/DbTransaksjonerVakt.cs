@@ -19,8 +19,8 @@ namespace Jobbplan.Models
             // Alternate choice: If the string has been input by an end user, you might  
             // want to format it according to the current culture: 
              IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            DateTime dt1 = DateTime.Parse(innVakt.start, culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            DateTime dt2 = DateTime.Parse(innVakt.end, culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt1 = DateTime.ParseExact(innVakt.start, "dd.MM.yyyy HH:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt2 = DateTime.ParseExact(innVakt.end, "dd.MM.yyyy HH.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
 
          //  DateTime d1 = Convert.ToDateTime(innVakt.start);
                 //Convert.ToDateTime(innVakt.start);
