@@ -17,7 +17,8 @@ function taLedigVakt() {
         });
     })
 };
-    function LeggTilVakt() {
+function LeggTilVakt() {
+    
         var vakt = {
             start: $('#datetimepicker4').val(),
             end: $('#datetimepicker5').val(),
@@ -36,7 +37,7 @@ function taLedigVakt() {
                 $('#calendar').fullCalendar('refetchEvents');
             },
             error: function (x, y, z) {
-                //alert(x + '\n' + y + '\n' + z);
+                alert(x + '\n' + y + '\n' + z);
             }
         });
     }

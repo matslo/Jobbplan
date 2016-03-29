@@ -14,18 +14,27 @@ namespace Jobbplan.Models
             {
                 return false;
             }
+            
 
-            DateTime d1 = Convert.ToDateTime(innVakt.start);
-            DateTime d2 = Convert.ToDateTime(innVakt.end);
-            int result = DateTime.Compare(d1, d2);
+            // Alternate choice: If the string has been input by an end user, you might  
+            // want to format it according to the current culture: 
+             IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            DateTime dt1 = DateTime.Parse(innVakt.start, culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt2 = DateTime.Parse(innVakt.end, culture, System.Globalization.DateTimeStyles.AssumeLocal);
+
+         //  DateTime d1 = Convert.ToDateTime(innVakt.start);
+                //Convert.ToDateTime(innVakt.start);
+          //  DateTime d2 = Convert.ToDateTime(innVakt.end);
+            //Convert.ToDateTime(innVakt.end);
+            int result = DateTime.Compare(dt1, dt2);
             if (result > 0 || result==0)
             {
                 return false;
             }
             var nyVakt = new Vakt()
             {
-               start = Convert.ToDateTime(innVakt.start),
-               end = Convert.ToDateTime(innVakt.end),
+               start = dt1,
+               end = dt2,
                title = innVakt.title,
                Beskrivelse = innVakt.Beskrivelse,
                BrukerId = innVakt.BrukerId,
