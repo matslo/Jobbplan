@@ -1,8 +1,18 @@
 ﻿body {
-    /*background-image: url("stock-photo-93933531.jpg");*/
+    background-image: url("background.jpg");
     background-size:100%;
     background-color: #cccccc;
 
+}
+
+#JobbPlanLogo {
+   text-shadow: 2px 2px #ffffff;
+    /*color: rgb(230,71,89);*/
+    color: rgb(28,168,221);
+    font-size:10.9vw;
+    font-family:'Century Gothic';
+    text-align:center;
+    
 }
 #innhold{
    background-color:rgb(35,39,47);
