@@ -10,10 +10,11 @@ namespace Jobbplan.Models
         public bool RegistrerVakt (Vaktskjema innVakt, string brukernavn)
         {
             var dbtp = new DbTransaksjonerProsjekt();
-            if (!dbtp.ErAdmin(brukernavn, innVakt.ProsjektId) || !dbtp.ErEier(brukernavn, innVakt.ProsjektId))
+            if (!dbtp.ErAdmin(brukernavn, innVakt.ProsjektId) && !dbtp.ErEier(brukernavn, innVakt.ProsjektId))
             {
                 return false;
             }
+
             DateTime d1 = Convert.ToDateTime(innVakt.start);
             DateTime d2 = Convert.ToDateTime(innVakt.end);
             int result = DateTime.Compare(d1, d2);
