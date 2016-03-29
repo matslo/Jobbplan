@@ -27,6 +27,7 @@ function LeggTilVakt() {
             ProsjektId: $('#selectProsjekt').val(),
             BrukerId: $('#brukere').val()
         };
+
         $.ajax({
             url: '/api/VaktApi/',
             type: 'POST',
