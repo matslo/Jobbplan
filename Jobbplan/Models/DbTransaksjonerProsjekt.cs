@@ -46,7 +46,6 @@ namespace Jobbplan.Models
 
             }
         }
-
         public bool LeggTilBrukerRequest(ProsjektrequestSkjema pReq, string brukernavn)
         {
             int bId = BrukerId(brukernavn);
@@ -235,10 +234,10 @@ namespace Jobbplan.Models
         {
             int id = BrukerId(brukernavn);
           
-            int SjekkTilgang = (from x in dbs.Sjefer
+            bool SjekkTilgang = (from x in dbs.Prosjektdeltakelser
                           where x.BrukerId == id && x.ProsjektId == PId
-                          select x.BrukerId).SingleOrDefault();
-            if (SjekkTilgang != 0)
+                          select x.Admin).SingleOrDefault();
+            if (SjekkTilgang == true)
             {
                 return true;
             }
@@ -323,7 +322,7 @@ namespace Jobbplan.Models
             }
             return false;
         }
-        public bool SlettProsjekt (string Brukernavn, int id) //Mangler å slette vakter, deltakelser, requester, admin 
+        public bool SlettProsjekt (string Brukernavn, int id) //Mangler å slette vakter, deltakelser, admin 
         { 
            Dbkontekst db = new Dbkontekst();
             if (ErEier(Brukernavn, id) == true)

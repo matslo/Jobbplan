@@ -44,7 +44,19 @@ namespace Jobbplan.Models
         }
         public bool GiBrukerAdminTilgang(Sjef innBruker)
         {
+            Dbkontekst dbs = new Dbkontekst();
 
+            try
+            {
+                var AdminTilgang = dbs.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektId == innBruker.ProsjektId && p.BrukerId == innBruker.BrukerId);
+                AdminTilgang.Admin = true;
+                dbs.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }/*
             var nySjef = new Sjef()
             {
                 BrukerId = innBruker.BrukerId,
@@ -63,6 +75,22 @@ namespace Jobbplan.Models
                 {
                     return false;
                 }
+            }*/
+        }
+        public bool FjernAdminTilgang(Sjef innBruker)
+        {
+            Dbkontekst dbs = new Dbkontekst();
+
+            try
+            {
+                var AdminTilgang = dbs.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektId == innBruker.ProsjektId && p.BrukerId == innBruker.BrukerId);
+                AdminTilgang.Admin = false;
+                dbs.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
             }
         }
         public List<BrukerListe> HentBrukere(int ProsjektId, string brukernavn)
@@ -70,14 +98,16 @@ namespace Jobbplan.Models
             Dbkontekst dbs = new Dbkontekst();
             DbTransaksjonerProsjekt dbtp = new DbTransaksjonerProsjekt();
 
-            int ProsjektidTilgang = dbtp.BrukerId(brukernavn);
-            Prosjekt funnetTilgang = dbs.Prosjekter.FirstOrDefault
-                   (b => b.EierId == ProsjektidTilgang && b.ProsjektId == ProsjektId);
+            //int ProsjektidTilgang = dbtp.BrukerId(brukernavn);
+            /*Prosjekt funnetTilgang = dbs.Prosjekter.FirstOrDefault
+                   (b => b.EierId == ProsjektidTilgang && b.ProsjektId == ProsjektId);*/
+           
 
-            if (funnetTilgang != null)
+            if (dbtp.ErAdmin(brukernavn, ProsjektId) == true || dbtp.ErEier(brukernavn, ProsjektId) == true)
             {
                 List<BrukerListe> pros = (from p in dbs.Prosjektdeltakelser
                                           from s in dbs.Brukere
+                                      
                                           where p.ProsjektId == ProsjektId && p.BrukerId == s.BrukerId
                                           select
                                               new BrukerListe()
@@ -85,7 +115,9 @@ namespace Jobbplan.Models
                                                   ProsjektDeltakerId = p.ProsjektDeltakerId,
                                                   Navn = s.Fornavn + " " + s.Etternavn,
                                                   BrukerId = p.BrukerId,
-                                                  Brukernavn = s.Email
+                                                  Brukernavn = s.Email,
+                                                  Admin = p.Admin
+                                                  
                                               }).ToList();
                 return pros;
             }

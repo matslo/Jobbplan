@@ -12,6 +12,7 @@ namespace Jobbplan.Models
         public int BrukerId { get; set; }
         public int ProsjektId { get; set; }
         public DateTime Medlemsdato { get; set; }
+        public bool Admin { get; set; }
 
         public virtual Prosjekt Prosjekt { get; set; }
         public virtual dbBruker dbBruker { get; set; }

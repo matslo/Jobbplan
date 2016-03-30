@@ -41,26 +41,44 @@ function LeggTilVakt() {
                 alert(x + '\n' + y + '\n' + z);
             }
         });
-    }
-    function EndreVakt() {
-        $('body').on('click', '.btnEndreVakt', function () {
+}
+function EndreVakt() {
+    $('body').on('click', '.btnEndreVakt', function () {
+        var id = this.id;
+        var endrevakt = {
+            VaktId: id,
+            start: $('#datetimepicker1').val(),
+            end: $('#datetimepicker2').val(),
+            title: $('#eTittel').val(),
+            Beskrivelse: $('#eBeskrivelse').val(),
+            ProsjektId: $('#selectProsjekt').val(),
+            BrukerId: $('#ebrukere').val()
+        };
+        $.ajax({
+            url: '/api/VaktApi2/',
+            type: 'PUT',
+            data: JSON.stringify(endrevakt),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                alert('Godkjent!');
+                $('#calendar').fullCalendar('refetchEvents');
+            },
+            error: function (x, y, z) {
+                //alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    })
+}
+    function SlettVakt() {
+        $('body').on('click', '.btnSlettVakt', function () {
+            
             var id = this.id;
-            var endrevakt = {
-                VaktId: id,
-                start: $('#datetimepicker1').val(),
-                end: $('#datetimepicker2').val(),
-                title: $('#eTittel').val(),
-                Beskrivelse: $('#eBeskrivelse').val(),
-                ProsjektId: $('#selectProsjekt').val(),
-                BrukerId: $('#ebrukere').val()
-            };
             $.ajax({
-                url: '/api/VaktApi2/',
-                type: 'PUT',
-                data: JSON.stringify(endrevakt),
+                url: '/api/VaktApi/'+id,
+                type: 'DELETE',
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert('Godkjent!');
+                    $('#fullCalModal').modal('hide');
                     $('#calendar').fullCalendar('refetchEvents');
                 },
                 error: function (x, y, z) {
@@ -259,6 +277,7 @@ $(document).ready(function () {
     selOnChange();
     taLedigVakt();
     EndreVakt();
+    SlettVakt();
     HentProsjekter();
     fullcal();
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);

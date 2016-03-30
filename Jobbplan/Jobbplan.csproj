@@ -299,6 +299,10 @@
     <Compile Include="Migrations\201603141425405_InitialCreate.Designer.cs">
       <DependentUpon>201603141425405_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603300816373_Mats.cs" />
+    <Compile Include="Migrations\201603300816373_Mats.Designer.cs">
+      <DependentUpon>201603300816373_Mats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Sjef.cs" />
     <Compile Include="Models\Bruker.cs" />
@@ -353,6 +357,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201603141425405_InitialCreate.resx">
       <DependentUpon>201603141425405_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603300816373_Mats.resx">
+      <DependentUpon>201603300816373_Mats.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -43,5 +43,24 @@ namespace Jobbplan.Controllers
             string brukernavn = User.Identity.Name;
             db.taLedigVakt(id, brukernavn);
         }
+        public HttpResponseMessage Delete(int id)
+        {
+            string userName = User.Identity.Name;
+           
+            bool ok = db.SlettVakt(id);
+
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                };
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke opprette vakt")
+            };
+        }
     }
 }

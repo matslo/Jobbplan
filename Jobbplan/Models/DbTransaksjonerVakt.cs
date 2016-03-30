@@ -211,6 +211,21 @@ namespace Jobbplan.Models
                 return false;
             }
         }
+        public bool SlettVakt(int vaktId)
+        {
+            Dbkontekst db = new Dbkontekst();
+            try
+            {
+                var vakt = db.Vakter.FirstOrDefault(p => p.VaktId == vaktId);
+                db.Vakter.Remove(vakt);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
         public List<VaktRequestMelding> visVaktRequester(string Brukernavn)
         {
             var dbt = new DbTransaksjonerProsjekt();

@@ -81,6 +81,7 @@ namespace Jobbplan.Models
         public string Navn { get; set; }
         public string Brukernavn { get; set; }
         public int BrukerId { get; set; }
+        public bool Admin { get; set; }
     }
     public class Profil
     {

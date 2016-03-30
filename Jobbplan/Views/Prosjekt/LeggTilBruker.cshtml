@@ -75,7 +75,27 @@
                 data: JSON.stringify(adminInn),
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert("Ok!");
+                    HentBrukere();
+                },
+                error: function () {
+                    alert("bruker ikke funnet");
+                }
+            });
+        })
+    };
+    function FjernAdminTilgang() {
+        $('body').on('click', '#FjernadminTilgang', function () {
+            var adminInn = {
+                BrukerId: $(this).attr("value"),
+                ProsjektId: $('#selectProsjekt').val()
+            };
+            $.ajax({
+                url: '/api/Sjef/',
+                type: 'PUT',
+                data: JSON.stringify(adminInn),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    HentBrukere();
                 },
                 error: function () {
                     alert("bruker ikke funnet");
@@ -138,7 +158,12 @@
         strResult += "</table>";
         strResult += "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
-            strResult += "<tr><td>" + p.Navn + "</td><td><button type='button' id='adminTilgang' class='btn btn-info' value="+p.BrukerId+"><span class='glyphicon glyphicon-user' aria-hidden='true'></span> Administrator</button></td><td><button type='button' class='btn btn-danger' id='slettBruker' value="+p.ProsjektDeltakerId+"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
+            var knapp = "<button type='button' id='adminTilgang' class='btn btn-info' value=" + p.BrukerId + "><span class='glyphicon glyphicon-plus' aria-hidden='true'></span> Administrator</button>";
+            if (p.Admin == true)
+            {
+                knapp = "<button type='button' id='FjernadminTilgang' class='btn btn-danger' value=" + p.BrukerId + "><span class='glyphicon glyphicon-minus' aria-hidden='true'></span> Administrator</button>";
+            }
+            strResult += "<tr><td>" + p.Navn + "</td><td>" + knapp + "</td><td><button type='button' class='btn btn-danger' id='slettBruker' value=" + p.ProsjektDeltakerId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
         strResult += "</table>";
         $(".brukere").html(strResult);
@@ -157,6 +182,7 @@
         HentRequester();
         slettBrukerFraProsjekt();
         slettRequest();
+        FjernAdminTilgang();
 
         $("#leggTilBruker").click(function () {
             var text = $("#sendemeldingSkjema");
