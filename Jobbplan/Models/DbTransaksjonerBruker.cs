@@ -231,5 +231,51 @@ namespace Jobbplan.Models
                                       }).ToList();
             return pros;
         }
+
+        public bool EndreBrukerInfo(dbBruker EndreBrukerInfo)
+        {
+            Dbkontekst db = new Dbkontekst();
+
+            try
+            {
+                var nyEndreBrukerInfo = db.Brukere.FirstOrDefault(p => p.BrukerId == EndreBrukerInfo.BrukerId);
+
+                nyEndreBrukerInfo.Fornavn = EndreBrukerInfo.Fornavn;
+         /*       if (EndreBrukerInfo.Fornavn != null)
+                {
+                    EndreBrukerInfo.Fornavn = nyEndreBrukerInfo.Fornavn;
+                }
+            
+
+                nyEndreBrukerInfo.Etternavn = EndreBrukerInfo.Etternavn;
+                if (EndreBrukerInfo.Etternavn != null)
+                {
+                    EndreBrukerInfo.Etternavn = nyEndreBrukerInfo.Etternavn;
+                }
+            
+
+                nyEndreBrukerInfo.Adresse = EndreBrukerInfo.Adresse;
+                if (EndreBrukerInfo.Adresse != null)
+                {
+                    EndreBrukerInfo.Adresse = nyEndreBrukerInfo.Adresse;
+                }
+            
+                nyEndreBrukerInfo.Email = EndreBrukerInfo.Email;
+                if (EndreBrukerInfo.Email != null)
+                {
+                    EndreBrukerInfo.Email = nyEndreBrukerInfo.Email;
+                }*/
+              
+
+
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception feil)
+            {
+                return false;
+            }
+        }
+
     }
 }

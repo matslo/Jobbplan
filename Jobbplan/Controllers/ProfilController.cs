@@ -18,5 +18,9 @@ namespace Jobbplan.Controllers
             string brukernavn = User.Identity.Name;
             return db.HentBruker(brukernavn);
         }
+        public void Put(dbBruker EndreBrukerInfo)
+        {
+            db.EndreBrukerInfo(EndreBrukerInfo);
+        }
     }
 }

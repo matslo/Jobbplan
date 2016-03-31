@@ -19,7 +19,7 @@
             });
         }
 
-
+        
         function VisBruker(dbBruker)
         {
             var strResult = "<table class='table table-hover table-bordered'>";
@@ -30,6 +30,41 @@
             $("#brukerliste").html(strResult);
         }
     })
+    
+
+    function EndreBrukerInfo() {
+        var EndreBrukerInfo = {
+            Fornavn: $('#EndreBrukerInfotxt').val()
+        };
+        $.ajax({
+            url: '/api/Profil',
+            type: 'PUT',
+            data: JSON.stringify(EndreBrukerInfo),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                alert('Godkjent!');
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
+
+
+        function VisKnapper() {
+
+            var text = $("#brukerEndring");
+            var text2 = $("#visKnapp")
+            if (text.is(':hidden')) {
+                text.slideDown('500');
+                text2.slideUp('500');
+
+            }
+            else {
+                text.slideUp('500');
+                text2.slideDown('500');
+            }
+        };
     
 
 </script>
@@ -43,3 +78,11 @@
 <h2>MinProfil</h2>
 
 <div id="brukerliste"></div>
+
+<button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre Informasjon</button>
+
+<div id="brukerEndring" style="display:none">
+<input type="text" id="EndreBrukerInfotxt" class="form-control" />
+<button onclick="EndreBrukerInfo()" class="btn btn-info">Endre Informasjon</button>
+<button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button>
+</div>
