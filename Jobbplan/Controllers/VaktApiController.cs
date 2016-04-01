@@ -27,7 +27,7 @@ namespace Jobbplan.Controllers
                 {
                     return new HttpResponseMessage()
                     {
-                        StatusCode = HttpStatusCode.OK,
+                        StatusCode = HttpStatusCode.Created,
                     };
                 }
             }

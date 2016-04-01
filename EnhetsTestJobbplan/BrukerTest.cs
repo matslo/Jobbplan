@@ -7,7 +7,7 @@ using Jobbplan.Controllers;
 using Jobbplan.Models;
 using System.Collections.Generic;
 using System.Transactions;
-
+using Moq;
 
 
 namespace EnhetsTestJobbplan
@@ -17,6 +17,7 @@ namespace EnhetsTestJobbplan
 
     public class BrukerTest
     {
+       
         [TestMethod]
         public void RegistrerTest()
         {
@@ -72,6 +73,7 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Registrer_Post_DB_feil()
         {
+            
             // Arrange
             var controller = new BrukerController();
             var forventetKunde = new Registrer();

@@ -5,6 +5,10 @@ using Jobbplan;
 using Jobbplan.Controllers;
 using System.Web.Mvc;
 using Jobbplan.Models;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Routing;
+
 
 namespace EnhetsTestJobbplan
 {
@@ -21,22 +25,33 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, ""); 
         }
-
-       /* [TestMethod]
+        /*
+        [TestMethod]
         public void IndexLoggInnTest()
         {
-            var controller = new AuthenticateController();
+            // Arrange
+            AuthenticateController controller = new AuthenticateController();
 
-            var forventetKunde = new LogInn()
+            controller.Request = new HttpRequestMessage
             {
-                Brukernavn = "perperper@perper.com",
-                Passord = "12345688"
+                RequestUri = new Uri("http://localhost/api/Authenticate")
             };
+            controller.Configuration = new HttpConfiguration();
+            controller.Configuration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
+
+            controller.RequestContext.RouteData = new HttpRouteData(
+                route: new HttpRoute(),
+                values: new HttpRouteValueDictionary { { "controller", "Authenticate" } });
+
             // Act
-            var result = (RedirectToRouteResult)controller.Post(forventetKunde);
+            var product = new LogInn() { Brukernavn = "matslll@hotmail.com", Passord = "Product1" };
+            var response = controller.Post(product);
 
             // Assert
-            Assert.AreEqual(result.RouteName, "");
+            Assert.AreEqual("http://localhost/api/Authenticate/", response.Headers.Location.AbsoluteUri);
         }*/
     }
 }

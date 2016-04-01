@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Jobbplan.Models
 {
-    interface InterfaceDbTBruker
+    public interface InterfaceDbTBruker
     {
         bool RegistrerBruker(Registrer innBruker);
         bool GiBrukerAdminTilgang(Sjef innBruker);

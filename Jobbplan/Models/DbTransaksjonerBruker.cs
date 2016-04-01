@@ -212,7 +212,6 @@ namespace Jobbplan.Models
             return pros;
 
         }
-
         public List<Profil> HentBruker(string Brukernavn)
         {
             var db = new Dbkontekst();

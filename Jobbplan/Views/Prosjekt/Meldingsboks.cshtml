@@ -130,7 +130,7 @@
     }
     function VisAlleVaktReq(melding) {
 
-        var strResult = "<table class='table table-hover table-bordered'>";
+        var strResult = "<table class='table table-hover table-bordered meldinger'>";
         $.each(melding, function (i, m) {
             strResult += "<th>Sendt</th><th>Fra</th><th>Melding</th><th>Jobb</th><th>+-</th><tr><td> " + m.Tid + "</td><td> " + m.FraBruker + "</td><td> " + m.Melding + " " + m.start + m.end + " <td>" + m.Prosjektnavn + "</td><td> <button class='GodkjennVakt btn btn-success' id='GodtaVakt' value=" + m.MeldingId + " >Godta</button><button class='Avslag btn btn-danger' id='SlettReq' value=" + m.MeldingId + " >Avslå</button></td></tr>";
         });

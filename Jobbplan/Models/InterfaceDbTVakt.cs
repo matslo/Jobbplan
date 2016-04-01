@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Jobbplan.Models
 {
-    interface InterfaceDbTVakt
+    public interface InterfaceDbTVakt
     {
         bool RegistrerVakt(Vaktskjema innVakt, string brukernavn);
         bool LedigVakt(Vaktskjema inn);
