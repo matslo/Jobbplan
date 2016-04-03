@@ -74,11 +74,19 @@
     };
 
 </script>
-@{
-    ViewBag.Title = "Index";
-}
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Left</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Middle</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Right</button>
+    </div>
+</div>
 <br />
-<div class="row" >
+
     <div class="btn-group btn-group-justified " role="group" aria-label="...">
         <div class="btn-group" role="group" >
             <button type="button" class="btn btn-default menyValgProsjekt">Opprett ny jobb<br /><span class="glyphicon glyphicon-plus-sign ikonMeny" aria-hidden="true" ></span></button>
@@ -90,7 +98,7 @@
             <button type="button" class="btn btn-default menyValgProsjekt">Ansatte <br /><span class="glyphicon glyphicon-user ikonMeny" aria-hidden="true"></span></button>
         </div>
     </div>
-</div>
+
 
 <p>Opprett jobb</p>
 <div class='col-sm-3'>

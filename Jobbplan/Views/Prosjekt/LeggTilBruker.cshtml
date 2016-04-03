@@ -105,7 +105,8 @@
     };
    function sendRequest() {
        $('body').on('click', '#sendReq', function () {
-          
+           var $this = $(this);
+           $this.attr('disabled', 'disabled').html("Sender...");
             var reqInn = {
                 TilBruker: $('#TilTxt').val(),
                 ProsjektId: $('#selectProsjekt').val()
@@ -116,11 +117,12 @@
                 data: JSON.stringify(reqInn),
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                   
+                    $this.removeAttr('disabled').html('<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send forespørsel');
                     HentRequester();
                 },
                 error: function () {
                     alert("bruker ikke funnet");
+                    $this.removeAttr('disabled').html('<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send forespørsel');
                 }
             });
          
@@ -228,3 +230,14 @@
 <div class="requester"></div>
 
 
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Left</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Middle</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Right</button>
+    </div>
+</div>

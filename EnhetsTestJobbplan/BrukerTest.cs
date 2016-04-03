@@ -30,6 +30,21 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(result.ViewName, "");
         }
         [TestMethod]
+        public void RegistrerTestOk()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                var controller = new BrukerApiController();
+                var innBruker = new Registrer();
+
+                //Act
+                var result = controller.Post(innBruker);
+                //Assert
+
+                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            }
+        }
+        [TestMethod]
         public void RegistrerFeilValideringTestBruker()
         {
             //Arrange

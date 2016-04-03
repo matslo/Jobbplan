@@ -17,17 +17,21 @@ function taLedigVakt() {
         });
     })
 };
-function LeggTilVakt() {
-    
-        var vakt = {
-            start: $('#datetimepicker4').val(),
-            end: $('#datetimepicker5').val(),
-            title: $('#Tittel').val(),
-            Beskrivelse: $('#Beskrivelse').val(),
-            ProsjektId: $('#selectProsjekt').val(),
-            BrukerId: $('#brukere').val()
-        };
 
+function OpprettVakt() {
+$('body').on('click', '#LeggTilVakt', function () {
+
+    var $this = $(this);
+    $this.attr('disabled', 'disabled').html("Legger til...");
+    var vakt = {
+        start: $('#datetimepicker4').val(),
+        end: $('#datetimepicker5').val(),
+        title: $('#Tittel').val(),
+        Beskrivelse: $('#Beskrivelse').val(),
+        ProsjektId: $('#selectProsjekt').val(),
+        BrukerId: $('#brukere').val()
+    };
+    
         $.ajax({
             url: '/api/VaktApi/',
             type: 'POST',
@@ -35,12 +39,15 @@ function LeggTilVakt() {
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 alert('Godkjent!');
+                $this.removeAttr('disabled').html('Legg til vakt');
                 $('#calendar').fullCalendar('refetchEvents');
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
-            }
+                $this.removeAttr('disabled').html('Legg til vakt');
+           }
         });
+    })
 }
 function EndreVakt() {
     $('body').on('click', '.btnEndreVakt', function () {
@@ -272,7 +279,7 @@ function VisAlleProsjekter(prosjekter) {
 }
     
 $(document).ready(function () {  
-    
+    OpprettVakt();
     HentBrukere();
     selOnChange();
     taLedigVakt();
@@ -321,13 +328,13 @@ $(document).ready(function () {
         var text = $("#vaktRegistrering");
         if (text.is(':hidden')) {
             text.slideDown('500');
-            $("#vaktNed").removeClass('glyphicon glyphicon-menu-up');
-            $("#vaktNed").addClass('glyphicon glyphicon-menu-up');
+            $("#vaktNed").removeClass('glyphicon glyphicon-chevron-down');
+            $("#vaktNed").addClass('glyphicon glyphicon-chevron-up');
         }
         else {
             text.slideUp('500');
-            $("#vaktNed").removeClass('glyphicon glyphicon-menu-up');
-            $("#vaktNed").addClass('glyphicon glyphicon-menu-down');
+            $("#vaktNed").removeClass('glyphicon glyphicon-chevron-up');
+            $("#vaktNed").addClass('glyphicon glyphicon-chevron-down');
         }
     });
 });

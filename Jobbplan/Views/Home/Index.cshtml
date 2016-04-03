@@ -24,8 +24,9 @@
         });
 
         function loggInn() {
-            $("body").on('click', '#LogginnKnapp', function () {
-               
+            $("body").on('click', '#LogginnKnapp', function () {     
+                var $this = $(this);
+                $this.attr('disabled', 'disabled').html("Logger inn...");
                 var loggInn = {
                     Brukernavn: $('#brukernavntxt').val(),
                     Passord: $('#passordtxt').val()
@@ -40,6 +41,7 @@
                     },
                     error: function (data, status) {
                         alert("Ugyldig brukernavn/ passord");
+                        $this.removeAttr('disabled').html('Logg inn');
 
                     }
                 });
@@ -70,31 +72,7 @@
 
 </body>
 </html>
-
-<!--
 @{
     Layout = null;
 }
-@model Jobbplan.Models.LogInn
-<body id="innhold">
-    @Html.ValidationSummary(true, "Ikke gyldig brukernavn og/ eller passord", new { @class = "text-danger" })
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div id="logginnskjema">
-            <img src="~/Content/jp.jpg" alt="Logo" id="Logo" width="267" height="248" />
-             @Html.TextBoxFor(m => m.Brukernavn, new { id = "brukernavntxt", placeholder = "Brukernavn" })
-             @Html.ValidationMessageFor(m => m.Brukernavn, "", new { @class = "text-danger" })
-            <div class="input-group">
-             @Html.PasswordFor(m => m.Passord, new { id = "passordtxt", placeholder = "Passord" })
-             @Html.ValidationMessageFor(m => m.Passord, "", new { @class = "text-danger" })
-            </div>
-
-            <input type="submit" id="LogginnKnapp" value="LOGG INN" />
-            <br />
-            <br />
-            <div id="registrerbruker">@Html.ActionLink("Registrer ny bruker", "RegistrerAPI", "Bruker")</div>
-        </div>
-    }
-    -->
