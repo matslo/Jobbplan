@@ -8,6 +8,7 @@ using Jobbplan.Models;
 using System.Collections.Generic;
 using System.Transactions;
 using Moq;
+using System.Net;
 
 
 namespace EnhetsTestJobbplan
@@ -28,20 +29,40 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, "");
         }
-
-        
         [TestMethod]
-        public void RegistrerFeilValideringTest()
+        public void RegistrerFeilValideringTestBruker()
         {
             //Arrange
-            var controller = new BrukerController();
+            var controller = new BrukerApiController();
             var innBruker = new Registrer();
-            controller.ViewData.ModelState.AddModelError("Fornavn", "Ikke oppgitt fornavn");
+            controller.ModelState.AddModelError("Fornavn","Fornavn må oppgis");
             //Act
-            var result = (ViewResult)controller.Registrer(innBruker);
+            var result = controller.Post(innBruker);
             //Assert
-            Assert.IsTrue(result.ViewData.ModelState.Count == 1);
-            Assert.AreEqual(result.ViewName, "");
+
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
+        }
+        [TestMethod]
+        public void SettInnBrukerOk()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                InterfaceDbTBruker studentRepository = new DbTransaksjonerBruker();
+                Registrer NyBruker = new Registrer()
+                {
+                    Fornavn="Mats",
+                    Etternavn="Lokken",
+                    Adresse="Kirkeveien 67",
+                    Email="tesbruker@hotmail.com",
+                    Postnummer="0364",
+                    Poststed="Oslo",
+                    Telefonnummer="93686771",
+                    BekreftPassord="password"
+                };
+
+                bool actual = studentRepository.RegistrerBruker(NyBruker);
+                Assert.AreEqual(true, actual);
+            }
         }
         /* Skriver inn i Db 
         [TestMethod]
@@ -69,7 +90,7 @@ namespace EnhetsTestJobbplan
             // Assert
             Assert.AreEqual(result.RouteName, "");
         }
-        */
+        
         [TestMethod]
         public void Registrer_Post_DB_feil()
         {
@@ -84,6 +105,6 @@ namespace EnhetsTestJobbplan
 
             // Assert
             Assert.AreEqual(actionResult.ViewName, "");
-        }
+        }¨*/
     }
 }

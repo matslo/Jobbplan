@@ -326,7 +326,6 @@
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\Jobbplan2016.pubxml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\Bruker\Registrer.cshtml" />
     <Content Include="Views\Bruker\LoggetInn.cshtml" />
     <Content Include="Views\Bruker\RegistrerAPI.cshtml" />
     <Content Include="Views\Vakt\Index.cshtml" />

@@ -39,8 +39,6 @@ namespace Jobbplan.Controllers
                     };
                  }
             }
-
-
             return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,

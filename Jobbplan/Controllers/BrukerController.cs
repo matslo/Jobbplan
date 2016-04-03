@@ -16,7 +16,6 @@ namespace Jobbplan.Controllers
         {
             return View();
         }
-
         public ActionResult MinProfil()
         {
             return View();
@@ -34,24 +33,9 @@ namespace Jobbplan.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index","Home");
         }        
-        [HttpPost]
-        public ActionResult Registrer(Registrer innBruker)
-        {
-            if (ModelState.IsValid)
-            {
-                var db = new DbTransaksjonerBruker();
-                bool insertOk = db.RegistrerBruker(innBruker);
-                if (insertOk)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            return View();
-        }       
+       
         public ActionResult Testliste()
         {
-            
             return View();
         }
         [ChildActionOnly]
