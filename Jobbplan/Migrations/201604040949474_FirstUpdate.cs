@@ -3,7 +3,7 @@ namespace Jobbplan.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class FirstUpdate : DbMigration
     {
         public override void Up()
         {
@@ -42,6 +42,7 @@ namespace Jobbplan.Migrations
                         BrukerId = c.Int(nullable: false),
                         ProsjektId = c.Int(nullable: false),
                         Medlemsdato = c.DateTime(nullable: false),
+                        Admin = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.ProsjektDeltakerId)
                 .ForeignKey("dbo.dbBruker", t => t.BrukerId, cascadeDelete: true)
@@ -63,6 +64,21 @@ namespace Jobbplan.Migrations
                 .Index(t => t.dbBruker_BrukerId);
             
             CreateTable(
+                "dbo.Sjef",
+                c => new
+                    {
+                        SjefId = c.Int(nullable: false, identity: true),
+                        BrukerId = c.Int(nullable: false),
+                        ProsjektId = c.Int(nullable: false),
+                        Tittel = c.String(),
+                    })
+                .PrimaryKey(t => t.SjefId)
+                .ForeignKey("dbo.dbBruker", t => t.BrukerId, cascadeDelete: true)
+                .ForeignKey("dbo.Prosjekt", t => t.ProsjektId, cascadeDelete: true)
+                .Index(t => t.BrukerId)
+                .Index(t => t.ProsjektId);
+            
+            CreateTable(
                 "dbo.Prosjektrequest",
                 c => new
                     {
@@ -79,21 +95,6 @@ namespace Jobbplan.Migrations
                 .ForeignKey("dbo.Prosjekt", t => t.ProsjektId, cascadeDelete: true)
                 .Index(t => t.ProsjektId)
                 .Index(t => t.dbBruker_BrukerId);
-            
-            CreateTable(
-                "dbo.Sjef",
-                c => new
-                    {
-                        SjefId = c.Int(nullable: false, identity: true),
-                        BrukerId = c.Int(nullable: false),
-                        ProsjektId = c.Int(nullable: false),
-                        Tittel = c.String(),
-                    })
-                .PrimaryKey(t => t.SjefId)
-                .ForeignKey("dbo.dbBruker", t => t.BrukerId, cascadeDelete: true)
-                .ForeignKey("dbo.Prosjekt", t => t.ProsjektId, cascadeDelete: true)
-                .Index(t => t.BrukerId)
-                .Index(t => t.ProsjektId);
             
             CreateTable(
                 "dbo.Vakt",
@@ -140,10 +141,10 @@ namespace Jobbplan.Migrations
             DropForeignKey("dbo.VaktRequest", "VaktId", "dbo.Vakt");
             DropForeignKey("dbo.VaktRequest", "ProsjektId", "dbo.Prosjekt");
             DropForeignKey("dbo.VaktRequest", "dbBruker_BrukerId", "dbo.dbBruker");
-            DropForeignKey("dbo.Sjef", "ProsjektId", "dbo.Prosjekt");
-            DropForeignKey("dbo.Sjef", "BrukerId", "dbo.dbBruker");
             DropForeignKey("dbo.Prosjektrequest", "ProsjektId", "dbo.Prosjekt");
             DropForeignKey("dbo.Prosjektrequest", "dbBruker_BrukerId", "dbo.dbBruker");
+            DropForeignKey("dbo.Sjef", "ProsjektId", "dbo.Prosjekt");
+            DropForeignKey("dbo.Sjef", "BrukerId", "dbo.dbBruker");
             DropForeignKey("dbo.Prosjektdeltakelse", "ProsjektId", "dbo.Prosjekt");
             DropForeignKey("dbo.Prosjekt", "dbBruker_BrukerId", "dbo.dbBruker");
             DropForeignKey("dbo.Prosjektdeltakelse", "BrukerId", "dbo.dbBruker");
@@ -151,18 +152,18 @@ namespace Jobbplan.Migrations
             DropIndex("dbo.VaktRequest", new[] { "dbBruker_BrukerId" });
             DropIndex("dbo.VaktRequest", new[] { "ProsjektId" });
             DropIndex("dbo.VaktRequest", new[] { "VaktId" });
-            DropIndex("dbo.Sjef", new[] { "ProsjektId" });
-            DropIndex("dbo.Sjef", new[] { "BrukerId" });
             DropIndex("dbo.Prosjektrequest", new[] { "dbBruker_BrukerId" });
             DropIndex("dbo.Prosjektrequest", new[] { "ProsjektId" });
+            DropIndex("dbo.Sjef", new[] { "ProsjektId" });
+            DropIndex("dbo.Sjef", new[] { "BrukerId" });
             DropIndex("dbo.Prosjekt", new[] { "dbBruker_BrukerId" });
             DropIndex("dbo.Prosjektdeltakelse", new[] { "ProsjektId" });
             DropIndex("dbo.Prosjektdeltakelse", new[] { "BrukerId" });
             DropIndex("dbo.dbBruker", new[] { "Poststed_Postnummer" });
             DropTable("dbo.VaktRequest");
             DropTable("dbo.Vakt");
-            DropTable("dbo.Sjef");
             DropTable("dbo.Prosjektrequest");
+            DropTable("dbo.Sjef");
             DropTable("dbo.Prosjekt");
             DropTable("dbo.Prosjektdeltakelse");
             DropTable("dbo.Poststed");

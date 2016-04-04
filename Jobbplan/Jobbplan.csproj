@@ -142,7 +142,6 @@
     <Content Include="Content\jp.jpg" />
     <Content Include="Content\registrer.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\stock-photo-93933531.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Fullcalendar\CHANGELOG.txt" />
     <Content Include="Fullcalendar\CONTRIBUTING.txt" />
@@ -296,13 +295,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JobbPlanAuthentication.cs" />
-    <Compile Include="Migrations\201603141425405_InitialCreate.cs" />
-    <Compile Include="Migrations\201603141425405_InitialCreate.Designer.cs">
-      <DependentUpon>201603141425405_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603300816373_Mats.cs" />
-    <Compile Include="Migrations\201603300816373_Mats.Designer.cs">
-      <DependentUpon>201603300816373_Mats.cs</DependentUpon>
+    <Compile Include="Migrations\201604040949474_FirstUpdate.cs" />
+    <Compile Include="Migrations\201604040949474_FirstUpdate.Designer.cs">
+      <DependentUpon>201604040949474_FirstUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Sjef.cs" />
@@ -355,11 +350,8 @@
     <Folder Include="Content\fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603141425405_InitialCreate.resx">
-      <DependentUpon>201603141425405_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603300816373_Mats.resx">
-      <DependentUpon>201603300816373_Mats.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604040949474_FirstUpdate.resx">
+      <DependentUpon>201604040949474_FirstUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

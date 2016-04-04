@@ -2,7 +2,6 @@
     background-image: url("background.jpg");
     background-size:100%;
     background-color: #cccccc;
-
 }
 
 #JobbPlanLogo {
@@ -28,11 +27,7 @@ input, select, textarea{
     font-family:Arial;
    
 }
-#logginnskjema{
- 
-    width:400px; 
-    margin: 0 auto;
-}
+
 #Logo{
 
 }
@@ -79,6 +74,34 @@ input, select, textarea{
     
      border:solid 2px;
 }
+
+#logginnskjema{
+   margin-top:80px;
+    position:static;
+    width:400px; 
+    
+}
+LogoDiv
+{
+    margin-right:500px;
+    
+    width:400px; 
+}
+#JpLogo{
+    
+    margin-left:60px;
+    margin-bottom:15px;
+    font-size:3vw; 
+    color:rgb(230,71,89);
+}
+#skyLogo{
+    margin-top:48px;
+    margin-left:380px;
+    position:absolute;
+    z-index:-1; 
+    color:rgb(35,39,47);
+    font-size:20vw;
+}
 .cookieAlert 
 {
 position: relative;
@@ -119,3 +142,4 @@ z-index: 0;
 bottom: -22px;
 left: 157px;
 }
+
