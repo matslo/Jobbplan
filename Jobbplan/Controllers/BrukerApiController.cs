@@ -47,7 +47,7 @@ namespace Jobbplan.Controllers
        }
         public void Delete (int id)
         {
-
+            //SLETT BRUKER
         }
        
     }

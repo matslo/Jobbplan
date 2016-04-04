@@ -39,8 +39,8 @@
                     success: function (data) {                     
                         location.href = "/Vakt/Index";
                     },
-                    error: function (data, status) {
-                        alert("Ugyldig brukernavn/ passord");
+                    error: function (data) {
+                        alert(data.responseText);
                         $this.removeAttr('disabled').html('Logg inn');
 
                     }

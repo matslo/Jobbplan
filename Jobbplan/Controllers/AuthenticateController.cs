@@ -25,8 +25,7 @@ namespace Jobbplan.Controllers
                     return new HttpResponseMessage()
                     {
                         StatusCode = HttpStatusCode.OK,
-                    };
-                    
+                    };             
                 }
             }
 
@@ -34,7 +33,7 @@ namespace Jobbplan.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Ikke gyldig")
+                Content = new StringContent("Ikke gyldig brukernavn/ passord")
             };
         }
     }

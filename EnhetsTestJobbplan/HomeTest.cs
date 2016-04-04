@@ -8,6 +8,8 @@ using Jobbplan.Models;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Routing;
+using System.Net;
+using System.Transactions;
 
 
 namespace EnhetsTestJobbplan
@@ -25,33 +27,38 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, ""); 
         }
-        /*
+        
         [TestMethod]
-        public void IndexLoggInnTest()
+        public void IndexLoggInnTestFeilBrukernavnPassord()
         {
-            // Arrange
-            AuthenticateController controller = new AuthenticateController();
-
-            controller.Request = new HttpRequestMessage
+            using (TransactionScope scope = new TransactionScope())
             {
-                RequestUri = new Uri("http://localhost/api/Authenticate")
-            };
-            controller.Configuration = new HttpConfiguration();
-            controller.Configuration.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
+                InterfaceDbTBruker studentRepository = new DbTransaksjonerBruker();
+                LogInn NyBruker = new LogInn()
+                { 
+                    Brukernavn = "test",
+                    Passord = "123123"
+                };
 
-            controller.RequestContext.RouteData = new HttpRouteData(
-                route: new HttpRoute(),
-                values: new HttpRouteValueDictionary { { "controller", "Authenticate" } });
+                bool actual = studentRepository.BrukerIdb(NyBruker);
+                Assert.AreEqual(false, actual);
+            }
+        }
+        [TestMethod]
+        public void IndexBrukerErI_DB_OK()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                InterfaceDbTBruker studentRepository = new DbTransaksjonerBruker();
+                LogInn NyBruker = new LogInn()
+                {
+                    Brukernavn = "gordo@hotmail.com",
+                    Passord = "Mats1414"
+                };
 
-            // Act
-            var product = new LogInn() { Brukernavn = "matslll@hotmail.com", Passord = "Product1" };
-            var response = controller.Post(product);
-
-            // Assert
-            Assert.AreEqual("http://localhost/api/Authenticate/", response.Headers.Location.AbsoluteUri);
-        }*/
+                bool actual = studentRepository.BrukerIdb(NyBruker);
+                Assert.AreEqual(true, actual);
+            }
+        }
     }
 }

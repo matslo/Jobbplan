@@ -45,6 +45,21 @@ namespace EnhetsTestJobbplan
             }
         }
         [TestMethod]
+        public void RegistrerTestBrukerFinnes()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                InterfaceDbTBruker studentRepository = new DbTransaksjonerBruker();
+                Registrer NyBruker = new Registrer()
+                {
+                    Email = "gordo@hotmail.com"        
+                };
+
+                bool actual = studentRepository.RegistrerBruker(NyBruker);
+                Assert.AreEqual(false, actual);
+            }
+        }
+        [TestMethod]
         public void RegistrerFeilValideringTestBruker()
         {
             //Arrange
@@ -79,47 +94,8 @@ namespace EnhetsTestJobbplan
                 Assert.AreEqual(true, actual);
             }
         }
-        /* Skriver inn i Db 
-        [TestMethod]
-        public void RegistrerPostOK()
-        {
-            // Arrange
-            var controller = new BrukerController(new DbTransaksjonerBrukerStub());
-
-            var forventetBruker = new Registrer()
-            {
-                id = 1,
-                Fornavn = "Per",
-                Etternavn = "Olsen",
-                Adresse = "Osloveien 82",
-                Postnummer = "1234",
-                Email = "PerOslo@oslo.com",
-                Telefonnummer = "12345678",
-                Passord = "12345688"
-            };
-            // Act
-            when(controller.Registrer(any()).thenReturn(forventetBruker)
-
-            var result = (RedirectToRouteResult)controller.Registrer(forventetBruker);
-
-            // Assert
-            Assert.AreEqual(result.RouteName, "");
-        }
         
-        [TestMethod]
-        public void Registrer_Post_DB_feil()
-        {
-            
-            // Arrange
-            var controller = new BrukerController();
-            var forventetKunde = new Registrer();
-            forventetKunde.Fornavn = "";
-
-            // Act
-            var actionResult = (ViewResult)controller.Registrer(forventetKunde);
-
-            // Assert
-            Assert.AreEqual(actionResult.ViewName, "");
-        }¨*/
+        
+      
     }
 }
