@@ -19,8 +19,8 @@ namespace Jobbplan.Models
             // Alternate choice: If the string has been input by an end user, you might  
             // want to format it according to the current culture: 
              IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            DateTime dt1 = DateTime.ParseExact(innVakt.start, "dd.MM.yyyy HH.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            DateTime dt2 = DateTime.ParseExact(innVakt.end, "dd.MM.yyyy HH.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt1 = DateTime.ParseExact(innVakt.start, "dd.MM.yyyy H.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt2 = DateTime.ParseExact(innVakt.end, "dd.MM.yyyy H.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
 
          //  DateTime d1 = Convert.ToDateTime(innVakt.start);
                 //Convert.ToDateTime(innVakt.start);
@@ -92,8 +92,8 @@ namespace Jobbplan.Models
                            where k.ProsjektId==id && k.ProsjektId==s.Id
                            select new Vaktkalender
                            {
-                               start = k.start.ToString("s"),
-                               end = k.end.ToString("s"),
+                               start = k.start,
+                               end = k.end,
                                Brukernavn = dbtB.BrukerNavn(k.BrukerId),
                                title = k.title +": "+ dbtB.FultNavn(k.BrukerId),
                                color = k.color,
@@ -110,14 +110,14 @@ namespace Jobbplan.Models
             int brukerId = dbtB.BrukerId(brukernavn);
 
 
-            List<Vakt> vakter = db.Vakter.ToList();
+            List<Vakt> vakter = VakterProsjekt(id);
             var eventer = (from k in vakter
                            from s in liste
                            where k.ProsjektId == id && k.ProsjektId == s.Id && k.BrukerId == brukerId
                            select new Vaktkalender
                            {
-                               start = k.start.ToString("s"),
-                               end = k.end.ToString("s"),
+                               start = k.start,
+                               end = k.end,
                                Brukernavn = dbtB.BrukerNavn(k.BrukerId),
                                title = k.title,
                                color = k.color,
@@ -134,14 +134,14 @@ namespace Jobbplan.Models
             int brukerId = dbtB.BrukerId(brukernavn);
 
 
-            List<Vakt> vakter = db.Vakter.ToList();
+            List<Vakt> vakter = VakterProsjekt(id);
             var eventer = (from k in vakter
                            from s in liste
                            where k.ProsjektId == id && k.ProsjektId == s.Id && k.BrukerId == 0
                            select new Vaktkalender
                            {
-                               start = k.start.ToString("s"),
-                               end = k.end.ToString("s"),
+                               start = k.start,
+                               end = k.end,
                                Brukernavn = dbtB.BrukerNavn(k.BrukerId),
                                title = k.title,
                                color = k.color,

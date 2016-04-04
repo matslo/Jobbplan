@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace Jobbplan.Models
 {
     public class Vakt
@@ -23,8 +24,8 @@ namespace Jobbplan.Models
     }
     public class Vaktkalender
     {
-        public string start { get; set; }
-        public string end { get; set; }
+        public DateTime start { get; set; }
+        public DateTime end { get; set; }
         public string title { get; set; }
         public string color { get; set; }
         public int VaktId { get; set; }
