@@ -9,7 +9,7 @@
       });
 
 
-      function godkjenn() {
+    function godkjenn() {
           $("#meldinger").on('click', '.Godkjenn', function () {
               var ProsjektG = {
                   ProsjektId: $(this).attr("value")
@@ -94,8 +94,6 @@
             });
         })
     };
-
-
     function godkjennVakt() {
         $("#vaktEndringer").on('click', '.GodkjennVakt', function () {
             var MeldingId = $(this).attr("value");
@@ -114,7 +112,6 @@
             });
         })
     };
-
     function HentVaktMelding() {
         $.ajax({
             url: '/api/VaktApi3',

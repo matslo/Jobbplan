@@ -25,7 +25,7 @@ namespace EnhetsTestJobbplan
             //Arrange
             var controller = new BrukerController();
             //Act
-            var result = controller.Registrer() as ViewResult;
+            var result = controller.RegistrerAPI() as ViewResult;
             //Assert
             Assert.AreEqual(result.ViewName, "");
         }

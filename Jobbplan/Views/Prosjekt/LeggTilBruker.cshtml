@@ -19,7 +19,6 @@
             });
         })
     };
-
     function slettBrukerFraProsjekt() {
         $("body").on('click', '#slettBruker', function () {
 
@@ -53,7 +52,6 @@
             }
         });
     };
-
     function VisAlleReq(brukere) {
         var strResult = "<table class='table table-hover table-bordered'>";
         $.each(brukere, function (i, p) {
@@ -103,7 +101,7 @@
             });
         })
     };
-   function sendRequest() {
+    function sendRequest() {
        $('body').on('click', '#sendReq', function () {
            var $this = $(this);
            $this.attr('disabled', 'disabled').html("Sender...");
@@ -128,7 +126,7 @@
          
         })
     };
-   function ProId() {
+    function ProId() {
        var prosjektid = $('#selectProsjekt').val();
        if ($("#selectProsjekt:selected").length) {
            prosjektid = ($(this).find(":selected").val());
@@ -137,8 +135,7 @@
 
        return prosjektid;
    }
-
-   function HentBrukere() {
+    function HentBrukere() {
 
         $.ajax({
             url: '/api/BrukerApi/' + ProId(),
@@ -153,7 +150,6 @@
         });
 
     };
-
     function VisAlle(brukere) {
         var strResult = "<table id='sendemeldingSkjema'  class='table table-hover table-bordered' style='display:none;'>";
         strResult += "<tr ><td><input class='form-control' type='text' id='TilTxt' placeholder='E-post'/></td><td><button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button></td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button></td></tr>";

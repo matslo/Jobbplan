@@ -284,7 +284,6 @@
     <Compile Include="Controllers\ProsjektController.cs" />
     <Compile Include="Controllers\ProsjektDeltakelseApiController.cs" />
     <Compile Include="Controllers\ProsjektreqApiController.cs" />
-    <Compile Include="Controllers\SjefController.cs" />
     <Compile Include="Controllers\TimelisteApiController.cs" />
     <Compile Include="Controllers\TimelisteController.cs" />
     <Compile Include="Controllers\VaktApi2Controller.cs" />
@@ -324,17 +323,12 @@
     <Content Include="Views\Bruker\LoggetInn.cshtml" />
     <Content Include="Views\Bruker\RegistrerAPI.cshtml" />
     <Content Include="Views\Vakt\Index.cshtml" />
-    <Content Include="Views\Bruker\RegistrerAPI1.cshtml" />
     <Content Include="Views\Prosjekt\Index.cshtml" />
-    <Content Include="Views\Prosjekt\LeggTil.cshtml" />
-    <Content Include="Views\Prosjekt\VisProsjekter.cshtml" />
     <Content Include="Views\Prosjekt\prosjektMeny.cshtml" />
     <Content Include="Views\Prosjekt\LeggTilBruker.cshtml" />
     <Content Include="Views\Prosjekt\Meldingsboks.cshtml" />
-    <Content Include="Views\Bruker\brukerListe.cshtml" />
     <Content Include="Views\Bruker\brukerPå.cshtml" />
     <Content Include="Views\Timeliste\Index.cshtml" />
-    <Content Include="Views\Vakt\MinVaktplan.cshtml" />
     <Content Include="Views\Vakt\VaktPlanTest.cshtml" />
     <Content Include="Views\Bruker\MinProfil.cshtml" />
     <None Include="Web.Debug.config">

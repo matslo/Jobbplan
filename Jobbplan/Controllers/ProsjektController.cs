@@ -15,30 +15,7 @@ namespace Jobbplan.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-
-        
-        public ActionResult LeggTil()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult LeggTil(Prosjekt p)
-        {
-
-            string userName = HttpContext.User.Identity.Name;
-            db.RegistrerProsjekt(p, userName);
-            return View();
-        }
-       
-        public ActionResult VisProsjekter()
-        {
-
-            string userName = HttpContext.User.Identity.Name;
-
-            List<ProsjektVis> pro = db.HentProsjekter(userName);
-            return View(pro);
-        }
+        }       
         public ActionResult LeggTilBruker()
         {
             return View();

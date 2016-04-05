@@ -24,20 +24,12 @@ namespace Jobbplan.Controllers
         {
             return View();
         }    
-        public ActionResult Registrer()
-        {
-            return View();
-        }
         public ActionResult Loggut()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index","Home");
         }        
        
-        public ActionResult Testliste()
-        {
-            return View();
-        }
         [ChildActionOnly]
         public ActionResult LoggetInn()// meny
         {
@@ -54,11 +46,6 @@ namespace Jobbplan.Controllers
                 ViewBag.Innlogget = false;
             }
 
-            return PartialView();
-        }
-        [ChildActionOnly]
-        public ActionResult brukerListe()//Liste med ansatte
-        {
             return PartialView();
         }
     }
