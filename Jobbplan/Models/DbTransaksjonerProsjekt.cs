@@ -7,8 +7,7 @@ using System.Web.Http;
 namespace Jobbplan.Models
 {
     public class DbTransaksjonerProsjekt
-    {
-        
+    {       
         Dbkontekst dbs = new Dbkontekst();
         public bool RegistrerProsjekt(Prosjekt innProsjekt, string brukernavn)
         {

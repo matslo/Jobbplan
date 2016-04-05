@@ -14,14 +14,6 @@ namespace Jobbplan.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-        public ActionResult Loggut()
-        {
-            Session["LoggetInn"] = false;
-            //Session["Brukernavn"] = null;
-            return RedirectToAction("Index", "Home");
-
-        }
-        
+        }     
     }
 }

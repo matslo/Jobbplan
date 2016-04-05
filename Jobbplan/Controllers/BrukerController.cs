@@ -12,10 +12,6 @@ namespace Jobbplan.Controllers
     public class BrukerController : Controller
     {   
         // GET: Kunde
-        public ActionResult Index()   
-        {
-            return View();
-        }
         public ActionResult MinProfil()
         {
             return View();
@@ -24,10 +20,10 @@ namespace Jobbplan.Controllers
         {
             return View();
         }    
-        public ActionResult Loggut()
+        public void Loggut()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index","Home");
+            FormsAuthentication.RedirectToLoginPage();
         }        
        
         [ChildActionOnly]

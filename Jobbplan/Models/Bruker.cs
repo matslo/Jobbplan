@@ -61,6 +61,7 @@ namespace Jobbplan.Models
         
             [Required]
             [DataType(DataType.Password)]
+            [StringLength(100, ErrorMessage = "Passordet må være minst seks tegn", MinimumLength = 6)]
             [Display(Name = "Bekreft Passord")]
             public string BekreftPassord { get; set; }
         }

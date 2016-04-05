@@ -17,6 +17,9 @@ namespace EnhetsTestJobbplan
     [TestClass]
     public class HomeTest
     {
+        //Inneholder Tester for HomeController, AuthenticateController, DbtransaksjonerBruker
+
+        //BrukerController
         [TestMethod]
         public void IndexTest()
         {
@@ -27,9 +30,28 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, ""); 
         }
-        
+        //AuthenticateController
         [TestMethod]
-        public void IndexLoggInnTestFeilBrukernavnPassord()
+        public void LoggInn_POST_Ok()
+        {
+          // Test på FormsAuthentication --
+        }
+        [TestMethod]
+        public void LoggInn_Feil_Validering()
+        {
+            //Arrange
+            var controller = new AuthenticateController();
+            var innBruker = new LogInn();
+            controller.ModelState.AddModelError("Brukernavn", "Brukernavn må oppgis");
+            //Act
+            var result = controller.Post(innBruker);
+            //Assert
+
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
+        }
+        //DbtransaksjonerBruker
+        [TestMethod]
+        public void Bruker_Er_Ikke_I_DB()
         {
             using (TransactionScope scope = new TransactionScope())
             {
@@ -45,20 +67,22 @@ namespace EnhetsTestJobbplan
             }
         }
         [TestMethod]
-        public void IndexBrukerErI_DB_OK()
+        public void Bruker_Er_I_DB_OK()
         {
             using (TransactionScope scope = new TransactionScope())
             {
-                InterfaceDbTBruker studentRepository = new DbTransaksjonerBruker();
+                InterfaceDbTBruker brukerTransaksjoner = new DbTransaksjonerBruker();
                 LogInn NyBruker = new LogInn()
                 {
                     Brukernavn = "gordo@hotmail.com",
                     Passord = "Mats1414"
                 };
 
-                bool actual = studentRepository.BrukerIdb(NyBruker);
+                bool actual = brukerTransaksjoner.BrukerIdb(NyBruker);
                 Assert.AreEqual(true, actual);
             }
         }
+   
+
     }
 }

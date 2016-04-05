@@ -12,10 +12,26 @@ namespace Jobbplan.Controllers
     public class ProsjektDeltakelseApiController : ApiController
     {
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
-        public void Post(ProsjektrequestMelding pid )
+        public HttpResponseMessage Post(ProsjektrequestMelding pid )
         {
-            string username = User.Identity.Name;
-            db.RegistrerProsjektdeltakelse(pid, username);
+            string userName = User.Identity.Name;
+            if (ModelState.IsValid)
+            {
+                bool ok = db.RegistrerProsjektdeltakelse(pid, userName);
+                if (ok)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.Created,
+                    };
+                }
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke sende melding")
+            };
+          
         }
         public void Delete(int id)
         {

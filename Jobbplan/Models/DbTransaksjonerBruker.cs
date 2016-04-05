@@ -56,26 +56,7 @@ namespace Jobbplan.Models
             catch (Exception feil)
             {
                 return false;
-            }/*
-            var nySjef = new Sjef()
-            {
-                BrukerId = innBruker.BrukerId,
-                ProsjektId = innBruker.ProsjektId
-            };
-
-            using (var db = new Dbkontekst())
-            {
-                try
-                {
-                    db.Sjefer.Add(nySjef);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch (Exception feil)
-                {
-                    return false;
-                }
-            }*/
+            }
         }
         public bool FjernAdminTilgang(Sjef innBruker)
         {
@@ -230,7 +211,6 @@ namespace Jobbplan.Models
                                       }).ToList();
             return pros;
         }
-
         public bool EndreBrukerInfo(dbBruker EndreBrukerInfo)
         {
             Dbkontekst db = new Dbkontekst();
