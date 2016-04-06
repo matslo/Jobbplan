@@ -23,7 +23,7 @@
         $("body").on('click', '#slettBruker', function () {
 
            var ProsjektDeltakerId = $(this).attr("value")
-            
+           if (confirm('Du er i ferd med å slette '+ +'. Du vil miste all data tilknyttet denne jobben')) {
             $.ajax({
                 url: '/api/ProsjektDeltakelseApi/' + ProsjektDeltakerId,
                 type: 'DELETE',
@@ -35,11 +35,10 @@
                 error: function (x, y, z) {
                     alert(x + '\n' + y + '\n' + z);
                 }
-            });
+            });}
         })
     };
     function HentRequester() {
-
         $.ajax({
             url: '/api/ProsjektreqApi/' + ProId(),
             type: 'GET',
@@ -48,7 +47,6 @@
                 VisAlleReq(data);
             },
             error: function (x, y, z) {
-
             }
         });
     };
@@ -193,13 +191,10 @@
             }
         });
     });
-
 </script>
 <h2>Legg til bruker</h2>
-    <div class="container">
-       
+    <div class="container">     
         <div class="row">
-
             <div class='col-sm-3'>
                 <p>Jobb</p>
                 <select class="form-control" id="selectProsjekt">
@@ -226,14 +221,3 @@
 <div class="requester"></div>
 
 
-<div class="btn-group btn-group-justified" role="group" aria-label="...">
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default">Left</button>
-    </div>
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default">Middle</button>
-    </div>
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default">Right</button>
-    </div>
-</div>

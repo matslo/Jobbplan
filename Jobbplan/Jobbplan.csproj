@@ -284,6 +284,7 @@
     <Compile Include="Controllers\ProsjektController.cs" />
     <Compile Include="Controllers\ProsjektDeltakelseApiController.cs" />
     <Compile Include="Controllers\ProsjektreqApiController.cs" />
+    <Compile Include="Controllers\SjefController.cs" />
     <Compile Include="Controllers\TimelisteApiController.cs" />
     <Compile Include="Controllers\TimelisteController.cs" />
     <Compile Include="Controllers\VaktApi2Controller.cs" />
