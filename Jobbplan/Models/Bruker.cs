@@ -86,6 +86,7 @@ namespace Jobbplan.Models
     }
     public class Profil
     {
+        public int id { get; set; }
         public string Fornavn { get; set; }
         public string Etternavn { get; set; }
         public string Email { get; set; }

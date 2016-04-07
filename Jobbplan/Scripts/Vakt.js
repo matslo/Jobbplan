@@ -42,8 +42,8 @@ $('body').on('click', '#LeggTilVakt', function () {
                 $this.removeAttr('disabled').html('Legg til vakt');
                 $('#calendar').fullCalendar('refetchEvents');
             },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+            error: function (data) {
+                alert(data.responseText);
                 $this.removeAttr('disabled').html('Legg til vakt');
            }
         });

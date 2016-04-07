@@ -1,5 +1,4 @@
 ﻿<script type="text/javascript">
-
     function LeggTilProsjekt() {
         var prosjekt = {
             Arbeidsplass: $('#NavnTxt').val()
@@ -14,8 +13,8 @@
                 alert('Godkjent!');
 
             },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+            error: function (data) {
+                alert(data.responseText);
             }
         });
     }

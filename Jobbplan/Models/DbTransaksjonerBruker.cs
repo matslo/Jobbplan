@@ -204,23 +204,26 @@ namespace Jobbplan.Models
                                    select
                                       new Profil()
                                       {
+                                          id = p.BrukerId,
                                           Fornavn = p.Fornavn,
                                           Etternavn = p.Etternavn,
                                           Email = p.Email,
-                                          Adresse = p.Adresse,
+                                          Adresse = p.Adresse
+                                          
                                       }).ToList();
             return pros;
         }
-        public bool EndreBrukerInfo(dbBruker EndreBrukerInfo)
+        public bool EndreBrukerInfo(Profil EndreBrukerInfo, string brukernavn)
         {
+            var dbtp = new DbTransaksjonerProsjekt();
             Dbkontekst db = new Dbkontekst();
-
+            int id = dbtp.BrukerId(brukernavn);
             try
             {
-                var nyEndreBrukerInfo = db.Brukere.FirstOrDefault(p => p.BrukerId == EndreBrukerInfo.BrukerId);
+                var nyEndreBrukerInfo = db.Brukere.FirstOrDefault(p => p.BrukerId == EndreBrukerInfo.id);
 
                 nyEndreBrukerInfo.Fornavn = EndreBrukerInfo.Fornavn;
-         /*       if (EndreBrukerInfo.Fornavn != null)
+                if (EndreBrukerInfo.Fornavn != null)
                 {
                     EndreBrukerInfo.Fornavn = nyEndreBrukerInfo.Fornavn;
                 }
@@ -243,7 +246,7 @@ namespace Jobbplan.Models
                 if (EndreBrukerInfo.Email != null)
                 {
                     EndreBrukerInfo.Email = nyEndreBrukerInfo.Email;
-                }*/
+                }
               
 
 

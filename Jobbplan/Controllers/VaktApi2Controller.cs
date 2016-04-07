@@ -20,7 +20,8 @@ namespace Jobbplan.Controllers
       
         public void Put(Vaktskjema endrevakt)
         {
-           db.EndreVakt(endrevakt);
+            string userName = User.Identity.Name;
+           db.EndreVakt(endrevakt, userName);
         }
     }
 }

@@ -50,5 +50,25 @@ namespace Jobbplan.Controllers
                 Content = new StringContent("Feil")
             };
         }
+        public HttpResponseMessage Delete(int id)
+        {
+            var dbtp = new DbTransaksjonerProsjekt();
+            string userName = User.Identity.Name;
+
+            bool ok = dbtp.SlettRequestSomAdmin(userName,id);
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Created,
+                };
+            }
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Feil")
+            };
+        }
     }
 }

@@ -4,13 +4,12 @@
 <script type="text/javascript">
     function slettRequest() {
         $("body").on('click', '#slettRequest', function () {
-            var MeldingId = $(this).attr("value");
+            var id = $(this).attr("value");
             $.ajax({
-                url: '/api/Sjef/' + MeldingId,
+                url: '/api/Sjef/' + id,
                 type: 'DELETE',
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert("Ok");
                     HentRequester();
                 },
                 error: function (x, y, z) {
@@ -73,8 +72,8 @@
                 success: function (data) {
                     HentBrukere();
                 },
-                error: function () {
-                    alert("bruker ikke funnet");
+                error: function (data) {
+                    alert(data.responseText);
                 }
             });
         })
@@ -93,8 +92,8 @@
                 success: function (data) {
                     HentBrukere();
                 },
-                error: function () {
-                    alert("bruker ikke funnet");
+                error: function (data) {
+                    alert(data.responseText);
                 }
             });
         })
@@ -217,7 +216,8 @@
 </button>
 <div class="brukere"></div>
 <hr />
-<h2>Venter på godkjenning</h2>
+<h2>Venter på godkjenning:</h2>
+
 <div class="requester"></div>
 
 

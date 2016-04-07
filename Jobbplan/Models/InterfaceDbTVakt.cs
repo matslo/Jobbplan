@@ -13,9 +13,12 @@ namespace Jobbplan.Models
         List<Vaktkalender> hentAlleVakter(int id, string b);
         List<Vaktkalender> hentAlleVakterBruker(int id, string brukernavn);
         bool taLedigVakt(int id, string brukernavn);
-        bool EndreVakt(Vaktskjema EndreVakt);
+        bool EndreVakt(Vaktskjema EndreVakt, string brukernavn);
+        bool SlettVakt(int vaktId, string brukernavn);
         List<VaktRequestMelding> visVaktRequester(string Brukernavn);
         bool requestOk(int id);
+        bool SlettVaktRequest(int Meldingid);
+
 
     }
 }

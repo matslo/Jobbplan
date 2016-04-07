@@ -47,7 +47,7 @@ namespace Jobbplan.Controllers
         {
             string userName = User.Identity.Name;
            
-            bool ok = db.SlettVakt(id);
+            bool ok = db.SlettVakt(id, userName);
 
             if (ok)
             {
@@ -59,7 +59,7 @@ namespace Jobbplan.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke opprette vakt")
+                Content = new StringContent("Kunne ikke slette vakt")
             };
         }
     }

@@ -179,13 +179,17 @@ namespace Jobbplan.Models
                 return false;
             }
         }
-        public bool EndreVakt(Vaktskjema EndreVakt)
+        public bool EndreVakt(Vaktskjema EndreVakt, string brukernavn)
         {
             Dbkontekst db = new Dbkontekst();
-
+            var NyEndreVakt = db.Vakter.FirstOrDefault(p => p.VaktId == EndreVakt.Vaktid);
+            var dbtp = new DbTransaksjonerProsjekt();
+            if (!dbtp.ErAdmin(brukernavn, NyEndreVakt.ProsjektId) && !dbtp.ErEier(brukernavn, NyEndreVakt.ProsjektId))
+            {
+                return false;
+            }         
             try
             {
-                var NyEndreVakt = db.Vakter.FirstOrDefault(p => p.VaktId == EndreVakt.Vaktid);
                 NyEndreVakt.Beskrivelse = EndreVakt.Beskrivelse;
                 NyEndreVakt.BrukerId = EndreVakt.BrukerId;
                 NyEndreVakt.start = Convert.ToDateTime(EndreVakt.start);
@@ -211,13 +215,18 @@ namespace Jobbplan.Models
                 return false;
             }
         }
-        public bool SlettVakt(int vaktId)
+        public bool SlettVakt(int vaktId, string brukernavn)
         {
             Dbkontekst db = new Dbkontekst();
-            try
+            var slettVakt = db.Vakter.FirstOrDefault(p => p.VaktId == vaktId);
+            var dbtp = new DbTransaksjonerProsjekt();
+            if (!dbtp.ErAdmin(brukernavn, slettVakt.ProsjektId) && !dbtp.ErEier(brukernavn, slettVakt.ProsjektId))
             {
-                var vakt = db.Vakter.FirstOrDefault(p => p.VaktId == vaktId);
-                db.Vakter.Remove(vakt);
+                return false;
+            }
+            try
+            {            
+                db.Vakter.Remove(slettVakt);
                 db.SaveChanges();
                 return true;
             }

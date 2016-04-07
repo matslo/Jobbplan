@@ -42,7 +42,7 @@ namespace Jobbplan.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sette inn kunden i DB")
+                Content = new StringContent("Kunne ikke sette inn databasen")
             };
        }
         public void Delete (int id)

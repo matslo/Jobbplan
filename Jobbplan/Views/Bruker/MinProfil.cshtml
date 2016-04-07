@@ -7,8 +7,8 @@
         function HentBruker()	{
             $.support.cors	=	true;	
             $.ajax({
-                url:	'/api/Profil',
-                type:	'GET',
+                url:'/api/Profil',
+                type:'GET',
                 dataType:	'json',
                 success:	function (data)	{
                     VisBruker(data);
@@ -34,7 +34,10 @@
 
     function EndreBrukerInfo() {
         var EndreBrukerInfo = {
-            Fornavn: $('#EndreBrukerInfotxt').val()
+            Fornavn: $('#FornavnTxt').val(),
+            Etternavn: $('#EtternavnTxt').val(),
+            Adresse: $('#AdresseTxt').val(),
+            Email: $('#EmailTxt').val()
         };
         $.ajax({
             url: '/api/Profil',
@@ -82,7 +85,10 @@
 <button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre Informasjon</button>
 
 <div id="brukerEndring" style="display:none">
-<input type="text" id="EndreBrukerInfotxt" class="form-control" />
+   Fornavn <input type="text" id="FornavnTxt" class="form-control"/>
+ Etternavn   <input type="text" id="EtternavnTxt" class="form-control"/>
+  Adresse  <input type="text" id="AdresseTxtTxt" class="form-control"/>
+   Email: <input type="text" id="EmailTxt" class="form-control"/>  
 <button onclick="EndreBrukerInfo()" class="btn btn-info">Endre Informasjon</button>
 <button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button>
 </div>
