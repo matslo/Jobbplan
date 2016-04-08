@@ -65,6 +65,33 @@ namespace EnhetsTestJobbplan
 
             Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
-    }
 
+
+
+        // DbtransaksjonerProsjekt
+        [TestMethod]
+        public void Registrer_Prosjekt_OK()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+               //  DBtp = new DbTransaksjonerProsjekt();
+                Vaktskjema vakt= new Vaktskjema()
+                {
+                    start = "22.12.2012 16.43",
+                    end = "22.12.2012 15.43",
+                    title = "Dagvakt",
+                    Beskrivelse = "Opplæring",
+                    BrukerId = 1,
+                    ProsjektId = 1
+                };
+                bool id = studentRepository.RegistrerVakt(vakt, "mats_loekken@hotmail.com");
+                Assert.AreEqual(false, id);
+            }
+        }
+
+
+
+
+
+    }
 }

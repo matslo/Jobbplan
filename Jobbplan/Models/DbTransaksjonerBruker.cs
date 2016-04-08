@@ -258,6 +258,5 @@ namespace Jobbplan.Models
                 return false;
             }
         }
-
     }
 }

@@ -300,6 +300,7 @@
       <DependentUpon>201604040949474_FirstUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\InterfaceDbTProsjekt.cs" />
     <Compile Include="Models\Sjef.cs" />
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />

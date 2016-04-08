@@ -122,7 +122,27 @@ namespace EnhetsTestJobbplan
                 Assert.AreEqual(true, actual);
             }
         }
-        
+        [TestMethod]
+        public void Hent_Bruker_Moq()
+        {
+
+            var _mock = new Mock<InterfaceDbTBruker>();
+            var brukere = new List<Profil>() { new Profil()
+            {
+                Email = "mats_loekken@hotmail.com",
+                Fornavn = "Mats",
+                Etternavn = "Løkken"
+            } };
+            _mock.Setup(x => x.HentBruker("mats_loekken@hotmail.com")).Returns(brukere);
+            _mock.Verify(framework => framework.HentBruker("mats_loekken@hotmail.com"), Times.AtMostOnce());
+
+            InterfaceDbTBruker lovable = _mock.Object;
+            var download = lovable.HentBruker("mats_loekken@hotmail.com");
+
+            Assert.AreEqual(download, brukere);
+
+        }
+
 
 
     }

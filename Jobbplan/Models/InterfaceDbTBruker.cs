@@ -15,6 +15,9 @@ namespace Jobbplan.Models
         bool BrukerIdb(LogInn innBruker);
         bool EmailDb(Registrer innBruker);
         int AntallMeldinger(string brukernavn);
+        List<Timeliste> HentVakter(string Brukernavn);
+        List<Profil> HentBruker(string Brukernavn);
+        bool EndreBrukerInfo(Profil EndreBrukerInfo, string brukernavn);
 
     }
 }

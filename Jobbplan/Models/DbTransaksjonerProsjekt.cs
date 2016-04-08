@@ -13,9 +13,7 @@ namespace Jobbplan.Models
         {
             Dbkontekst dbs = new Dbkontekst();
 
-            int userId = (from x in dbs.Brukere
-                          where x.Email == brukernavn
-                          select x.BrukerId).SingleOrDefault();
+            int userId = BrukerId(brukernavn);
 
             var nyProsjekt = new Prosjekt()
             {          
