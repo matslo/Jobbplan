@@ -1,5 +1,7 @@
 ﻿using System;
+using Jobbplan.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Web.Mvc;
 
 namespace EnhetsTestJobbplan
 {
@@ -7,8 +9,15 @@ namespace EnhetsTestJobbplan
     public class TimelisteTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Index_ViewName()
         {
+            //Arrange
+            var controller = new TimelisteController();
+            //Act
+            var result = controller.Index() as ViewResult;
+            //Assert
+            Assert.AreEqual(result.ViewName, "");
         }
     }
+}
 }

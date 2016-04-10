@@ -22,10 +22,26 @@ namespace Jobbplan.Controllers
             string brukernavn = User.Identity.Name;
             return db.hentAlleLedigeVakter(id, brukernavn);
         }
-        public void Post(int id)
+        public HttpResponseMessage Post(int id)
         {
             string brukernavn = User.Identity.Name;
-            db.taLedigVakt(id, brukernavn);
+           
+            if (ModelState.IsValid)
+            {
+                bool ok = db.taLedigVakt(id, brukernavn);
+                if (ok)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.Created,
+                    };
+                }
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke ta ledig vakt")
+            };
         }
         public bool Put(int id)
         {

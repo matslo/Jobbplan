@@ -22,15 +22,26 @@ namespace Jobbplan.Controllers
             return db.VisRequesterForProsjekt(id,UserName);
         }
 
-        public IHttpActionResult Post(ProsjektrequestSkjema reqInn)
+        public HttpResponseMessage Post(ProsjektrequestSkjema reqInn)
         {
             string UserName = User.Identity.Name;
-            bool oki= db.LeggTilBrukerRequest(reqInn, UserName);
-            if (oki)
+            if (ModelState.IsValid)
             {
-                return Ok(oki);
+                bool ok = db.LeggTilBrukerRequest(reqInn, UserName);
+                if (ok)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.Created,
+                    };
+                }
             }
-            return NotFound();
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke sende melding")
+            };
+           
         }
          
         public List<ProsjektrequestMelding> Delete(int id)

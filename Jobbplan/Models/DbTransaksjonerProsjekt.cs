@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace Jobbplan.Models
 {
-    public class DbTransaksjonerProsjekt
+    public class DbTransaksjonerProsjekt : InterfaceDbTProsjekt
     {       
         Dbkontekst dbs = new Dbkontekst();
         public bool RegistrerProsjekt(Prosjekt innProsjekt, string brukernavn)
@@ -14,7 +14,10 @@ namespace Jobbplan.Models
             Dbkontekst dbs = new Dbkontekst();
 
             int userId = BrukerId(brukernavn);
-
+            if (innProsjekt.Arbeidsplass == null)
+            {
+                return false;
+            }
             var nyProsjekt = new Prosjekt()
             {          
                 Arbeidsplass = innProsjekt.Arbeidsplass,
@@ -76,36 +79,7 @@ namespace Jobbplan.Models
                 }
             }
             return false;
-        }
-        public bool RegistrerProsjektApi(Prosjekt innProsjekt, string brukernavn)
-        {
-
-            int userId = BrukerId(brukernavn);
-            var nyProsjekt = new Prosjekt()
-            {
-
-                Arbeidsplass = innProsjekt.Arbeidsplass,
-                EierId = userId
-
-            };
-
-            using (var db = new Dbkontekst())
-            {
-                try
-                {
-
-                    db.Prosjekter.Add(nyProsjekt);
-                    db.SaveChanges();
-                    return true;
-
-                }
-                catch (Exception feil)
-                {
-                    return false;
-                }
-
-            }
-        }
+        }     
         public bool RegistrerProsjektdeltakelse(ProsjektrequestMelding pid,string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();

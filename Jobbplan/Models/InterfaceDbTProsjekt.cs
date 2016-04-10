@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Jobbplan.Models
 {
-    interface InterfaceDbTProsjekt
+    public interface InterfaceDbTProsjekt
     {
         bool RegistrerProsjekt(Prosjekt innProsjekt, string brukernavn);
         bool LeggTilBrukerRequest(ProsjektrequestSkjema pReq, string brukernavn);
-        bool RegistrerProsjektApi(Prosjekt innProsjekt, string brukernavn);
         bool RegistrerProsjektdeltakelse(ProsjektrequestMelding pid, string brukernavn);
         List<ProsjektrequestMelding> VisRequester(string Brukernavn); 
         List<ProsjektrequestMelding> VisRequesterForProsjekt(int id, string brukernavn);

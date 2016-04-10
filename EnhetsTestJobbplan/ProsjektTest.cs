@@ -74,21 +74,27 @@ namespace EnhetsTestJobbplan
         {
             using (TransactionScope scope = new TransactionScope())
             {
-               //  DBtp = new DbTransaksjonerProsjekt();
-                Vaktskjema vakt= new Vaktskjema()
+                InterfaceDbTProsjekt DBtp = new DbTransaksjonerProsjekt();
+                var nyProsjekt = new Prosjekt()
                 {
-                    start = "22.12.2012 16.43",
-                    end = "22.12.2012 15.43",
-                    title = "Dagvakt",
-                    Beskrivelse = "Opplæring",
-                    BrukerId = 1,
-                    ProsjektId = 1
-                };
-                bool id = studentRepository.RegistrerVakt(vakt, "mats_loekken@hotmail.com");
-                Assert.AreEqual(false, id);
+                   Arbeidsplass = "kiwi"
+                 };
+                bool actual = DBtp.RegistrerProsjekt( nyProsjekt, "mats_loekken@hotmail.com");
+                Assert.AreEqual(true, actual);
             }
         }
+        [TestMethod]
+        public void Registrer_Prosjekt_Mangler_Arbeidplass()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                InterfaceDbTProsjekt DBtp = new DbTransaksjonerProsjekt();
+                var nyProsjekt = new Prosjekt();
 
+                bool actual = DBtp.RegistrerProsjekt(nyProsjekt, "mats_loekken@hotmail.com");
+                Assert.AreEqual(false, actual);
+            }
+        }
 
 
 
