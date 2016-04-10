@@ -18,6 +18,7 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, "");
         }
+
     }
 }
-}
+

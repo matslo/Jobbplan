@@ -98,8 +98,7 @@ namespace EnhetsTestJobbplan
                 bool actual = studentRepository.RegistrerBruker(NyBruker);
                 Assert.AreEqual(false, actual);
             }
-        }
-       
+        }    
         [TestMethod]
         public void Sett_Inn_Bruker_I_Db_Ok()
         {
@@ -122,27 +121,81 @@ namespace EnhetsTestJobbplan
                 Assert.AreEqual(true, actual);
             }
         }
+       
         [TestMethod]
-        public void Hent_Bruker_Moq()
+        public void Hent_Timeliste_Moq()
         {
-
             var _mock = new Mock<InterfaceDbTBruker>();
-            var brukere = new List<Profil>() { new Profil()
+
+            var timer = new List<Timeliste>() { new Timeliste()
             {
+                PeriodeStart = Convert.ToDateTime("22.12.2012 16.43"),
+                PeriodeSlutt =  Convert.ToDateTime("22.12.2012 16.43")
+             }};
+
+            _mock.Setup(x => x.HentVakter(It.IsAny<string>())).Returns(timer);
+            _mock.Verify(framework => framework.HentVakter("mats_loekken@hotmail.com"), Times.AtMostOnce());
+
+            InterfaceDbTBruker lovable = _mock.Object;
+            var actual = lovable.HentVakter("mats_loekken@hotmail.com");
+
+            Assert.AreEqual(timer,actual);
+        }
+
+        [TestMethod]
+        public void Hent_BrukerInfo_Moq()
+        {
+            var _mock = new Mock<InterfaceDbTBruker>();
+
+            var info = new List<Profil>() { new Profil()
+            {
+                id = 1,
+                Fornavn = "mats",
+                Etternavn = "Løkken",
                 Email = "mats_loekken@hotmail.com",
-                Fornavn = "Mats",
-                Etternavn = "Løkken"
-            } };
-            _mock.Setup(x => x.HentBruker("mats_loekken@hotmail.com")).Returns(brukere);
+                Adresse = "Kirkeveien 67"
+             }};
+
+            _mock.Setup(x => x.HentBruker(It.IsAny<string>())).Returns(info);
             _mock.Verify(framework => framework.HentBruker("mats_loekken@hotmail.com"), Times.AtMostOnce());
 
             InterfaceDbTBruker lovable = _mock.Object;
-            var download = lovable.HentBruker("mats_loekken@hotmail.com");
+            var actual = lovable.HentBruker("mats_loekken@hotmail.com");
 
-            Assert.AreEqual(download, brukere);
+            Assert.AreEqual(info, actual);
+        }
+        [TestMethod]
+        public void Gi_AdminTilgang_Moq()
+        {
+            var _mock = new Mock<InterfaceDbTBruker>();
 
+            Sjef adminBruker = new Sjef()
+            {
+                 ProsjektId= 1,
+                 BrukerId = 2
+            };
+     
+            _mock.Setup(x => x.GiBrukerAdminTilgang(adminBruker,It.IsAny<string>())).Returns(true);
+            _mock.Verify(framework => framework.GiBrukerAdminTilgang(adminBruker, "mats_loekken@hotmail.com"), Times.AtMostOnce());
+
+            InterfaceDbTBruker lovable = _mock.Object;
+            var actual = lovable.GiBrukerAdminTilgang(adminBruker, "mats_loekken@hotmail.com");
+
+            Assert.AreEqual(true, actual);
         }
 
+        [TestMethod]
+        public void Gi_AdminTilgang_Feil()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                InterfaceDbTBruker Bruker = new DbTransaksjonerBruker();
+                Sjef tomBruker = new Sjef();
+
+                bool actual = Bruker.GiBrukerAdminTilgang(tomBruker,"");
+                Assert.AreEqual(false, actual);
+            }
+        }
 
 
     }

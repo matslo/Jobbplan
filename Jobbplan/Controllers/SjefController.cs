@@ -16,7 +16,7 @@ namespace Jobbplan.Controllers
         {
             string userName = User.Identity.Name;
           
-                bool ok = db.GiBrukerAdminTilgang(innBruker);
+                bool ok = db.GiBrukerAdminTilgang(innBruker, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()

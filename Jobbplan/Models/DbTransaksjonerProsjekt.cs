@@ -317,17 +317,19 @@ namespace Jobbplan.Models
                           select x.Email).SingleOrDefault();
             return brukernavn;
         }
-        public bool EndreProsjekt(Prosjekt EndreProsjekt)
+        public bool EndreProsjekt(Prosjekt EndreProsjekt, string brukernavn)
         {
             Dbkontekst db = new Dbkontekst();
-
+            if (!ErEier(brukernavn, EndreProsjekt.ProsjektId))
+            {
+                return false;
+            }
             try
             {
                 var NyEndreProsjekt = db.Prosjekter.FirstOrDefault(p => p.ProsjektId == EndreProsjekt.ProsjektId);
                 NyEndreProsjekt.Arbeidsplass = EndreProsjekt.Arbeidsplass;
- 
-
-               db.SaveChanges();
+      
+                db.SaveChanges();
                 return true;
             }
             catch (Exception feil)

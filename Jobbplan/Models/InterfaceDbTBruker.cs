@@ -9,7 +9,7 @@ namespace Jobbplan.Models
     public interface InterfaceDbTBruker
     {
         bool RegistrerBruker(Registrer innBruker);
-        bool GiBrukerAdminTilgang(Sjef innBruker);
+        bool GiBrukerAdminTilgang(Sjef innBruker, string brukernavn);
         bool FjernAdminTilgang(Sjef innBruker);
         List<BrukerListe> HentBrukere(int ProsjektId, string b);
         bool BrukerIdb(LogInn innBruker);

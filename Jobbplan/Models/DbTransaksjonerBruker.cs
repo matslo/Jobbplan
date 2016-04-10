@@ -42,13 +42,22 @@ namespace Jobbplan.Models
                 }
             }
         }
-        public bool GiBrukerAdminTilgang(Sjef innBruker)
+        public bool GiBrukerAdminTilgang(Sjef innBruker, string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();
+            DbTransaksjonerProsjekt DbTp = new DbTransaksjonerProsjekt();
 
+            if (!DbTp.ErEier(brukernavn,innBruker.ProsjektId))
+            {
+                return false;
+            }
+            var AdminTilgang = dbs.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektId == innBruker.ProsjektId && p.BrukerId == innBruker.BrukerId);
+            if (AdminTilgang == null)
+            {
+                return false;
+            }
             try
             {
-                var AdminTilgang = dbs.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektId == innBruker.ProsjektId && p.BrukerId == innBruker.BrukerId);
                 AdminTilgang.Admin = true;
                 dbs.SaveChanges();
                 return true;
@@ -78,12 +87,7 @@ namespace Jobbplan.Models
         {
             Dbkontekst dbs = new Dbkontekst();
             DbTransaksjonerProsjekt dbtp = new DbTransaksjonerProsjekt();
-
-            //int ProsjektidTilgang = dbtp.BrukerId(brukernavn);
-            /*Prosjekt funnetTilgang = dbs.Prosjekter.FirstOrDefault
-                   (b => b.EierId == ProsjektidTilgang && b.ProsjektId == ProsjektId);*/
-           
-
+     
             if (dbtp.ErAdmin(brukernavn, ProsjektId) == true || dbtp.ErEier(brukernavn, ProsjektId) == true)
             {
                 List<BrukerListe> pros = (from p in dbs.Prosjektdeltakelser

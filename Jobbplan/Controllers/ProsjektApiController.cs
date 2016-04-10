@@ -42,9 +42,25 @@ namespace Jobbplan.Controllers
             string userName = User.Identity.Name;
             db.SlettProsjekt(userName,id);       
         }
-        public void Put(Prosjekt EndreProsjekt)
+        public HttpResponseMessage Put(Prosjekt EndreProsjekt)
         {
-            db.EndreProsjekt(EndreProsjekt);
+            string userName = User.Identity.Name;
+            if (ModelState.IsValid)
+            {
+                bool ok = db.EndreProsjekt(EndreProsjekt, userName);
+                if (ok)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                    };
+                }
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke sette inn databasen")
+            };
         }
     }
 }

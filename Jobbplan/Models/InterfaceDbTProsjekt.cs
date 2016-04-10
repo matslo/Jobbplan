@@ -24,7 +24,7 @@ namespace Jobbplan.Models
         bool SlettRequestSomAdmin(string brukernavn, int id);
         bool SlettProsjekt(string Brukernavn, int id); //Mangler å slette vakter, deltakelser, admin 
         string BrukerNavn(int id);
-        bool EndreProsjekt(Prosjekt EndreProsjekt);
+        bool EndreProsjekt(Prosjekt EndreProsjekt, string brukernavn);
 
     }
 }
