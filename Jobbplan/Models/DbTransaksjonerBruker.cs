@@ -71,7 +71,6 @@ namespace Jobbplan.Models
         {
             Dbkontekst dbs = new Dbkontekst();
             DbTransaksjonerProsjekt DbTp = new DbTransaksjonerProsjekt();
-
             if (!DbTp.ErEier(brukernavn, innBruker.ProsjektId))
             {
                 return false;

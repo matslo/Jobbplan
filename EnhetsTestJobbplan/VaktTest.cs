@@ -13,6 +13,7 @@ using System.Transactions;
 using System.Net;
 using System.Linq;
 using System.Collections.Generic;
+
 namespace EnhetsTestJobbplan
 {
    
@@ -153,7 +154,6 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Ledig_Vakt()
         {
-
             var dbtv = new DbTransaksjonerVakt();
             
             var innVakt = new Vaktskjema();
@@ -162,7 +162,6 @@ namespace EnhetsTestJobbplan
             var actual = dbtv.LedigVakt(innVakt);
 
             Assert.AreEqual(true, actual);
-
         }
         [TestMethod]
         public void Ikke_Ledig_Vakt()
