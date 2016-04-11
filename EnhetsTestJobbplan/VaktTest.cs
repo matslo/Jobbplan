@@ -130,26 +130,7 @@ namespace EnhetsTestJobbplan
             Assert.IsFalse(download);
             Mock.Get(lovable).Verify(framework => framework.RegistrerVakt(vakter, "mats_loekken@hotmail.com"));
         }
-        [TestMethod]
-        public void SettInnVaktOk()
-        {
-            using (TransactionScope scope = new TransactionScope())
-             {
-                 InterfaceDbTVakt studentRepository = new DbTransaksjonerVakt();
-                 Vaktskjema vakt = new Vaktskjema()
-                  {
-                      start = "22.12.2012 07.43",
-                      end = "22.12.2012 15.43",
-                      title = "Dagvakt",
-                      Beskrivelse = "Opplæring",
-                      BrukerId = 1,
-                      ProsjektId = 1
-                  };
        
-                bool id = studentRepository.RegistrerVakt(vakt,"mats_loekken@hotmail.com");
-                 Assert.AreEqual(true, id);
-             }
-        }
         [TestMethod]
         public void SettInnVakt_End_Before_start()
         {

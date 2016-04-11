@@ -151,6 +151,45 @@ namespace EnhetsTestJobbplan
                 Assert.AreEqual(false, actual);
             }
         }
+        [TestMethod]
+        public void Legg_Til_Bruker_Request_OK()
+        {
+            var _mock = new Mock<InterfaceDbTProsjekt>();
+
+            var pReq = new ProsjektrequestSkjema();
+            var bruker = new Registrer();
+            bruker.Email = "mats_loekken@hotmail.com";
+            pReq.TilBruker = "gordo@hotmail.com";
+            pReq.ProsjektId = 1;
+
+            _mock.Setup(x => x.LeggTilBrukerRequest(pReq, bruker.Email)).Returns(true);
+            _mock.Verify(framework => framework.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com"), Times.AtMostOnce());
+
+            InterfaceDbTProsjekt lovable = _mock.Object;
+            var actual = lovable.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com");
+
+            Assert.AreEqual(true, actual);
+        }
+        [TestMethod]
+        public void Legg_Til_Bruker_Request_Ikke_OK()
+        {
+            var _mock = new Mock<InterfaceDbTProsjekt>();
+
+            var pReq = new ProsjektrequestSkjema();
+            pReq.TilBruker = null;
+            var bruker = new Registrer();
+
+            bruker.Email = "mats_loekken@hotmail.com";
+
+            _mock.Setup(x => x.LeggTilBrukerRequest(pReq, bruker.Email)).Returns(false);
+            _mock.Verify(framework => framework.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com"), Times.AtMostOnce());
+
+            InterfaceDbTProsjekt lovable = _mock.Object;
+            var actual = lovable.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com");
+
+            Assert.AreEqual(false, actual);
+        }
+
 
 
 

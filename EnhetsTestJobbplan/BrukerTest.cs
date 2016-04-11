@@ -92,7 +92,7 @@ namespace EnhetsTestJobbplan
                 InterfaceDbTBruker studentRepository = new DbTransaksjonerBruker();
                 Registrer NyBruker = new Registrer()
                 {
-                    Email = "gordo@hotmail.com"        
+                    Email = "mats123@hotmail.com"        
                 };
 
                 bool actual = studentRepository.RegistrerBruker(NyBruker);
