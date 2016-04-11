@@ -10,7 +10,7 @@ namespace Jobbplan.Models
     {
         bool RegistrerBruker(Registrer innBruker);
         bool GiBrukerAdminTilgang(Sjef innBruker, string brukernavn);
-        bool FjernAdminTilgang(Sjef innBruker);
+        bool FjernAdminTilgang(Sjef innBruker, string brukernavn);
         List<BrukerListe> HentBrukere(int ProsjektId, string b);
         bool BrukerIdb(LogInn innBruker);
         bool EmailDb(Registrer innBruker);

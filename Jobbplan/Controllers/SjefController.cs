@@ -35,7 +35,7 @@ namespace Jobbplan.Controllers
         {
             string userName = User.Identity.Name;
 
-            bool ok = db.FjernAdminTilgang(innBruker);
+            bool ok = db.FjernAdminTilgang(innBruker, userName);
             if (ok)
             {
                 return new HttpResponseMessage()

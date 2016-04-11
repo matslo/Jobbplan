@@ -67,10 +67,15 @@ namespace Jobbplan.Models
                 return false;
             }
         }
-        public bool FjernAdminTilgang(Sjef innBruker)
+        public bool FjernAdminTilgang(Sjef innBruker, string brukernavn)
         {
             Dbkontekst dbs = new Dbkontekst();
+            DbTransaksjonerProsjekt DbTp = new DbTransaksjonerProsjekt();
 
+            if (!DbTp.ErEier(brukernavn, innBruker.ProsjektId))
+            {
+                return false;
+            }
             try
             {
                 var AdminTilgang = dbs.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektId == innBruker.ProsjektId && p.BrukerId == innBruker.BrukerId);
@@ -220,40 +225,28 @@ namespace Jobbplan.Models
         public bool EndreBrukerInfo(Profil EndreBrukerInfo, string brukernavn)
         {
             var dbtp = new DbTransaksjonerProsjekt();
+
             Dbkontekst db = new Dbkontekst();
             int id = dbtp.BrukerId(brukernavn);
             try
             {
-                var nyEndreBrukerInfo = db.Brukere.FirstOrDefault(p => p.BrukerId == EndreBrukerInfo.id);
+          
+                var nyEndreBrukerInfo = db.Brukere.FirstOrDefault(p => p.BrukerId == id);
 
-                nyEndreBrukerInfo.Fornavn = EndreBrukerInfo.Fornavn;
-                if (EndreBrukerInfo.Fornavn != null)
-                {
-                    EndreBrukerInfo.Fornavn = nyEndreBrukerInfo.Fornavn;
-                }
-            
 
-                nyEndreBrukerInfo.Etternavn = EndreBrukerInfo.Etternavn;
-                if (EndreBrukerInfo.Etternavn != null)
+                if (EndreBrukerInfo.Fornavn != "")
                 {
-                    EndreBrukerInfo.Etternavn = nyEndreBrukerInfo.Etternavn;
+                    nyEndreBrukerInfo.Fornavn = EndreBrukerInfo.Fornavn;
                 }
-            
-
-                nyEndreBrukerInfo.Adresse = EndreBrukerInfo.Adresse;
-                if (EndreBrukerInfo.Adresse != null)
+                if (EndreBrukerInfo.Etternavn != "")
                 {
-                    EndreBrukerInfo.Adresse = nyEndreBrukerInfo.Adresse;
+                    nyEndreBrukerInfo.Etternavn = EndreBrukerInfo.Etternavn;
                 }
-            
-                nyEndreBrukerInfo.Email = EndreBrukerInfo.Email;
-                if (EndreBrukerInfo.Email != null)
+                if (EndreBrukerInfo.Adresse != "")
                 {
-                    EndreBrukerInfo.Email = nyEndreBrukerInfo.Email;
+                   nyEndreBrukerInfo.Adresse = EndreBrukerInfo.Adresse;
                 }
               
-
-
                 db.SaveChanges();
                 return true;
             }

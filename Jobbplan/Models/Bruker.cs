@@ -89,6 +89,8 @@ namespace Jobbplan.Models
         public int id { get; set; }
         public string Fornavn { get; set; }
         public string Etternavn { get; set; }
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}",
+        ErrorMessage = "Email er ikke gyldig")]
         public string Email { get; set; }
         public string Telefonnummer { get; set; }
         public string Adresse { get; set; }

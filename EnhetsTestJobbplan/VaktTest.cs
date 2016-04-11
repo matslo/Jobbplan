@@ -125,15 +125,9 @@ namespace EnhetsTestJobbplan
             };
             InterfaceDbTVakt lovable = Mock.Of<InterfaceDbTVakt>(l => l.RegistrerVakt(vakter, "mats_loekken@hotmail.com") == false);
 
-            // Hand the instance as a collaborator and exercise it, 
-            // like calling methods on it...
             bool download = lovable.RegistrerVakt(vakter, "mats_loekken@hotmail.com");
 
-            // Simply assert the returned state:
             Assert.IsFalse(download);
-
-            // If you really want to go beyond state testing and want to 
-            // verify the mock interaction instead...
             Mock.Get(lovable).Verify(framework => framework.RegistrerVakt(vakter, "mats_loekken@hotmail.com"));
         }
         [TestMethod]

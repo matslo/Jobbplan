@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Routing;
 using System.Net;
 using System.Transactions;
+using Moq;
 
 
 namespace EnhetsTestJobbplan
@@ -69,18 +70,20 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Bruker_Er_I_DB_OK()
         {
-            using (TransactionScope scope = new TransactionScope())
+          var _mock = new Mock<InterfaceDbTBruker>();
+            var Loggin = new LogInn()
             {
-                InterfaceDbTBruker brukerTransaksjoner = new DbTransaksjonerBruker();
-                LogInn NyBruker = new LogInn()
-                {
-                    Brukernavn = "gordo@hotmail.com",
-                    Passord = "Mats1414"
-                };
+                Brukernavn = "mats_loekken@hotmail.com",
+                Passord = "Password123",          
+             };
+            _mock.Setup(x => x.BrukerIdb(Loggin)).Returns(true);
+            _mock.Verify(framework => framework.BrukerIdb(Loggin), Times.AtMostOnce());
 
-                bool actual = brukerTransaksjoner.BrukerIdb(NyBruker);
-                Assert.AreEqual(true, actual);
-            }
+            InterfaceDbTBruker lovable = _mock.Object;
+            var actual = lovable.BrukerIdb(Loggin);
+
+            Assert.AreEqual(true, actual);
+            
         }
    
 

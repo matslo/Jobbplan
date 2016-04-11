@@ -33,10 +33,22 @@ namespace Jobbplan.Controllers
             };
           
         }
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
             string username = User.Identity.Name;
-            db.SlettBrukerFraProsjekt(username, id);
+            bool ok = db.SlettBrukerFraProsjekt(username, id);
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                };
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke sende melding")
+            };
         }
     }
 }

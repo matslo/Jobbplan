@@ -2,16 +2,14 @@
     function LeggTilProsjekt() {
         var prosjekt = {
             Arbeidsplass: $('#NavnTxt').val()
-        };
-     
+        };     
         $.ajax({
             url: '/api/ProsjektApi/',
             type: 'POST',
             data: JSON.stringify(prosjekt),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Godkjent!');
-
+                alert('Godkjent!');           
             },
             error: function (data) {
                 alert(data.responseText);

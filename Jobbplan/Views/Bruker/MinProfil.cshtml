@@ -1,16 +1,14 @@
 ﻿<script type="text/javascript">
-
-    
-    $(document).ready(function () {
+    $(document).ready(function() {
         HentBruker();
-    
+    });
         function HentBruker()	{
-            $.support.cors	=	true;	
+            $.support.cors=true;	
             $.ajax({
                 url:'/api/Profil',
                 type:'GET',
-                dataType:	'json',
-                success:	function (data)	{
+                dataType:'json',
+                success:function (data)	{
                     VisBruker(data);
                 },
                 error:	function (x,	y,	z)	{
@@ -24,20 +22,18 @@
         {
             var strResult = "<table class='table table-hover table-bordered'>";
             $.each(dbBruker, function(i, p) {
-                strResult += "<tr><td> Fornavn: " + p.Fornavn + "</td></tr><tr><td>Etternavn: " + p.Etternavn + "</td></tr><tr><td>Adresse: " + p.Adresse + "</td></tr><tr><td>Email: " + p.Email + "</td></tr><tr><td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
+                strResult += "<tr><td> Fornavn: " + p.Fornavn + "</td></tr><tr><td>Etternavn: " + p.Etternavn + "</td></tr><tr><td>Adresse: " + p.Adresse + "</td></tr><tr><td>Email: " + p.Email + "</td></tr>";
             });
             strResult += "</table>";
             $("#brukerliste").html(strResult);
-        }
-    })
+        };
     
 
     function EndreBrukerInfo() {
         var EndreBrukerInfo = {
             Fornavn: $('#FornavnTxt').val(),
             Etternavn: $('#EtternavnTxt').val(),
-            Adresse: $('#AdresseTxt').val(),
-            Email: $('#EmailTxt').val()
+            Adresse: $('#AdresseTxt').val()
         };
         $.ajax({
             url: '/api/Profil',
@@ -45,7 +41,7 @@
             data: JSON.stringify(EndreBrukerInfo),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Godkjent!');
+                HentBruker();
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -55,7 +51,6 @@
 
 
         function VisKnapper() {
-
             var text = $("#brukerEndring");
             var text2 = $("#visKnapp")
             if (text.is(':hidden')) {
@@ -87,8 +82,7 @@
 <div id="brukerEndring" style="display:none">
    Fornavn <input type="text" id="FornavnTxt" class="form-control"/>
  Etternavn   <input type="text" id="EtternavnTxt" class="form-control"/>
-  Adresse  <input type="text" id="AdresseTxtTxt" class="form-control"/>
-   Email: <input type="text" id="EmailTxt" class="form-control"/>  
+  Adresse  <input type="text" id="AdresseTxt" class="form-control"/>
 <button onclick="EndreBrukerInfo()" class="btn btn-info">Endre Informasjon</button>
 <button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button>
 </div>
