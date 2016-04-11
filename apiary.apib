@@ -41,9 +41,7 @@ object containing a question and a collection of answers in the
 form of choices.
 
 + Request (application/json)
-
-        [
-            
+           
             {
                 "Beskrivelse":"Opplæring",
                 "Brukernavn":"mats_loekken@hotmail.com",
@@ -54,19 +52,20 @@ form of choices.
                 "start":"2016-03-15T09:44:00",
                 "title":"Dagvakt: Mats Løkken"
             }
-        ]
+        
 
 + Response 201 (application/json)
 
     + Headers
-
-            Location: /questions/2
-
+    
+            Location: /api/VaktApi/
+            
+            
     + Body
-
-            {
-               "Beskrivelse":"Opplæring",
-               "Brukernavn":"mats_loekken@hotmail.com",
+    
+             {
+                "Beskrivelse":"Opplæring",
+                "Brukernavn":"mats_loekken@hotmail.com",
                 "Ledig":false,
                 "VaktId":1,
                 "color":"#3A87AD",
@@ -74,3 +73,7 @@ form of choices.
                 "start":"2016-03-15T09:44:00",
                 "title":"Dagvakt: Mats Løkken"
             }
+            
++ Response 404 (text/plain)
+
+        Kunne ikke oprette vakt!
