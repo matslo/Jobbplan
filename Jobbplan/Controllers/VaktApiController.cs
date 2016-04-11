@@ -36,8 +36,7 @@ namespace Jobbplan.Controllers
                 StatusCode = HttpStatusCode.NotFound,
                 Content = new StringContent("Kunne ikke opprette vakt")
             };
-        }
-   
+        } 
         public void Put(int id)
         {
             string brukernavn = User.Identity.Name;

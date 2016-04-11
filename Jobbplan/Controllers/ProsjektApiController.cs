@@ -17,7 +17,7 @@ namespace Jobbplan.Controllers
            string userName = User.Identity.Name;
            return db.HentProsjekter(userName);
         }
-        public HttpResponseMessage Post(Prosjekt prosjektInn)
+        public virtual HttpResponseMessage Post(Prosjekt prosjektInn)
         {
             string userName = User.Identity.Name;
             if (ModelState.IsValid)

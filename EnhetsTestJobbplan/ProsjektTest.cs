@@ -5,7 +5,10 @@ using Jobbplan.Models;
 using Moq;
 using System.Web.Mvc;
 using System.Net;
+using System.Net.Http;
 using System.Transactions;
+using System.Web;
+using System.Web.Http.Results;
 
 namespace EnhetsTestJobbplan
 {
@@ -13,7 +16,7 @@ namespace EnhetsTestJobbplan
     public class ProsjektTest
     {
         //Inneholder Tester for ProsjektApiController,ProsjektDeltakelseApiController, ProsjektReqApiController, ProsjektController, DbtransaksjonerProsjekt
-        
+               
         //ProsjektController
         [TestMethod]
         public void Index_ViewName()
@@ -45,12 +48,68 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, "");
         }
+        //ProsjektApiController
+        [TestMethod]
+        public void Opprett_Prosjekt_POST_Ok()
+        {
+            var _mock = new Mock<ProsjektApiController>();
 
+            var innProsjekt = new Prosjekt()
+            {
+                ProsjektId = 1,
+                Arbeidsplass = "Kiwi",
+                EierId = 1
+            };
+
+            var http = new HttpResponseMessage();
+            http.StatusCode = HttpStatusCode.OK;
+
+            _mock.Setup(x => x.Post(innProsjekt)).Returns(http);
+            _mock.Verify(framework => framework.Post(innProsjekt), Times.AtMostOnce());
+
+            ProsjektApiController lovable = _mock.Object;
+            var actual = lovable.Post(innProsjekt);
+
+            Assert.AreEqual(HttpStatusCode.OK, actual.StatusCode);
+        }
+        [TestMethod]
+        public void Opprett_Prosjekt_Feil_Validering()
+        {
+            //Arrange
+            var controller = new ProsjektApiController();
+            var innBruker = new Prosjekt();
+            controller.ModelState.AddModelError("Arbeidsplass", "Arbeidsplass må oppgis");
+            //Act
+            var result = controller.Post(innBruker);
+            //Assert
+
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
+        }
         //ProsjektDeltakelseApiController
         [TestMethod]
         public void RegistrerDeltakelse_POST_Ok()
         {
+            var _mock = new Mock<ProsjektDeltakelseApiController>();
 
+            var innBruker = new ProsjektrequestMelding()
+            {
+                ProsjektId = 1,
+                FraBruker = "mats_loekken@hotmail.com",
+                TilBruker = "gordo@hotmail.com",
+                MeldingId = 2,
+                Prosjektnavn = "Bunnpris",
+                Tid = Convert.ToDateTime("22.12.2012 16.43")
+            };
+            var http = new HttpResponseMessage();
+            http.StatusCode = HttpStatusCode.OK;
+
+            _mock.Setup(x => x.Post(innBruker)).Returns(http);
+            _mock.Verify(framework => framework.Post(innBruker), Times.AtMostOnce());
+
+            ProsjektDeltakelseApiController lovable = _mock.Object;
+            var download = lovable.Post(innBruker);
+
+            Assert.AreEqual(download.StatusCode, HttpStatusCode.OK);
         }
         [TestMethod]
         public void RegistrerDeltakelse_Feil_Validering()
@@ -65,9 +124,6 @@ namespace EnhetsTestJobbplan
 
             Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
-
-
-
         // DbtransaksjonerProsjekt
         [TestMethod]
         public void Registrer_Prosjekt_OK()

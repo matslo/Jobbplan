@@ -12,7 +12,7 @@ namespace Jobbplan.Controllers
     public class ProsjektDeltakelseApiController : ApiController
     {
         DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
-        public HttpResponseMessage Post(ProsjektrequestMelding pid )
+        public virtual HttpResponseMessage Post(ProsjektrequestMelding pid )
         {
             string userName = User.Identity.Name;
             if (ModelState.IsValid)

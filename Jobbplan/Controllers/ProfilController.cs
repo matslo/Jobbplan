@@ -18,10 +18,25 @@ namespace Jobbplan.Controllers
             string brukernavn = User.Identity.Name;
             return db.HentBruker(brukernavn);
         }
-        public void Put(Profil EndreBrukerInfo)
+        public HttpResponseMessage Put(Profil EndreBrukerInfo)
         {
-            string userName = User.Identity.Name;
-            db.EndreBrukerInfo(EndreBrukerInfo, userName);
+            string userName = User.Identity.Name;            
+            if (ModelState.IsValid)
+            {
+                bool ok = db.EndreBrukerInfo(EndreBrukerInfo, userName);
+                if (ok)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.OK,
+                    };
+                }
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke sette inn databasen")
+            };
         }
     }
 }
