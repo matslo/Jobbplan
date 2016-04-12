@@ -10,6 +10,8 @@ namespace Jobbplan.Models
         public bool RegistrerVakt (Vaktskjema innVakt, string brukernavn)
         {
             var dbtp = new DbTransaksjonerProsjekt();
+            DateTime date1 = in;
+            TimeSpan time1 = ...;
             if (!dbtp.ErAdmin(brukernavn, innVakt.ProsjektId) && !dbtp.ErEier(brukernavn, innVakt.ProsjektId))
             {
                 return false;
@@ -19,12 +21,18 @@ namespace Jobbplan.Models
             // Alternate choice: If the string has been input by an end user, you might  
             // want to format it according to the current culture: 
              IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            DateTime dt1 = DateTime.ParseExact(innVakt.start, "dd.MM.yyyy H.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            DateTime dt2 = DateTime.ParseExact(innVakt.end, "dd.MM.yyyy H.mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt1 = DateTime.ParseExact(innVakt.start, "dd.MM.yyyy", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            if(innVakt.end!="")
+            { 
+            DateTime dt2 = DateTime.ParseExact(innVakt.end, "dd.MM.yyyy", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            }
+            DateTime dt3 = DateTime.ParseExact(innVakt.startTid, "H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
 
-         //  DateTime d1 = Convert.ToDateTime(innVakt.start);
-                //Convert.ToDateTime(innVakt.start);
-          //  DateTime d2 = Convert.ToDateTime(innVakt.end);
+            DateTime dt4 = DateTime.ParseExact(innVakt.endTid, "H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+
+            //  DateTime d1 = Convert.ToDateTime(innVakt.start);
+            //Convert.ToDateTime(innVakt.start);
+            //  DateTime d2 = Convert.ToDateTime(innVakt.end);
             //Convert.ToDateTime(innVakt.end);
             int result = DateTime.Compare(dt1, dt2);
             if (result > 0 || result==0)

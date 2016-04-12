@@ -42,7 +42,14 @@ namespace Jobbplan.Models
         [Display(Name = "Fra Dato")]
         public string start { get; set; }
 
-        [Required(ErrorMessage = "Dato må oppgis")]
+        [Required(ErrorMessage = "Tid må oppgis")]
+        [Display(Name = "Fra Dato")]
+        public string startTid { get; set; }
+
+        [Required(ErrorMessage = "tid må oppgis")]
+        [Display(Name = "Tid Dato")]
+        public string endTid { get; set; }
+
         [Display(Name = "Til Dato")]
         public string end { get; set; }
 
