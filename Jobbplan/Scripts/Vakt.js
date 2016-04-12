@@ -2,22 +2,22 @@
 function taLedigVakt() {
 
     $('body').on('click', '.btnTavakt', function () {
-        var id = this.id;
+        var id = $(this).attr("value");
         $.ajax({
             url: '/api/VaktApi/' + id,
             type: 'PUT',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Godkjent!');
+                alert('Forespørsel sendt!');
                 $('#calendar').fullCalendar('refetchEvents');
+                $('#fullCalModal').modal('hide');
             },
             error: function (x, y, z) {
-                //alert(x + '\n' + y + '\n' + z);
+                alert(x + '\n' + y + '\n' + z);
             }
         });
     })
 };
-
 function OpprettVakt() {
 $('body').on('click', '#LeggTilVakt', function () {
 
@@ -51,10 +51,9 @@ $('body').on('click', '#LeggTilVakt', function () {
         });
     })
 }
-
 function EndreVakt() {
     $('body').on('click', '.btnEndreVakt', function () {
-        var id = this.id;
+        var id = $(this).attr("value");
         var endrevakt = {
             VaktId: id,
             start: $('#datetimepicker1').val(),
@@ -73,8 +72,8 @@ function EndreVakt() {
             data: JSON.stringify(endrevakt),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Godkjent!');
                 $('#calendar').fullCalendar('refetchEvents');
+                $('#fullCalModal').modal('hide');
             },
             error: function (x, y, z) {
                 alert(x + '\n' + y + '\n' + z);
@@ -85,20 +84,21 @@ function EndreVakt() {
 
     function SlettVakt() {
         $('body').on('click', '.btnSlettVakt', function () {
+            var id = $(this).attr("value");
             
-            var id = this.id;
-            $.ajax({
-                url: '/api/VaktApi/'+id,
-                type: 'DELETE',
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    $('#fullCalModal').modal('hide');
-                    $('#calendar').fullCalendar('refetchEvents');
-                },
-                error: function (x, y, z) {
-                    //alert(x + '\n' + y + '\n' + z);
-                }
-            });
+                $.ajax({
+                    url: '/api/VaktApi/' + id,
+                    type: 'DELETE',
+                    contentType: "application/json;charset=utf-8",
+                    success: function(data) {
+                        $('#fullCalModal').modal('hide');
+                        $('#calendar').fullCalendar('refetchEvents');
+                    },
+                    error: function(x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            
         })
     }
     function VisKnapper() {
@@ -188,7 +188,7 @@ function EndreVakt() {
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'month'
             },
             editable: false,
             displayEventEnd: true,
@@ -205,15 +205,15 @@ function EndreVakt() {
                 $('#modalBody').html(event.title);
                 if (event.Brukernavn == null) {
                     event.Brukernavn = "Ledig vakt";
-                    $('#tavakt').html("<button id='" + event.VaktId + "' class='btn btn-primary btnTavakt'>Ta vakt</button>");
+                    $('#tavakt').html("<button value='" + event.VaktId + "' class='btn btn-primary btnTavakt'>Ta vakt</button>");
                 }
 
               
                 $('#modalBody').append(start.format(" HH:mm" + "-"));
                 $('#modalBody').append(end.format("HH:mm"));
 
-                $('#endrevakt').html("<button id='" + event.VaktId + "' class='btn btn-warning btnEndreVakt'>Endre vakt</button>");
-                $('#slettvakt').html("<button id='" + event.VaktId + "' class='btn btn-danger btnSlettVakt'>Slett vakt</button>");
+                $('#endrevakt').html("<button value='" + event.VaktId + "' class='btn btn-warning btnEndreVakt'>Endre vakt</button>");
+                $('#slettvakt').html("<button value='" + event.VaktId + "' class='btn btn-danger btnSlettVakt'>Slett vakt</button>");
                 $('#eventUrl').attr('href', event.url);
                 $('#fullCalModal').modal();
                 // $("#fullCalModal").html("");
@@ -290,7 +290,18 @@ function Heldags() {
         }
     })
 };
+function EndreHeldags() {
+    $('#echeckAllDay').on('change', function () {
+        var text = $("#etilDato");
 
+        if (text.is(':hidden')) {
+            text.slideDown('500');
+
+        } else {
+            text.slideUp('500');
+        }
+    })
+};
     
 $(document).ready(function () {  
     OpprettVakt();
@@ -302,6 +313,7 @@ $(document).ready(function () {
     HentProsjekter();
     fullcal();
     Heldags();
+    EndreHeldags();
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
     $('#calendar').fullCalendar('refetchEvents');
    // selOnChangeTEST();
