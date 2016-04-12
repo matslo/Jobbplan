@@ -34,20 +34,22 @@
         </div>
         <div class='col-sm-2' style="display: none;">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
-            <input type='text' class="form-control input-sm" id='datetimepicker5' />
-        </div>
-        <div class='col-sm-2' >
-            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
-            <input type='text' class="form-control input-sm" id='Tittel' />
+            <input type='text' class="form-control input-sm" id='datetimepicker5'/>
         </div>
 
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
             <label for="sel1">Ansatt:</label>
             <select class="form-control input-sm brukere" id="brukere">
-               <option></option>
+                <option></option>
             </select>
         </div>
+        <div class='col-sm-2' >
+            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
+            <input type='text' class="form-control input-sm" id='Tittel' />
+        </div>
+
+       
         
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Notater:</label>
@@ -56,10 +58,10 @@
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker4').datetimepicker({
-                    format: 'DD/MM/YYYY'
+                    format: 'DD.MM.YYYY'
                 });
                 $('#datetimepicker5').datetimepicker({
-                    format: 'DD/MM/YYYY'
+                    format: 'DD.MM.YYYY'
                 });
                 $('#timepicker6').datetimepicker({
                     format: 'H:mm'

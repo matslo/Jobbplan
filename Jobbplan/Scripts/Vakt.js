@@ -25,8 +25,8 @@ $('body').on('click', '#LeggTilVakt', function () {
     $this.attr('disabled', 'disabled').html("Legger til...");
     var vakt = {
         start: $('#datetimepicker4').val(),
-        startTid: $('#timepicker6'),
-        endTid: $('#timepicker7'),
+        startTid: $('#timepicker6').val(),
+        endTid: $('#timepicker7').val(),
         end: $('#datetimepicker5').val(),
         title: $('#Tittel').val(),
         Beskrivelse: $('#Beskrivelse').val(),
