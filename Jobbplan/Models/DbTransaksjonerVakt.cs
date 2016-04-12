@@ -193,6 +193,30 @@ namespace Jobbplan.Models
             Dbkontekst db = new Dbkontekst();
             var NyEndreVakt = db.Vakter.FirstOrDefault(p => p.VaktId == EndreVakt.Vaktid);
             var dbtp = new DbTransaksjonerProsjekt();
+
+            string start = EndreVakt.start + " " + EndreVakt.startTid;
+            string end;
+
+            IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime dt2;
+
+            if (EndreVakt.end != "")
+            {
+                end = EndreVakt.end + " " + EndreVakt.endTid;
+                dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            }
+            else
+            {
+                end = EndreVakt.start + " " + EndreVakt.endTid;
+                dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            }
+
+            int result = DateTime.Compare(dt1, dt2);
+            if (result > 0 || result == 0)
+            {
+                return false;
+            }
             if (!dbtp.ErAdmin(brukernavn, NyEndreVakt.ProsjektId) && !dbtp.ErEier(brukernavn, NyEndreVakt.ProsjektId))
             {
                 return false;
@@ -201,8 +225,8 @@ namespace Jobbplan.Models
             {
                 NyEndreVakt.Beskrivelse = EndreVakt.Beskrivelse;
                 NyEndreVakt.BrukerId = EndreVakt.BrukerId;
-                NyEndreVakt.start = Convert.ToDateTime(EndreVakt.start);
-                NyEndreVakt.end = Convert.ToDateTime(EndreVakt.end);
+                NyEndreVakt.start = dt1;
+                NyEndreVakt.end = dt2;
                 NyEndreVakt.title = EndreVakt.title;             
 
                if (LedigVakt(EndreVakt))
