@@ -62,18 +62,16 @@
                    <li>@Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
                    <li>@Html.ActionLink("Jobb", "Index", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })</li>
                    <li>@Html.ActionLink("Timeliste", "Index", "Timeliste", new { area = "" }, new { @class = "navbar-brand" })</li>
-                   <li>@Html.ActionLink("Meldingsboks", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })</li>
-
+                   <li>@Html.ActionLink("Innboks", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })<span class="badge alert-info" id="antallInnboks" style=""></span></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}<span class="badge alert-info" id="antallInnboks" style=""></span></li>
+                    <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}</li>
                 </ul>
             </div>
         </div>
     </div>
     <div id="Body">
         <div class="container body-content">
-
             @RenderBody()
             <hr />
             <footer>
