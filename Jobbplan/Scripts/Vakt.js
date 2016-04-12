@@ -51,17 +51,21 @@ $('body').on('click', '#LeggTilVakt', function () {
         });
     })
 }
+
 function EndreVakt() {
     $('body').on('click', '.btnEndreVakt', function () {
         var id = this.id;
         var endrevakt = {
             VaktId: id,
             start: $('#datetimepicker1').val(),
+            startTid: $('#etimepicker6').val(),
             end: $('#datetimepicker2').val(),
+            endTid: $('#etimepicker7').val(),
             title: $('#eTittel').val(),
             Beskrivelse: $('#eBeskrivelse').val(),
             ProsjektId: $('#selectProsjekt').val(),
             BrukerId: $('#ebrukere').val()
+
         };
         $.ajax({
             url: '/api/VaktApi2/',
@@ -73,11 +77,12 @@ function EndreVakt() {
                 $('#calendar').fullCalendar('refetchEvents');
             },
             error: function (x, y, z) {
-                //alert(x + '\n' + y + '\n' + z);
+                alert(x + '\n' + y + '\n' + z);
             }
         });
     })
 }
+
     function SlettVakt() {
         $('body').on('click', '.btnSlettVakt', function () {
             
@@ -191,7 +196,7 @@ function EndreVakt() {
             eventSources: [kalendere.alle, kalendere.brukers],
 
             loading: function (bool) {
-                $('#loading').toggle(bool);
+                $('.loading').toggle(bool);
             },
             eventClick: function (event, jsEvent, view) {
                 var start = event.start;
@@ -203,8 +208,7 @@ function EndreVakt() {
                     $('#tavakt').html("<button id='" + event.VaktId + "' class='btn btn-primary btnTavakt'>Ta vakt</button>");
                 }
 
-                $('#modalBody').append(": " + event.Brukernavn);
-
+              
                 $('#modalBody').append(start.format(" HH:mm" + "-"));
                 $('#modalBody').append(end.format("HH:mm"));
 
@@ -224,14 +228,8 @@ function selOnChange() {
         HentBrukere();
         $('#calendar').fullCalendar('refetchEvents');
     });
-};/*
-    function selOnChangeTEST() {
-       
-    $('#radioProsjekt').on('change', function () {    
-             HentBrukere();
-        $('#calendar').fullCalendar('refetchEvents');
-    });
-};*/
+};
+
 function HentBrukere() {
       
     $.ajax({
@@ -279,6 +277,20 @@ function VisAlleProsjekter(prosjekter) {
     $(".prosjekterTest").html(strResult);
     //$("input:radio[name=prosjekter]:first").attr('checked', true);
 }
+
+function Heldags() {
+    $('#checkAllDay').on('change', function() {
+        var text = $("#tilDato");
+      
+        if (text.is(':hidden')) {
+            text.slideDown('500');
+
+        } else {
+            text.slideUp('500');
+        }
+    })
+};
+
     
 $(document).ready(function () {  
     OpprettVakt();
@@ -289,6 +301,7 @@ $(document).ready(function () {
     SlettVakt();
     HentProsjekter();
     fullcal();
+    Heldags();
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
     $('#calendar').fullCalendar('refetchEvents');
    // selOnChangeTEST();

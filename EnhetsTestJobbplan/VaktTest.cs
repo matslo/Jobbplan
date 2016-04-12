@@ -21,7 +21,6 @@ namespace EnhetsTestJobbplan
     public class VaktTest
     {
         //Inneholder Tester for VaktApiController/2/3, VaktController, DbtransaksjonerVakt
-
         //VaktController
         [TestMethod]
         public void Index_Test_Vakt()
@@ -48,7 +47,6 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
         }
         //DbtransaksjonerVakt
-
         [TestMethod]
         public void Hent_Vakter_Moq()
         {
@@ -96,7 +94,6 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(download, vakter);
 
         }
-
         [TestMethod]
         public void SettInnVaktOkMOCK()
         {
@@ -110,7 +107,6 @@ namespace EnhetsTestJobbplan
 
             moq.Verify(framework => framework.RegistrerVakt(vakte, "mats_loekken@hotmail.com"), Times.AtMostOnce());
         }
-
         [TestMethod]
         public void SettInnVaktikkeOkMOCK()
         {
@@ -130,8 +126,7 @@ namespace EnhetsTestJobbplan
 
             Assert.IsFalse(download);
             Mock.Get(lovable).Verify(framework => framework.RegistrerVakt(vakter, "mats_loekken@hotmail.com"));
-        }
-       
+        }     
         [TestMethod]
         public void SettInnVakt_End_Before_start()
         {
@@ -140,8 +135,10 @@ namespace EnhetsTestJobbplan
                 InterfaceDbTVakt Dbt = new DbTransaksjonerVakt();
                 Vaktskjema vakt = new Vaktskjema()
                 {
-                    start = "22.12.2012 16.43",
-                    end = "22.12.2012 15.43",
+                    start = "22.12.2012",
+                    end = "22.12.2012",
+                    startTid = "16.43",
+                    endTid = "15.43",
                     title = "Dagvakt",
                     Beskrivelse = "Opplæring",
                     BrukerId = 1,

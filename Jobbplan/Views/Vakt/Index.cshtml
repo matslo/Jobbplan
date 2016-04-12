@@ -13,29 +13,27 @@
     <div class="row">
         <div class='col-sm-2'>
             <label>Dato:</label>
-            <div class="input-group">
+           
                 <input type="text" class="form-control input-sm" id='datetimepicker4' aria-describedby="start-date">
-                <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
         </div>
         <div class='col-sm-1'>
-            <label>Tid fra:</label>
-            <div class="input-group">
-                <input type="text" class="form-control input-sm" id='timepicker6' aria-describedby="start-date">
-                <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-time"></span></span>
-            </div>
+            <label>Heldags</label>
+            <input type='checkbox' class="" id='checkAllDay' />
         </div>
-        <div class='col-sm-1'>
-            <label>Tid til:</label>
-            <div class="input-group">
-                <input type="text" class="form-control input-sm" id='timepicker7' aria-describedby="start-date">
-                <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-time"></span></span>
-            </div>
-        </div>
-        <div class='col-sm-2' style="display: none;">
+        <div class='col-sm-2' id="tilDato" style="display: none;">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
-            <input type='text' class="form-control input-sm" id='datetimepicker5'/>
+            <input type='text' class="form-control input-sm" id='datetimepicker5' />
         </div>
+        <div class='col-sm-1'>
+            <label>Tid fra:</label>     
+                <input type="text" class="form-control input-sm" id='timepicker6' aria-describedby="end-date">    
+         
+        </div>
+        <div class='col-sm-1'>
+            <label>Tid til:</label>          
+                <input type="text" class="form-control input-sm" id='timepicker7' aria-describedby="start-date">
+        </div>
+        
 
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -48,9 +46,7 @@
             <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
             <input type='text' class="form-control input-sm" id='Tittel' />
         </div>
-
-       
-        
+   
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Notater:</label>
             <textarea class="form-control input-sm" rows="1" id="Beskrivelse"></textarea>
@@ -72,7 +68,7 @@
             });
         </script>
         <div class='col-sm-2'>
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><label>OK</label><br />
+       <br/>
         <button class="btn btn-success btn-sm" rows="1" id="LeggTilVakt" >Legg til vakt</button>
             
         </div>
@@ -90,14 +86,21 @@
         <select class="form-control input-sm" id="selectProsjekt">
             @{Html.RenderAction("prosjektMeny", "Prosjekt");}
         </select>
-        </div>
+    </div>
     <button class="btn btn-primary btn-sm" id="mineVakter">Se mine vakter</button>
     <button class="btn btn-primary btn-sm" disabled="disabled" id="visAlleVakter">Se alle vakter</button>
     <button class="btn btn-success btn-sm" id="ledigeVakter">Se ledige vakter</button>
-    <div style="position:absolute; color:blue;" id="loading">Laster inn...</div>
-    <div id='calendar'></div>
+    <div style="position: absolute; color: blue;" class="loading">Laster inn...</div>
 
-    </div>
+</div>
+
+<img src="~/Content/ajax_loader_gray.gif" class="loading" alt="Loading" style="position: fixed;top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px; width: 220px; height: 220px;">
+
+<div id='calendar'></div>
+
 <div id="fullCalModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -116,44 +119,77 @@
             <div id="tavakt"></div>
             <button onclick="VisKnapper();" class="btn btn-warning" rows="1" id="EndreVakt">Endre vakt</button>
             <div id="slettvakt"></div>
-            <div class="container" id="vaktEndring" style="display:none;">
-                <div class="row">
-                    <div class='col-sm-3'>
-                        <label>Fra:</label>
-                        <div class="input-group">
+            <div class="container" id="vaktEndring" style="display: none;">
 
-                            <input type="text" class="form-control" id='datetimepicker1' aria-describedby="start-date">
+                <div class="row">
+                    <div class='col-sm-2'>
+                        <label>Dato:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" id='datetimepicker1' aria-describedby="start-date">
                             <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class='col-sm-3'>
-                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
-                        <input type='text' class="form-control" id='datetimepicker2' />
-                    </div>
-                    <div class='col-sm-3'>
-                        <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Tittel:</label>
-                        <input type='text' class="form-control" id='eTittel' />
-                    </div>
-                    </div>
-                <div class="row">
-                    <div class='col-sm-3'>
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        <label for="sel1">Ansatt:</label>
-                        <select class="form-control brukere" id="ebrukere">
-                            <option></option>
-                        </select>
+
+                    <div class='col-sm-1'>
+                        <label>Heldags</label>
+                        <input type='checkbox' class="" id='checkAllDay' />
                     </div>
 
-                    <div class='col-sm-3'>
-                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Beskrivelse:</label>
-                        <textarea class="form-control" rows="1" id="eBeskrivelse"></textarea>
+                    <div class='col-sm-2' id="tilDato" style="display: none;">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
+                        <input type='text' class="form-control input-sm" id='datetimepicker2' />
+                    </div>
+
+                    <div class='col-sm-1'>
+                        <label>Tid fra:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" id='etimepicker6' aria-describedby="start-date">
+                            <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-time"></span></span>
+                        </div>
+                    </div>
+
+                    <div class='col-sm-1'>
+                        <label>Tid til:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" id='etimepicker7' aria-describedby="start-date">
+                            <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-time"></span></span>
+                        </div>
+                    </div>
+
+                        <div class='col-sm-2'>
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <label for="sel1">Ansatt:</label>
+                            <select class="form-control input-sm brukere" id="ebrukere">
+                                <option></option>
+                            </select>
+                        </div>
+                    
+                    <div class='col-sm-2'>
+                        <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
+                        <input type='text' class="form-control input-sm" id='eTittel' />
+                    </div>
+
+                    <div class='col-sm-2'>
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Notater:</label>
+                        <textarea class="form-control input-sm" rows="1" id="eBeskrivelse"></textarea>
                     </div>
                     <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-                $('#datetimepicker2').datetimepicker();
-            });
+                        $(function () {
+                            $('#datetimepicker1').datetimepicker({
+                                format: 'DD.MM.YYYY'
+                            });
+                            $('#datetimepicker2').datetimepicker({
+                                format: 'DD.MM.YYYY'
+                            });
+                            $('#etimepicker6').datetimepicker({
+                                format: 'H:mm'
+                            });
+                            $('#etimepicker7').datetimepicker({
+                                format: 'H:mm'
+                            });
+                        });
                     </script>
+
                     <div class='col-sm-2'>
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span><label>OK</label><br />
                         <div id="endrevakt"></div>
@@ -164,6 +200,7 @@
 
                 </div>
 
+            
             </div>
         </div>
     </div>
