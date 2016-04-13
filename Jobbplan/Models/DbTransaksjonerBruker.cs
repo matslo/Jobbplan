@@ -22,8 +22,6 @@ namespace Jobbplan.Models
                 Passord = passordDb,
                 Fornavn = innBruker.Fornavn,
                 Etternavn = innBruker.Etternavn,
-                Adresse = innBruker.Adresse,
-                Postnr = innBruker.Postnummer,
                 Email = innBruker.Email,
                 Telefonnummer = innBruker.Telefonnummer
             };
@@ -215,9 +213,7 @@ namespace Jobbplan.Models
                                           id = p.BrukerId,
                                           Fornavn = p.Fornavn,
                                           Etternavn = p.Etternavn,
-                                          Email = p.Email,
-                                          Adresse = p.Adresse
-                                          
+                                          Email = p.Email                                                                         
                                       }).ToList();
             return pros;
         }
@@ -241,10 +237,7 @@ namespace Jobbplan.Models
                 {
                     nyEndreBrukerInfo.Etternavn = EndreBrukerInfo.Etternavn;
                 }
-                if (EndreBrukerInfo.Adresse != "")
-                {
-                   nyEndreBrukerInfo.Adresse = EndreBrukerInfo.Adresse;
-                }
+              
               
                 db.SaveChanges();
                 return true;

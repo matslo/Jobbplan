@@ -149,6 +149,28 @@ namespace EnhetsTestJobbplan
             }
         }
         [TestMethod]
+        public void SettInnMal_OK()
+        {
+            var _mock = new Mock<InterfaceDbTVakt>();
+
+            MalerSkjema maler = new MalerSkjema()
+            {
+                ProsjektId = 1,
+                startTid = "12:15",
+                sluttTid = "13.15"
+            };
+            var brukernavn = new dbBruker();
+            
+
+            _mock.Setup(x => x.RegistrerMal(maler, brukernavn.Email)).Returns(true);
+            _mock.Verify(framework => framework.RegistrerMal(maler, brukernavn.Email), Times.AtMostOnce());
+
+            InterfaceDbTVakt lovable = _mock.Object;
+            var actual = lovable.RegistrerMal(maler, brukernavn.Email);
+
+            Assert.AreEqual(true, actual);
+        }
+        [TestMethod]
         public void Ledig_Vakt()
         {
             var dbtv = new DbTransaksjonerVakt();

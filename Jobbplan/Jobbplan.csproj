@@ -309,7 +309,6 @@
     <Compile Include="Models\DbTransaksjonerVakt.cs" />
     <Compile Include="Models\InterfaceDbTVakt.cs" />
     <Compile Include="Models\InterfaceDbTBruker.cs" />
-    <Compile Include="Models\Poststed.cs" />
     <Compile Include="Models\Prosjekt.cs" />
     <Compile Include="Models\Prosjektdeltakelse.cs" />
     <Compile Include="Models\Timeliste.cs" />

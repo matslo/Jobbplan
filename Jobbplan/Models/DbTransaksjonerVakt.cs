@@ -337,16 +337,7 @@ namespace Jobbplan.Models
             {
                 return false;
             }
-            
-            IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            DateTime startKl = DateTime.ParseExact(mal.startTid, "H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            DateTime sluttKl = DateTime.ParseExact(mal.sluttTid, "H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            
-            int result = DateTime.Compare(startKl, sluttKl);
-            if (result > 0 || result == 0)
-            {
-                return false; //Tidsrommet er ugyldig
-            }
+                     
             var nyMal = new Maler()
             {
                 startTid = mal.startTid,

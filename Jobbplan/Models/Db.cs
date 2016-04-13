@@ -18,7 +18,6 @@ namespace Jobbplan.Models
         }
         
         public DbSet<dbBruker> Brukere { get; set; }
-        public DbSet<Poststed> Poststeder { get; set; }
         public DbSet<Vakt> Vakter { get; set; }
         public DbSet<Prosjekt> Prosjekter { get; set; }
         public DbSet<Prosjektdeltakelse> Prosjektdeltakelser { get; set; }

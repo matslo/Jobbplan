@@ -15,11 +15,8 @@ namespace Jobbplan.Models
         public string Etternavn { get; set; }
         public string Email { get; set; }
         public string Telefonnummer { get; set; }
-        public string Adresse { get; set; }
-        public string Postnr { get; set; }
         public byte[] Passord { get; set; }
 
-         public virtual Poststed Poststed { get; set; }
          public virtual List<Prosjektdeltakelse> Prosjektdeltakelse { get; set; }
     }
    
@@ -45,19 +42,6 @@ namespace Jobbplan.Models
             [Required]
             [Display(Name = "Telefonnummer")]
             public string Telefonnummer { get; set; }
-
-            [Required]
-            [Display(Name = "Adresse")]
-            public string Adresse { get; set; }
-
-            [Required]
-            [Display(Name = "Postnummer")]
-            public string Postnummer { get; set; }
-
-            [Required]
-            [Display(Name = "Poststed")]
-            public string Poststed { get; set; }
-
         
             [Required]
             [DataType(DataType.Password)]

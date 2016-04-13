@@ -109,10 +109,7 @@ namespace EnhetsTestJobbplan
                 {
                     Fornavn="Mats",
                     Etternavn="Lokken",
-                    Adresse="Kirkeveien 67",
                     Email="tesbruker@hotmail.com",
-                    Postnummer="0364",
-                    Poststed="Oslo",
                     Telefonnummer="93686771",
                     BekreftPassord="password"
                 };
