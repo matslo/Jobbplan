@@ -60,7 +60,7 @@
                 <ul class="nav navbar-nav">
                    <li> @Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" style="font-size:18px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon </a>
+                        <a href="#" class="dropdown-toggle" style="font-size:20px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon </a>
                         <ul class="dropdown-menu">
 
                             <li><a href="~/Prosjekt/Index"> Administrer bedrifter </a></li>
@@ -70,7 +70,7 @@
                         </ul>
                     </li>
                    <li>@Html.ActionLink("Timeliste", "Index", "Timeliste", new { area = "" }, new { @class = "navbar-brand" })</li>
-                   <li>@Html.ActionLink("Innboks", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })<span class="badge alert-info" id="antallInnboks" style=""></span></li>
+                   <li>@Html.ActionLink("Innboks", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })<span class="badge" id="antallInnboks" style=""></span></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

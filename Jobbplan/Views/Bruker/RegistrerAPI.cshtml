@@ -46,7 +46,7 @@
                         location.href = "/Home/Index";
                     },
                     error: function (data) {
-                    $this.removeAttr('disabled').html('Prøv igjen');
+                        $this.removeAttr('disabled').html('Prøv igjen');
                     alert(data.responseText);
 
                     }
@@ -68,9 +68,13 @@
                 <tr><td>Etternavn:</td><td><input class="form-control" type="text" id="EtternavnTxt" placeholder="Etternavn" /></td><td></td></tr> 
                 <tr><td>Telefonnr:</td><td><input class="form-control" type="text" id="TelefonnummerTxt" placeholder="Telefonnummer" /></td><td></td></tr>
                 <tr><td>Epost:</td><td><input class="form-control" type="text" id="EmailTxt" placeholder="e-post adresse" /></td><td></td></tr>
+                <tr><td></td><td></td><td></td></tr>
+                <tr><td></td><td>Passordet må inneholde minst 8 karakterer. </td><td></td></tr>
+                <tr><td></td><td>Det anbefales at disse består av store/små bokstaver, tall og spesialtegn.</td><td></td></tr>
                 <tr><td>Passord:</td><td><input class="form-control" type="password" id="passord" placeholder="Passord" /></td><td></td></tr>
                 <tr><td>Gjenta passord:</td><td><input class="form-control" type="password" id="passord2" placeholder="Gjenta passord" onkeyup="checkPasswordMatch();return false;" /></td><td id="oktd"> <span id="ok" class="" aria-hidden="true"></span></td></tr>
                 <tr><td></td><td><button id="leggTilBruker" class="btn btn-primary">Registrer</button></td> <td></td></tr>
+               
 
              </table>
 
