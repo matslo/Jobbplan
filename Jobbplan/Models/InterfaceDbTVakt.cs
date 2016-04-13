@@ -18,7 +18,8 @@ namespace Jobbplan.Models
         List<VaktRequestMelding> visVaktRequester(string Brukernavn);
         bool requestOk(int id);
         bool SlettVaktRequest(int Meldingid);
-
+        bool RegistrerMal(MalerSkjema mal, string brukernavn);
+        List<VisMaler> hentAlleMaler(int id, string brukernavn);
 
     }
 }

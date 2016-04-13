@@ -15,7 +15,8 @@ namespace Jobbplan.Models
         
         public virtual dbBruker dbBruker { get; set; }
         public virtual List<Prosjektdeltakelse> Prosjektdeltakelse { get; set; }
-        public virtual List<Sjef> Sjef { get; set; }
+        public virtual List<Maler> Maler { get; set; }
+
 
 
     }
