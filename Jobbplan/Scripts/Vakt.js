@@ -149,8 +149,7 @@ function ProId() {
         }
         
         return prosjektid;
-    }
-   
+    }   
 
 function ProIdTEST() {
         var prosjektid = $("#radioProsjekt :radio:checked").val();
@@ -413,15 +412,33 @@ $(document).ready(function () {
         $('#calendar').fullCalendar('refetchEvents');
     });
 
+    $("#malKnapp").click(function() {
+        var text = $("#malReg");
+
+        if (text.is(':hidden')) {
+            text.slideDown('500');
+
+            // $("#vaktNed").removeClass('glyphicon glyphicon-chevron-down');
+            //$("#vaktNed").addClass('glyphicon glyphicon-chevron-up');
+        } else {
+
+            text.slideUp('500');
+            //$("#vaktNed").removeClass('glyphicon glyphicon-chevron-up');
+            //$("#vaktNed").addClass('glyphicon glyphicon-chevron-down');
+        }
+    });
 
     $("#mer").click(function () {
         var text = $("#vaktRegistrering");
+        var text2 = $("#malKnapp");
         if (text.is(':hidden')) {
             text.slideDown('500');
+            text2.slideDown('500');
             $("#vaktNed").removeClass('glyphicon glyphicon-chevron-down');
             $("#vaktNed").addClass('glyphicon glyphicon-chevron-up');
         }
         else {
+            text2.slideUp('500');
             text.slideUp('500');
             $("#vaktNed").removeClass('glyphicon glyphicon-chevron-up');
             $("#vaktNed").addClass('glyphicon glyphicon-chevron-down');
