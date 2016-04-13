@@ -8,12 +8,13 @@
         <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" id="vaktNed"></span>
     </button>
 </div>
-<div class="container" id="malReg" style="">
+
+<button id="malKnapp" class="btn btn-primary btn-sm" style="margin-top: 5px; display: none;">Legg til maler</button>
+
+<div class="container" id="malReg" style="display: none;">
 
     <div class="row" id="Maler">
-        <div class='col-sm-2'>
-            <button class="btn btn-info" style="margin-top: 20px;">Legg til maler</button>
-        </div>
+        
 
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
@@ -50,12 +51,10 @@
     <hr />
 </div>
 <div class="container" id="vaktRegistrering" style="display:none;">
-
-
     <div class="row">
         <div class='col-sm-2'>
             <label>Dato:</label>         
-                <input type="text" class="form-control input-sm" id='datetimepicker4' aria-describedby="start-date">
+            <input type="text" class="form-control input-sm" id='datetimepicker4' aria-describedby="start-date">
         </div>
         <div class='col-sm-1'>
             <label>Sluttdato</label>
