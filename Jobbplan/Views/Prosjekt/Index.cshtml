@@ -21,7 +21,7 @@
                 Id: $('#selectProsjekt').val()
             };
             var text = $('#selectProsjekt option:selected').text();
-            if (confirm('Du er i ferd med å slette '+text+'. Du vil miste all data tilknyttet denne jobben')) {
+            if (confirm('Du er i ferd med å slette '+text+'. Hvis du godtar,  vil du miste all data tilknyttet denne jobben. Hvis du ikke ønsker å slette '+text+', trykk "Avbryt".')) {
              
             
            $.ajax({
@@ -29,7 +29,7 @@
                 type: 'DELETE',
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert("Ok");
+                    alert("Jobben ble slettet");
                 },
                 error: function (x, y, z) {
                     alert(x + '\n' + y + '\n' + z);
@@ -108,9 +108,8 @@
         <td><button type="button" onclick="VisKnapperNyJobb()" class="btn btn-default menyValgProsjekt">Opprett ny jobb<br /><span class="glyphicon glyphicon-plus-sign ikonMeny" aria-hidden="true"></span></button></td>
         <td><input class="form-control" style="display:none;" type="text" id="NavnTxt" /></td>
         <td><button id="nyJobb" onclick="LeggTilProsjekt()" style="display:none;" class="btn btn-success">Opprett</button></td>
-    </tr>
-</table>
-<table>
+
+        </tr>
     <tr>
         <td><button type="button" onclick="VisKnapperEndreJobb()" class="btn btn-default menyValgProsjekt">Rediger jobb<br /><span class="glyphicon glyphicon-edit ikonMeny" aria-hidden="true"></span></button></td>
         <td><select class="form-control" style="display: none;" id="selectProsjekt">
@@ -122,12 +121,11 @@
         <td class="vaktEndring" style="display:none"><input type="text" id="Endretxt" class="form-control" /></td>
         <td class="vaktEndring" style="display:none"><button onclick="EndreProsjekt()" class="btn btn-info">Endre Prosjekt</button></td>
         <td class="vaktEndring" style="display:none"><button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button></td>
+
+   
     </tr>
-</table>
-<table>
-    <tr>
-        <td><a href="Prosjekt/LeggTilBruker" class="btn btn-default menyValgProsjekt">Ansatte <br /><span class="glyphicon glyphicon-user ikonMeny" aria-hidden="true"></span></a></td>
-        <td></td>
-        <td></td>
-    </tr>
+    <td>
+
+    </td>
+
 </table> 

@@ -141,6 +141,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\InnloggingStil.css" />
     <Content Include="Content\jp.jpg" />
+    <Content Include="Content\jp2.gif" />
     <Content Include="Content\loadingGif.gif" />
     <Content Include="Content\registrer.css" />
     <Content Include="Content\Site.css" />

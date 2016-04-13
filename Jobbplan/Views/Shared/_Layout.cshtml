@@ -59,11 +59,35 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   <li>@Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
-                   <li>@Html.ActionLink("Jobb", "Index", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })</li>
+                   <li> @Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" style="font-size:18px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon </a>
+                        <ul class="dropdown-menu">
+
+                            <li><a href="~/Prosjekt/Index"> Administrer bedrifter </a></li>
+
+                            <li role="separator" class="divider"></li>
+                            <li><a href="~/Prosjekt/LeggTilBruker"> Administrer ansatte </a></li>
+                        </ul>
+                    </li>
                    <li>@Html.ActionLink("Timeliste", "Index", "Timeliste", new { area = "" }, new { @class = "navbar-brand" })</li>
                    <li>@Html.ActionLink("Innboks", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })<span class="badge alert-info" id="antallInnboks" style=""></span></li>
                 </ul>
+        <!---       <ul class="nav navbar-nav">
+            <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" style="font-size:18px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon </a>
+                        <ul class="dropdown-menu">
+
+                            <li><a href="~/Prosjekt/Index"> Administrer bedrifter </a></li>
+
+                            <li role="separator" class="divider"></li>
+                            <li><a href="~/Prosjekt/LeggTilBruker"> Administrer ansatte </a></li>
+                        </ul>
+                    </li>
+
+                    
+                </ul> --> 
+
                 <ul class="nav navbar-nav navbar-right">
                     <li class="elementerInav">@{Html.RenderAction("LoggetInn", "Bruker");}</li>
                 </ul>
