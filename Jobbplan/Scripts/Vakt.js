@@ -18,6 +18,35 @@ function taLedigVakt() {
         });
     })
 };
+function OpprettMal() {
+    $('body').on('click', '#LeggTilMal', function () {
+        var $this = $(this);
+        $this.attr('disabled', 'disabled').html("Legger til...");
+        var mal = {        
+            startTid: $('#timepicker10').val(),
+            sluttTid: $('#timepicker9').val(),          
+            Tittel: $('#MalTittel').val(),          
+            ProsjektId: $('#selectProsjekt').val(),
+        };
+
+        $.ajax({
+            url: '/api/Maler/',
+            type: 'POST',
+            data: JSON.stringify(mal),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                alert('Godkjent!');
+                HentMaler();
+                $this.removeAttr('disabled').html('Legg til mal');
+              
+            },
+            error: function (data) {
+                alert(data.responseText);
+                $this.removeAttr('disabled').html('Legg til mal');
+            }
+        });
+    })
+};
 function OpprettVakt() {
 $('body').on('click', '#LeggTilVakt', function () {
 
@@ -82,7 +111,7 @@ function EndreVakt() {
     })
 }
 
-    function SlettVakt() {
+function SlettVakt() {
         $('body').on('click', '.btnSlettVakt', function () {
             var id = $(this).attr("value");
             
@@ -101,7 +130,7 @@ function EndreVakt() {
             
         })
     }
-    function VisKnapper() {
+function VisKnapper() {
         var text = $("#vaktEndring");
         var text2 = $("#visKnapp")
         if (text.is(':hidden')) {
@@ -112,7 +141,7 @@ function EndreVakt() {
             text.slideUp('500');
            }
     };
-    function ProId() {
+function ProId() {
         var prosjektid =  $('#selectProsjekt').val();
         if ($("#selectProsjekt:selected").length) {
             prosjektid = ($(this).find(":selected").val()); 
@@ -123,7 +152,7 @@ function EndreVakt() {
     }
    
 
-    function ProIdTEST() {
+function ProIdTEST() {
         var prosjektid = $("#radioProsjekt :radio:checked").val();
         if ($("#radioProsjekt:checked").length) {
             prosjektid = $("#radioProsjekt :radio:checked").val();
@@ -133,7 +162,7 @@ function EndreVakt() {
         return prosjektid;
     }
 
-    var kalendere = {
+var kalendere = {
         alle: {
             url: '/api/VaktApi/',
             type: 'GET',
@@ -183,7 +212,7 @@ function EndreVakt() {
     }
     };
 
-    function fullcal() {
+function fullcal() {
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -229,7 +258,17 @@ function selOnChange() {
         $('#calendar').fullCalendar('refetchEvents');
     });
 };
-
+function selMalOnChange() {
+    $('#maler').on('change', function () {
+        var end = $(this).find(":selected").attr('id');
+        var start = $(this).find(":selected").val();
+        if (start == 0) {
+            start = "";
+        }
+        $('#timepicker6').val(start);
+        $('#timepicker7').val(end);
+    });
+};
 function HentBrukere() {
       
     $.ajax({
@@ -253,7 +292,28 @@ function VisAlle(brukere) {
     });
     $(".brukere").html(strResult);
 }
+function HentMaler() {
 
+    $.ajax({
+        url: '/api/Maler/' + ProId(),
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            VisAlleMaler(data);
+        },
+        error: function (x, y, z) {
+
+        }
+    });
+
+};
+function VisAlleMaler(maler) {
+    var strResult = "<option value=" + 0 + "></option>";
+    $.each(maler, function (i, p) {
+        strResult += "<option value=" + p.startTid + " id='"+p.sluttTid+"'>"+p.Tittel + "</option>";
+    });
+    $(".maler").html(strResult);
+}
 function HentProsjekter() {
     $.ajax({
         url: '/api/ProsjektApi/',
@@ -303,7 +363,8 @@ function EndreHeldags() {
     })
 };
     
-$(document).ready(function () {  
+$(document).ready(function () {
+    selMalOnChange();
     OpprettVakt();
     HentBrukere();
     selOnChange();
@@ -314,6 +375,8 @@ $(document).ready(function () {
     fullcal();
     Heldags();
     EndreHeldags();
+    OpprettMal();
+    HentMaler();
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
     $('#calendar').fullCalendar('refetchEvents');
    // selOnChangeTEST();

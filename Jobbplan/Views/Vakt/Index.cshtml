@@ -4,25 +4,72 @@
     ViewBag.Title = "Index";
 }
 <div id="feil">
-    <button id="mer" class="btn btn-primary btn-block" style="margin-top:2px;">Legg til vakt
+    <button id="mer" class="btn btn-primary btn-block" style="margin-top: 2px;">Legg til vakt
         <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" id="vaktNed"></span>
     </button>
 </div>
+<div class="container" id="malReg" style="">
+
+    <div class="row" id="Maler">
+        <div class='col-sm-2'>
+            <button class="btn btn-info" style="margin-top: 20px;">Legg til maler</button>
+        </div>
+
+        <div class='col-sm-2'>
+            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
+            <input type='text' class="form-control input-sm" id='MalTittel'/>
+        </div>
+        <div class='col-sm-1'>
+            <label>Tid fra:</label>
+            <input type="text" class="form-control input-sm" id='timepicker10' aria-describedby="end-date">
+        </div>
+        <div class='col-sm-1'>
+            <label>Tid til:</label>
+            <input type="text" class="form-control input-sm" id='timepicker9' aria-describedby="start-date">
+        </div>
+        <div class='col-sm-1'>
+            <label>Legg til</label>
+            <button class="btn btn-success btn-sm" rows="1" id="LeggTilMal">Legg til mal</button>
+        </div>
+        <div class='col-sm-1'>
+            <label>Avbryt</label>
+            <button class="btn btn-warning btn-sm" rows="1" id="avbrytMal">Avbryt</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+            $(function () {
+
+                $('#timepicker9').datetimepicker({
+                    format: 'H:mm'
+                });
+                $('#timepicker10').datetimepicker({
+                    format: 'H:mm'
+                });
+            });
+    </script>
+    <hr />
+</div>
 <div class="container" id="vaktRegistrering" style="display:none;">
-    <a href="~/Vakt/Maler">Legg til maler</a>
+
+
     <div class="row">
         <div class='col-sm-2'>
-            <label>Dato:</label>
-           
+            <label>Dato:</label>         
                 <input type="text" class="form-control input-sm" id='datetimepicker4' aria-describedby="start-date">
         </div>
         <div class='col-sm-1'>
-            <label>Heldags</label>
+            <label>Sluttdato</label>
             <input type='checkbox' class="" id='checkAllDay' />
         </div>
         <div class='col-sm-2' id="tilDato" style="display: none;">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
-            <input type='text' class="form-control input-sm" id='datetimepicker5' />
+            <input type='text' class="form-control input-sm" id='datetimepicker5'/>
+        </div>
+        <div class='col-sm-2'>
+            <label for="selMal">Mal:</label>
+            <select class="form-control input-sm maler" id="maler">
+                <option></option>
+            </select>
         </div>
         <div class='col-sm-1'>
             <label>Tid fra:</label>     
@@ -52,7 +99,7 @@
             <textarea class="form-control input-sm" rows="1" id="Beskrivelse"></textarea>
         </div>
         <script type="text/javascript">
-            $(function () {
+            $(function() {
                 $('#datetimepicker4').datetimepicker({
                     format: 'DD.MM.YYYY'
                 });
@@ -67,13 +114,11 @@
                 });
             });
         </script>
-        <div class='col-sm-2'>
-       <br/>
-        <button class="btn btn-success btn-sm" rows="1" id="LeggTilVakt" >Legg til vakt</button>
-            
+        <div class='col-sm-1'>
+            <label>Legg til</label>
+            <button class="btn btn-success btn-sm" rows="1" id="LeggTilVakt">Legg til vakt</button>
         </div>
-        
-        </div>
+       </div>
    
     </div>
 
@@ -94,7 +139,7 @@
 
 </div>
 
-<img src="~/Content/ajax_loader_gray.gif" class="loading" alt="Loading" style="position: fixed;top: 50%;
+<img src="~/Content/ajax_loader_gray.gif" class="loading" alt="Loading" style="position: absolute;top: 50%;
   left: 50%;
   margin-top: -50px;
   margin-left: -100px; width: 220px; height: 220px;">

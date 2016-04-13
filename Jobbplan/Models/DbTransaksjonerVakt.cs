@@ -329,6 +329,73 @@ namespace Jobbplan.Models
                 return false;
             }
         }
+        public bool RegistrerMal(MalerSkjema mal, string brukernavn)
+        {
+            var dbtp = new DbTransaksjonerProsjekt();
+
+            if (!dbtp.ErAdmin(brukernavn, mal.ProsjektId) && !dbtp.ErEier(brukernavn, mal.ProsjektId))
+            {
+                return false;
+            }
+            
+            IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            DateTime startKl = DateTime.ParseExact(mal.startTid, "H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            DateTime sluttKl = DateTime.ParseExact(mal.sluttTid, "H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+            
+            int result = DateTime.Compare(startKl, sluttKl);
+            if (result > 0 || result == 0)
+            {
+                return false; //Tidsrommet er ugyldig
+            }
+            var nyMal = new Maler()
+            {
+                startTid = mal.startTid,
+                sluttTid = mal.sluttTid,
+                ProsjektId = mal.ProsjektId,
+                Tittel = mal.Tittel
+            };
+          
+           using (var db = new Dbkontekst())
+            {
+                try
+                {
+                    db.Maler.Add(nyMal);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception feil)
+                {
+                    return false;
+                }
+
+            }
+
+        }
+        public List<VisMaler> hentAlleMaler(int id, string brukernavn)
+        {
+
+            Dbkontekst db = new Dbkontekst();
+            var dbtB = new DbTransaksjonerProsjekt();
+
+            if (dbtB.ErAdmin(brukernavn, id) == true || dbtB.ErEier(brukernavn, id) == true)
+            {
+                List<VisMaler> mal = (from p in db.Maler
+                                          where p.ProsjektId == id
+                                          select
+                                              new VisMaler()
+                                              {
+                                                 Tittel = p.Tittel,
+                                                 startTid = p.startTid,
+                                                 sluttTid = p.sluttTid
+                                              }).ToList();
+                return mal;
+            }
+            else
+            {
+                List<VisMaler> mal = null;
+                return mal;
+            }
+        }
     }
 
 

@@ -282,6 +282,7 @@
     <Compile Include="Controllers\BrukerApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\BrukerController.cs" />
+    <Compile Include="Controllers\MalerController.cs" />
     <Compile Include="Controllers\ProfilController.cs" />
     <Compile Include="Controllers\ProsjektApiController.cs" />
     <Compile Include="Controllers\ProsjektController.cs" />
@@ -298,12 +299,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JobbPlanAuthentication.cs" />
-    <Compile Include="Migrations\201604040949474_FirstUpdate.cs" />
-    <Compile Include="Migrations\201604040949474_FirstUpdate.Designer.cs">
-      <DependentUpon>201604040949474_FirstUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InterfaceDbTProsjekt.cs" />
+    <Compile Include="Models\Maler.cs" />
     <Compile Include="Models\Sjef.cs" />
     <Compile Include="Models\Bruker.cs" />
     <Compile Include="Models\Db.cs" />
@@ -347,11 +344,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\bootstrap\" />
     <Folder Include="Content\fonts\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604040949474_FirstUpdate.resx">
-      <DependentUpon>201604040949474_FirstUpdate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
