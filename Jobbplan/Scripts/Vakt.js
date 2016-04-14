@@ -1,5 +1,4 @@
-﻿
-function taLedigVakt() {
+﻿function taLedigVakt() {
 
     $('body').on('click', '.btnTavakt', function () {
         var id = $(this).attr("value");
@@ -149,7 +148,6 @@ function ProId() {
         
         return prosjektid;
     }   
-
 function ProIdTEST() {
         var prosjektid = $("#radioProsjekt :radio:checked").val();
         if ($("#radioProsjekt:checked").length) {
@@ -159,7 +157,6 @@ function ProIdTEST() {
 
         return prosjektid;
     }
-
 var kalendere = {
         alle: {
             url: '/api/VaktApi/',
