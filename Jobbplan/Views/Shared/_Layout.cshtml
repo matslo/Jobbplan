@@ -25,8 +25,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             HentAntallMeldinger();
-            
-        });  
+         
+            $.each($('.navbar').find('li'), function () {
+                $(this).toggleClass('active',
+                    $(this).find('a').attr('href') == window.location.pathname);
+            });
+        });
         function HentAntallMeldinger() {
             $.ajax({
                 url: '/api/BrukerApi',
@@ -58,15 +62,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   <li> @Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
+                   <li class="active"> @Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" style="font-size:20px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon </a>
                         <ul class="dropdown-menu">
-
-                            <li><a href="~/Prosjekt/Index"> Administrer bedrifter </a></li>
-
+                            <li><a href="~/Prosjekt/Index">Bedrifter<span class="glyphicon glyphicon-briefcase pull-right"></span></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="~/Prosjekt/LeggTilBruker"> Administrer ansatte </a></li>
+                            <li><a href="~/Prosjekt/LeggTilBruker">Ansatte <span class="glyphicon glyphicon-user pull-right"></span></a></li>
                         </ul>
                     </li>
                    <li>@Html.ActionLink("Timeliste", "Index", "Timeliste", new { area = "" }, new { @class = "navbar-brand" })</li>

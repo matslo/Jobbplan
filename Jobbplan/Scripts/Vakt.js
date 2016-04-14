@@ -1,5 +1,4 @@
-﻿
-function taLedigVakt() {
+﻿function taLedigVakt() {
 
     $('body').on('click', '.btnTavakt', function () {
         var id = $(this).attr("value");
@@ -109,7 +108,6 @@ function EndreVakt() {
         });
     })
 }
-
 function SlettVakt() {
         $('body').on('click', '.btnSlettVakt', function () {
             var id = $(this).attr("value");
@@ -149,7 +147,6 @@ function ProId() {
         
         return prosjektid;
     }   
-
 function ProIdTEST() {
         var prosjektid = $("#radioProsjekt :radio:checked").val();
         if ($("#radioProsjekt:checked").length) {
@@ -159,7 +156,6 @@ function ProIdTEST() {
 
         return prosjektid;
     }
-
 var kalendere = {
         alle: {
             url: '/api/VaktApi/',
@@ -209,7 +205,6 @@ var kalendere = {
 
     }
     };
-
 function fullcal() {
         $('#calendar').fullCalendar({
             header: {
@@ -282,7 +277,6 @@ function HentBrukere() {
     });
   
 };
-
 function VisAlle(brukere) {
     var strResult = "<option value="+0+"></option>";
     $.each(brukere, function (i, p) {
@@ -326,7 +320,6 @@ function HentProsjekter() {
     });
 
 };
-
 function VisAlleProsjekter(prosjekter) {
     var strResult = "";
     $.each(prosjekter, function (i, p) {
@@ -335,7 +328,6 @@ function VisAlleProsjekter(prosjekter) {
     $(".prosjekterTest").html(strResult);
     //$("input:radio[name=prosjekter]:first").attr('checked', true);
 }
-
 function Heldags() {
     $('#checkAllDay').on('change', function() {
         var text = $("#tilDato");
@@ -413,14 +405,11 @@ $(document).ready(function () {
 
     $("#malKnapp").click(function() {
         var text = $("#malReg");
-
         if (text.is(':hidden')) {
             text.slideDown('500');
-
             // $("#vaktNed").removeClass('glyphicon glyphicon-chevron-down');
             //$("#vaktNed").addClass('glyphicon glyphicon-chevron-up');
         } else {
-
             text.slideUp('500');
             //$("#vaktNed").removeClass('glyphicon glyphicon-chevron-up');
             //$("#vaktNed").addClass('glyphicon glyphicon-chevron-down');
@@ -430,6 +419,8 @@ $(document).ready(function () {
     $("#mer").click(function () {
         var text = $("#vaktRegistrering");
         var text2 = $("#malKnapp");
+        var text3 = $("#malReg");
+
         if (text.is(':hidden')) {
             text.slideDown('500');
             text2.slideDown('500');
@@ -439,6 +430,7 @@ $(document).ready(function () {
         else {
             text2.slideUp('500');
             text.slideUp('500');
+            text3.slideUp('500');
             $("#vaktNed").removeClass('glyphicon glyphicon-chevron-up');
             $("#vaktNed").addClass('glyphicon glyphicon-chevron-down');
         }
