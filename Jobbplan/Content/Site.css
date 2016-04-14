@@ -12,7 +12,9 @@ body{
   color: blue;
 }
 footer{
-    margin-top:50%;
+    position:absolute;
+    bottom:0;
+
 }
 #fullCalModal{
      margin-top:200px;
