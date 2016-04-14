@@ -20,9 +20,9 @@
         
         function VisBruker(dbBruker)
         {
-            var strResult = "<table class='table table-hover table-bordered'>";
+            var strResult = "<table class='table table-hover table-striped'>";
             $.each(dbBruker, function(i, p) {
-                strResult += "<tr><td> Fornavn: " + p.Fornavn + "</td></tr><tr><td>Etternavn: " + p.Etternavn + "</td></tr><tr><td>Adresse: " + p.Adresse + "</td></tr><tr><td>Email: " + p.Email + "</td></tr>";
+                strResult += "<tr><td> Fornavn:</td><td> " + p.Fornavn + "</td></tr><tr><td>Etternavn:</td><td> " + p.Etternavn + "</td></tr><tr><td>Email:</td><td> " + p.Email + "</td></tr>";
             });
             strResult += "</table>";
             $("#brukerliste").html(strResult);
@@ -66,16 +66,9 @@
     
 
 </script>
+<h2>Profil</h2>
 
-
-
-@{
-    ViewBag.Title = "MinProfil";
-}
-
-<h2>MinProfil</h2>
-
-<div id="brukerliste"></div>
+<div id="brukerliste" style="width:40%;"></div>
 
 <button id="visKnapp" onclick="VisKnapper()" class="btn btn-info">Endre Informasjon</button>
 
