@@ -69,7 +69,6 @@ $('body').on('click', '#LeggTilVakt', function () {
             data: JSON.stringify(vakt),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Godkjent!');
                 $this.removeAttr('disabled').html('Legg til vakt');
                 $('#calendar').fullCalendar('refetchEvents');
             },
