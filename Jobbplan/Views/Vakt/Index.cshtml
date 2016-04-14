@@ -124,17 +124,19 @@
   
  <hr />
 
-<form class="prosjekterTest" id="radioProsjekt"></form>
-<div class="row">
+<div class="row" style="margin-top: 25px; margin-left: 168px;">
+    <p style="margin-left: 15px;"><strong>Velg arbeidsplass:</strong></p>
     <div class='col-sm-2'>
         <select class="form-control input-sm" id="selectProsjekt">
             @{Html.RenderAction("prosjektMeny", "Prosjekt");}
         </select>
     </div>
-    <button class="btn btn-primary btn-sm" id="mineVakter">Se mine vakter</button>
-    <button class="btn btn-primary btn-sm" disabled="disabled" id="visAlleVakter">Se alle vakter</button>
-    <button class="btn btn-success btn-sm" id="ledigeVakter">Se ledige vakter</button>
-    <div style="position: absolute; color: blue;" class="loading">Laster inn...</div>
+    <div style="margin-left: 275px;">
+        <button class="btn btn-primary btn-sm" id="mineVakter">Se mine vakter</button>
+        <button class="btn btn-primary btn-sm" disabled="disabled" id="visAlleVakter">Se alle vakter</button>
+        <button class="btn btn-success btn-sm" id="ledigeVakter">Se ledige vakter</button>
+        <div style="position: absolute; color: blue;" class="loading">Laster inn...</div>
+    </div>
 
 </div>
 
