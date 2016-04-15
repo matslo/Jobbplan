@@ -11,6 +11,11 @@ namespace Jobbplan.Controllers
     {
         DbTransaksjonerVakt db = new DbTransaksjonerVakt();
         //Get api/KalenderApi
+        public List<Vaktkalender> Get()
+        {
+            string brukernavn = User.Identity.Name;
+            return db.hentAlleVakterForBruker(brukernavn);
+        }
         public List<Vaktkalender> Get(int id)
         {
             string brukernavn = User.Identity.Name;
