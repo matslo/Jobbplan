@@ -53,6 +53,7 @@
     <div class="navbar navbar-default navbar-fixed-top globalmeny">
         <div class="container">
             <div class="navbar-header">
+                <a class="navbar-brand" >JP</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -60,19 +61,19 @@
                 </button>
 
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                   <li class="active"> @Html.ActionLink("Kalender", "Index", "Vakt", new { area = "" }, new { @class = "navbar-brand" })</li>
+            <div class="navbar-collapse collapse" id="menyValgNav">
+                <ul class="nav navbar-nav" style="font-size: 15px; margin: 2px;">
+                    <li class="active"><a href="~/Vakt/Index"> Kalender <span class="glyphicon glyphicon-calendar menyIkoner"></span></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" style="font-size:20px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Administrasjon <span class="glyphicon glyphicon-cog menyIkoner" aria-hidden="true"></span> </a>
                         <ul class="dropdown-menu">
-                            <li><a href="~/Prosjekt/Index">Bedrifter<span class="glyphicon glyphicon-briefcase pull-right"></span></a></li>
+                            <li><a href="~/Prosjekt/Index">Bedrifter <span class="glyphicon glyphicon-briefcase pull-right"></span></a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="~/Prosjekt/LeggTilBruker">Ansatte <span class="glyphicon glyphicon-user pull-right"></span></a></li>
                         </ul>
                     </li>
-                   <li>@Html.ActionLink("Timeliste", "Index", "Timeliste", new { area = "" }, new { @class = "navbar-brand" })</li>
-                   <li>@Html.ActionLink("Innboks", "Meldingsboks", "Prosjekt", new { area = "" }, new { @class = "navbar-brand" })<span class="badge" id="antallInnboks" style=""></span></li>
+                   <li><a href="~/Timeliste/Index"> Timeliste <span class="glyphicon glyphicon-time menyIkoner"></span></a></li>
+                   <li><a href="~/Prosjekt/Meldingsboks"> Innboks <span class="glyphicon glyphicon-envelope menyIkoner"></span><span class="badge" id="antallInnboks" style=""></span></a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -85,12 +86,13 @@
         <div class="container body-content">
             @RenderBody()
             <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - JobbPlan</p>
-            </footer>
+            
         </div>
     </div>
-
+    <footer id="footer">
+        
+            <p>&copy; @DateTime.Now.Year - JobbPlan</p>
+    </footer>
   
 </body>
 </html>

@@ -104,32 +104,23 @@
         }
     };
 </script>
-
+<div id="godkjentProsjekt"></div>
+<div id="slettprosjekt"></div>
 <table>
     <tr>
         <td><button type="button" onclick="VisKnapperNyJobb()" class="btn btn-default menyValgProsjekt">Opprett ny jobb<br /><span class="glyphicon glyphicon-plus-sign ikonMeny" aria-hidden="true"></span></button></td>
         <td><input class="form-control" style="display:none;" type="text" id="NavnTxt" placeholder="Navn på bedrift"/></td>
         <td><button id="nyJobb" onclick="LeggTilProsjekt()" style="display:none;" class="btn btn-success">Opprett</button></td>
-        <div id="godkjentProsjekt"></div>
-
-        </tr>
-    <tr>
-        <td><button type="button" onclick="VisKnapperEndreJobb()" class="btn btn-default menyValgProsjekt">Rediger jobb<br /><span class="glyphicon glyphicon-edit ikonMeny" aria-hidden="true"></span></button></td>
-        <td><select class="form-control" style="display: none;" id="selectProsjekt">
-            @{Html.RenderAction("prosjektMeny", "Prosjekt");}</select>
-        </td>
-        <td><button id="visKnapp" style="display:none;" onclick="VisKnapper()" class="btn btn-info">Endre jobb</button></td>
-
-        <td><button onclick="SlettProsjekt()"  style="display:none;" class="btn btn-danger slett">Slett jobb</button></td>
-        <td class="vaktEndring" style="display:none"><input type="text" id="Endretxt" class="form-control" placeholder="Nytt navn på bedrift"/></td>
-        <td class="vaktEndring" style="display:none"><button onclick="EndreProsjekt()" class="btn btn-info">Endre Prosjekt</button></td>
-        <td class="vaktEndring" style="display:none"><button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button></td>
-        <div id="slettprosjekt"></div>
-
-   
     </tr>
-    <td>
-
-    </td>
-
+    <tr>
+        <td><button type="button" onclick="VisKnapperEndreJobb()" class="btn btn-default menyValgProsjekt">Rediger jobb<br/><span class="glyphicon glyphicon-edit ikonMeny" aria-hidden="true"></span></button></td>
+        <td><select class="form-control" style="display: none;" id="selectProsjekt">
+                @{Html.RenderAction("prosjektMeny", "Prosjekt");}</select>
+        </td>
+        <td><button id="visKnapp" style="display: none;" onclick="VisKnapper()" class="btn btn-info">Endre jobb</button></td>
+        <td><button onclick="SlettProsjekt()" style="display: none;" class="btn btn-danger slett">Slett jobb</button></td>
+        <td class="vaktEndring" style="display: none"><input type="text" id="Endretxt" class="form-control" placeholder="Nytt navn på bedrift"/></td>
+        <td class="vaktEndring" style="display: none"><button onclick="EndreProsjekt()" class="btn btn-info">Endre Prosjekt</button></td>
+        <td class="vaktEndring" style="display: none"><button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button></td>
+    </tr>
 </table> 
