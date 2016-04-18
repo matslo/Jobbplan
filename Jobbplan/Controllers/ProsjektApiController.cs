@@ -5,24 +5,30 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.Model;
+using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
     public class ProsjektApiController : ApiController 
-    {   
-        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();    
+    {
+        private IProsjektLogikk _ProsjektBLL;
+
+        public ProsjektApiController()
+        {
+            _ProsjektBLL = new ProsjektBLL();
+        }    
         public List<ProsjektVis> Get()
         {
            string userName = User.Identity.Name;
-           return db.HentProsjekter(userName);
+           return _ProsjektBLL.HentProsjekter(userName);
         }
         public virtual HttpResponseMessage Post(Prosjekt prosjektInn)
         {
             string userName = User.Identity.Name;
             if (ModelState.IsValid)
             {
-               bool ok = db.RegistrerProsjekt(prosjektInn, userName);
+               bool ok = _ProsjektBLL.RegistrerProsjekt(prosjektInn, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()
@@ -40,14 +46,14 @@ namespace Jobbplan.Controllers
         public void Delete(int id)
         {
             string userName = User.Identity.Name;
-            db.SlettProsjekt(userName,id);       
+            _ProsjektBLL.SlettProsjekt(userName,id);       
         }
         public HttpResponseMessage Put(Prosjekt EndreProsjekt)
         {
             string userName = User.Identity.Name;
             if (ModelState.IsValid)
             {
-                bool ok = db.EndreProsjekt(EndreProsjekt, userName);
+                bool ok = _ProsjektBLL.EndreProsjekt(EndreProsjekt, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()

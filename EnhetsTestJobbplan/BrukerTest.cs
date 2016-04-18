@@ -4,12 +4,13 @@ using System.Web;
 using System.Web.Mvc;
 using Jobbplan;
 using Jobbplan.Controllers;
-using Jobbplan.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Transactions;
 using Moq;
 using System.Net;
-
+/*
 namespace EnhetsTestJobbplan
 {
     
@@ -49,11 +50,34 @@ namespace EnhetsTestJobbplan
             string brukernavn = User.Identity.Name;
             return db.HentBrukere(id,brukernavn);
           
-        }*/
+        }
+        
         [TestMethod]
         public void Get_Brukere_Ok()
         {
-           
+            var data = new List<dbBruker>
+            {
+                new dbBruker() { Fornavn = "mats", Etternavn = "Løkken", BrukerId = 1, Email = "mats_loekken@hotmail.com"}
+            }.AsQueryable();
+            var data1 = new List<Profil>
+            {
+                new Profil() {Fornavn = "mats", Etternavn = "Løkken", id = 1, Email = "mats_loekken@hotmail.com"}
+            };
+
+            var mockSet = new Mock<DbSet<dbBruker>>();
+            mockSet.As<IQueryable<dbBruker>>().Setup(m => m.Provider).Returns(data.Provider);
+            mockSet.As<IQueryable<dbBruker>>().Setup(m => m.Expression).Returns(data.Expression);
+            mockSet.As<IQueryable<dbBruker>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            mockSet.As<IQueryable<dbBruker>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+            var mockContext = new Mock<DIbruker>();
+            mockContext.Setup(c => c.HentBruker("mats_loekken@hotmail.com")).Returns(data1);
+
+            var service = new DIbruker(mockContext.Object);
+            var blogs = service.HentBruker("mats_loekken@hotmail.com");
+
+            Assert.AreEqual(1, blogs.Count);
+            Assert.AreEqual(1, blogs[0].id);
         }
         [TestMethod]
         public void Registrer_POST_Ok()
@@ -118,7 +142,27 @@ namespace EnhetsTestJobbplan
                 Assert.AreEqual(true, actual);
             }
         }
-       
+        [TestMethod]
+        public void Sett_Inn_Bruker_I_Db_Ok_moq()
+        {
+                  
+            Registrer NyBruker = new Registrer()
+            {
+                Fornavn = "Mats",
+                Etternavn = "Lokken",
+                Email = "tesbruker@hotmail.com",
+                Telefonnummer = "93686771",
+                BekreftPassord = "password"
+            };
+            // Arrange 
+            var mockEntityRepository = new Mock<InterfaceDbTBruker>();
+            mockEntityRepository.Setup(m => m.RegistrerBruker(It.IsAny<Registrer>()));
+            var entity = new DIbruker(mockEntityRepository.Object);
+            // Act 
+            var name = entity.RegistrerBruker(NyBruker);
+            // Assert
+            mockEntityRepository.Verify(m => m.RegistrerBruker(It.IsAny<Registrer>()), Times.AtLeastOnce);
+        }
         [TestMethod]
         public void Hent_Timeliste_Moq()
         {
@@ -138,7 +182,6 @@ namespace EnhetsTestJobbplan
 
             Assert.AreEqual(timer,actual);
         }
-
         [TestMethod]
         public void Hent_BrukerInfo_Moq()
         {
@@ -161,6 +204,7 @@ namespace EnhetsTestJobbplan
 
             Assert.AreEqual(info, actual);
         }
+
         [TestMethod]
         public void Gi_AdminTilgang_Moq()
         {
@@ -172,11 +216,12 @@ namespace EnhetsTestJobbplan
                  BrukerId = 2
             };
      
+            
             _mock.Setup(x => x.GiBrukerAdminTilgang(adminBruker,It.IsAny<string>())).Returns(true);
             _mock.Verify(framework => framework.GiBrukerAdminTilgang(adminBruker, "mats_loekken@hotmail.com"), Times.AtMostOnce());
 
-            InterfaceDbTBruker lovable = _mock.Object;
-            var actual = lovable.GiBrukerAdminTilgang(adminBruker, "mats_loekken@hotmail.com");
+            InterfaceDbTBruker dbtb = _mock.Object;
+            var actual = dbtb.GiBrukerAdminTilgang(adminBruker, "mats_loekken@hotmail.com");
 
             Assert.AreEqual(true, actual);
         }
@@ -194,6 +239,7 @@ namespace EnhetsTestJobbplan
             }
         }
 
-
+        
     }
 }
+*/

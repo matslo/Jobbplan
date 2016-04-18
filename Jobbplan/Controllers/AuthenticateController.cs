@@ -4,20 +4,26 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.Model;
 using System.Web.Security;
+using Jobbplan.BLL;
 
 
 namespace Jobbplan.Controllers
 {
     public class AuthenticateController : ApiController
     {
-        DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+        private IBrukerLogikk _BrukerBLL;
+
+        public AuthenticateController()
+        {
+            _BrukerBLL = new BrukerBLL();
+        }
         public HttpResponseMessage Post(LogInn personInn)
         {
             if (ModelState.IsValid)
             {
-                bool ok = db.BrukerIdb(personInn);
+                bool ok = _BrukerBLL.BrukerIdb(personInn);
                 if (ok)
                 {
                     FormsAuthentication.RedirectFromLoginPage(personInn.Brukernavn, false);

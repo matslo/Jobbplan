@@ -4,15 +4,15 @@ using System.Web;
 using Jobbplan;
 using Jobbplan.Controllers;
 using System.Web.Mvc;
-using Jobbplan.Models;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Routing;
 using System.Net;
 using System.Transactions;
+using Jobbplan.Model;
 using Moq;
 
-
+/*
 namespace EnhetsTestJobbplan
 {
     [TestClass]
@@ -89,3 +89,4 @@ namespace EnhetsTestJobbplan
 
     }
 }
+*/

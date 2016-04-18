@@ -1,7 +1,7 @@
 ﻿using System;
 using Jobbplan.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Jobbplan.Models;
+using Jobbplan.Model;
 using Moq;
 using System.Web.Mvc;
 using System.Net;
@@ -11,6 +11,8 @@ using System.Web;
 using System.Web.Http.Results;
 using System.Linq;
 using System.Collections.Generic;
+using System.Data.Entity;
+/*
 namespace EnhetsTestJobbplan
 {
     [TestClass]
@@ -230,5 +232,34 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(req, actual);
 
         }
+        [TestMethod]
+        public void Hent_Bruker_Request_prosjekt()
+        {
+
+            var _mock = new Mock<InterfaceDbTProsjekt>();
+
+            var req = new List<ProsjektrequestMelding>() { new ProsjektrequestMelding()
+            {
+               ProsjektId = 1,
+               FraBruker = "mats_loekk@hotmail.com",
+               TilBruker = "gordo@hotmail.com",
+               Melding = "",
+               Prosjektnavn = "Bunnpris",
+               MeldingId = 1,
+               Tid = Convert.ToDateTime("22.12.2012 16.43")
+
+             } };
+
+            _mock.Setup(x => x.VisRequesterForProsjekt(1,"gordo@hotmail.com")).Returns(req);
+            _mock.Verify(framework => framework.VisRequesterForProsjekt(1,"gordo@hotmail.com"), Times.AtMostOnce());
+
+            InterfaceDbTProsjekt lovable = _mock.Object;
+            var actual = lovable.VisRequesterForProsjekt(1,"gordo@hotmail.com");
+
+            Assert.AreEqual(req, actual);
+
+        }
+       
     }
 }
+*/

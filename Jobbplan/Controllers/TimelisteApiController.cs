@@ -4,18 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.Model;
+using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
     
     public class TimelisteApiController : ApiController
     {
-        DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+        private IBrukerLogikk _BrukerBLL;
+
+        public TimelisteApiController()
+        {
+            _BrukerBLL = new BrukerBLL();
+        }
+       
         public List<Timeliste> Get ()
         {
             string username = User.Identity.Name;
-            return db.HentVakter(username);
+            return _BrukerBLL.HentVakter(username);
         }
 
     }

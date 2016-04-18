@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
-namespace Jobbplan.Models
+using Jobbplan.Model;
+
+namespace Jobbplan.DAL
 {
     public class DbTransaksjonerVakt : InterfaceDbTVakt
     {

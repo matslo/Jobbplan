@@ -4,26 +4,31 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
-using Jobbplan.Controllers;
+using Jobbplan.Model;
+using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
     public class ProfilController : ApiController
     {
-        DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+        private IBrukerLogikk _BrukerBLL;
 
+        public ProfilController()
+        {
+            _BrukerBLL = new BrukerBLL();
+        }
+        
         public List<Profil> Get()
         {
             string brukernavn = User.Identity.Name;
-            return db.HentBruker(brukernavn);
+            return _BrukerBLL.HentBruker(brukernavn);
         }
         public HttpResponseMessage Put(Profil EndreBrukerInfo)
         {
             string userName = User.Identity.Name;            
             if (ModelState.IsValid)
             {
-                bool ok = db.EndreBrukerInfo(EndreBrukerInfo, userName);
+                bool ok = _BrukerBLL.EndreBrukerInfo(EndreBrukerInfo, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()

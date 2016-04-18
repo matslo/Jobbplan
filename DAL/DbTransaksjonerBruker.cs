@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Jobbplan.Model;
 
-
-namespace Jobbplan.Models
+namespace Jobbplan.DAL
 {
     public class DbTransaksjonerBruker : InterfaceDbTBruker
     {
-        public bool RegistrerBruker(Registrer innBruker)
+        public virtual bool RegistrerBruker(Registrer innBruker)
         {
             if (EmailDb(innBruker))
             {
@@ -247,5 +247,6 @@ namespace Jobbplan.Models
                 return false;
             }
         }
+
     }
 }

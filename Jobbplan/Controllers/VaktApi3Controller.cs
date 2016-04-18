@@ -4,23 +4,30 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.Model;
+using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
     public class VaktApi3Controller : ApiController
     {
-        DbTransaksjonerVakt db = new DbTransaksjonerVakt();
+        private IVaktLogikk _VaktBLL;
+
+        public VaktApi3Controller()
+        {
+            _VaktBLL = new VaktBLL();
+        }
+
         //Get api/KalenderApi
         public List<VaktRequestMelding> Get()
         {
             string brukernavn = User.Identity.Name;
-            return db.visVaktRequester(brukernavn);
+            return _VaktBLL.visVaktRequester(brukernavn);
         }
         public List<Vaktkalender> Get(int id)
         {
             string brukernavn = User.Identity.Name;
-            return db.hentAlleLedigeVakter(id, brukernavn);
+            return _VaktBLL.hentAlleLedigeVakter(id, brukernavn);
         }
         public HttpResponseMessage Post(int id)
         {
@@ -28,7 +35,7 @@ namespace Jobbplan.Controllers
            
             if (ModelState.IsValid)
             {
-                bool ok = db.taLedigVakt(id, brukernavn);
+                bool ok = _VaktBLL.taLedigVakt(id, brukernavn);
                 if (ok)
                 {
                     return new HttpResponseMessage()
@@ -43,13 +50,42 @@ namespace Jobbplan.Controllers
                 Content = new StringContent("Kunne ikke ta ledig vakt")
             };
         }
-        public bool Put(int id)
+
+        public HttpResponseMessage Put(int id)
         {
-            return db.requestOk(id);
+            bool ok = _VaktBLL.requestOk(id);
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Created,
+                };
+            }
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Feil")
+            };
+
         }
-        public bool Delete (int id)
+
+        public HttpResponseMessage Delete (int id)
         {
-            return db.SlettVaktRequest(id);
+            bool ok = _VaktBLL.SlettVaktRequest(id);
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Created,
+                };
+            }
+
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Feil")
+            };
         }
     }
 }

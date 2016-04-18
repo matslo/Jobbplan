@@ -4,20 +4,27 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.BLL;
+using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
    // [Authorize]
     public class ProsjektDeltakelseApiController : ApiController
     {
-        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
+        private IProsjektLogikk _ProsjektBLL;
+
+        public ProsjektDeltakelseApiController()
+        {
+            _ProsjektBLL = new ProsjektBLL();
+        }
+       
         public virtual HttpResponseMessage Post(ProsjektrequestMelding pid )
         {
             string userName = User.Identity.Name;
             if (ModelState.IsValid)
             {
-                bool ok = db.RegistrerProsjektdeltakelse(pid, userName);
+                bool ok = _ProsjektBLL.RegistrerProsjektdeltakelse(pid, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()
@@ -36,7 +43,7 @@ namespace Jobbplan.Controllers
         public HttpResponseMessage Delete(int id)
         {
             string username = User.Identity.Name;
-            bool ok = db.SlettBrukerFraProsjekt(username, id);
+            bool ok = _ProsjektBLL.SlettBrukerFraProsjekt(username, id);
             if (ok)
             {
                 return new HttpResponseMessage()

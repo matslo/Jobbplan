@@ -4,22 +4,29 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.BLL;
+using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
     public class ProsjektreqApiController : ApiController
     {
-        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
+        private IProsjektLogikk _ProsjektBLL;
+
+        public ProsjektreqApiController()
+        {
+            _ProsjektBLL = new ProsjektBLL();
+        }
+       
         public List<ProsjektrequestMelding> Get()
         {
             string UserName = User.Identity.Name;
-            return db.VisRequester(UserName);
+            return _ProsjektBLL.VisRequester(UserName);
         }
         public List<ProsjektrequestMelding> Get(int id)
         {
             string UserName = User.Identity.Name;
-            return db.VisRequesterForProsjekt(id,UserName);
+            return _ProsjektBLL.VisRequesterForProsjekt(id,UserName);
         }
 
         public HttpResponseMessage Post(ProsjektrequestSkjema reqInn)
@@ -27,7 +34,7 @@ namespace Jobbplan.Controllers
             string UserName = User.Identity.Name;
             if (ModelState.IsValid)
             {
-                bool ok = db.LeggTilBrukerRequest(reqInn, UserName);
+                bool ok = _ProsjektBLL.LeggTilBrukerRequest(reqInn, UserName);
                 if (ok)
                 {
                     return new HttpResponseMessage()
@@ -47,8 +54,8 @@ namespace Jobbplan.Controllers
         public List<ProsjektrequestMelding> Delete(int id)
         {
             string UserName = User.Identity.Name;
-            db.SlettRequest(id,UserName);
-            return db.VisRequester(UserName);
+            _ProsjektBLL.SlettRequest(id,UserName);
+            return _ProsjektBLL.VisRequester(UserName);
         }
     }
 }
