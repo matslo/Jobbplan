@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Jobbplan.Models;
+using Jobbplan.BLL;
+using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
     [Authorize]
     public class ProsjektController : Controller
     {
-        DbTransaksjonerProsjekt db = new DbTransaksjonerProsjekt();
+        private IProsjektLogikk _ProsjektBLL;
+
+        public ProsjektController()
+        {
+            _ProsjektBLL = new ProsjektBLL();
+        }
+        
         // GET: Prosjekt
         public ActionResult Index()
         {
@@ -31,7 +38,7 @@ namespace Jobbplan.Controllers
         {
             string userName = HttpContext.User.Identity.Name;
         
-            List<ProsjektVis> pro = db.HentProsjekter(userName);
+            List<ProsjektVis> pro = _ProsjektBLL.HentProsjekter(userName);
 
             return PartialView(pro);
         }

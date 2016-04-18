@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jobbplan.Model;
 
-namespace Jobbplan.Models
+namespace Jobbplan.BLL
 {
-    public interface InterfaceDbTBruker
+    public interface IBrukerLogikk
     {
         bool RegistrerBruker(Registrer innBruker);
         bool GiBrukerAdminTilgang(Sjef innBruker, string brukernavn);

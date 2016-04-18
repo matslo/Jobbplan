@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
 using System.Data.Entity;
-using Jobbplan.Models;
+using Jobbplan.Model;
 
 namespace Jobbplan
 {

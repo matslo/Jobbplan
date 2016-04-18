@@ -157,6 +157,17 @@ function ProIdTEST() {
         return prosjektid;
     }
 var kalendere = {
+    Absoluttalle: {
+        url: '/api/VaktApi/',
+        type: 'GET',
+        dataType: 'json'
+        ,
+        error: function () {
+            $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
+            $('#script-warning').show();
+        }
+
+    },
         alle: {
             url: '/api/VaktApi/',
             type: 'GET',
@@ -375,6 +386,8 @@ $(document).ready(function () {
         $('#visAlleVakter').prop('disabled', true);
         $('#mineVakter').prop('disabled', false);
         $('#ledigeVakter').prop('disabled', false);
+        $('#alleMineVakter').prop('disabled', false);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.Absoluttalle);
         $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
         $('#calendar').fullCalendar('removeEventSource', kalendere.ledige);
         $('#calendar').fullCalendar('refetchEvents');
@@ -382,22 +395,39 @@ $(document).ready(function () {
         $('#calendar').fullCalendar('refetchEvents');
 
     });
+    
+    $("#alleMineVakter").click(function () {
+        $('#visAlleVakter').prop('disabled', false);
+        $('#mineVakter').prop('disabled', false);
+        $('#ledigeVakter').prop('disabled', false);
+        $('#alleMineVakter').prop('disabled', true);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.alle);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.ledige);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
+        $('#calendar').fullCalendar('refetchEvents');
+        $('#calendar').fullCalendar('addEventSource', kalendere.Absoluttalle);
+        $('#calendar').fullCalendar('refetchEvents');
+    });
     $("#mineVakter").click(function () {
+        $('#alleMineVakter').prop('disabled', false);
         $('#visAlleVakter').prop('disabled', false);
         $('#mineVakter').prop('disabled', true);
         $('#ledigeVakter').prop('disabled', false);
         $('#calendar').fullCalendar('removeEventSource', kalendere.alle);
         $('#calendar').fullCalendar('removeEventSource', kalendere.ledige);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.Absoluttalle);
         $('#calendar').fullCalendar('refetchEvents');
         $('#calendar').fullCalendar('addEventSource', kalendere.brukers);
         $('#calendar').fullCalendar('refetchEvents');
     });
     $("#ledigeVakter").click(function () {
+        $('#alleMineVakter').prop('disabled', false);
         $('#visAlleVakter').prop('disabled', false);
         $('#mineVakter').prop('disabled', false);
         $('#ledigeVakter').prop('disabled', true);
         $('#calendar').fullCalendar('removeEventSource', kalendere.alle);
         $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
+        $('#calendar').fullCalendar('removeEventSource', kalendere.Absoluttalle);
         $('#calendar').fullCalendar('refetchEvents');
         $('#calendar').fullCalendar('addEventSource', kalendere.ledige);
         $('#calendar').fullCalendar('refetchEvents');

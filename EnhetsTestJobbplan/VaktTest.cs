@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Jobbplan;
 using Jobbplan.Controllers;
-using Jobbplan.Models;
+using Jobbplan.Model;
 using System.Web.Mvc;
 using System.Net.Http;
 using System.Web.Http;
@@ -13,7 +13,7 @@ using System.Transactions;
 using System.Net;
 using System.Linq;
 using System.Collections.Generic;
-
+/*
 namespace EnhetsTestJobbplan
 {
    
@@ -170,6 +170,7 @@ namespace EnhetsTestJobbplan
 
             Assert.AreEqual(true, actual);
         }
+       
         [TestMethod]
         public void Ledig_Vakt()
         {
@@ -199,3 +200,4 @@ namespace EnhetsTestJobbplan
         
     }
 }
+*/

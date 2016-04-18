@@ -4,18 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.BLL;
+using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
     public class VaktApi2Controller : ApiController
     {
-        DbTransaksjonerVakt db = new DbTransaksjonerVakt();
+        private IVaktLogikk _VaktBLL;
+
+        public VaktApi2Controller()
+        {
+            _VaktBLL = new VaktBLL();
+        }
+     
         //Get api/KalenderApi
         public List<Vaktkalender> Get(int id)
         {
             string brukernavn = User.Identity.Name;
-            return db.hentAlleVakterBruker(id, brukernavn);
+            return _VaktBLL.hentAlleVakterBruker(id, brukernavn);
         }
       
         public HttpResponseMessage Put(Vaktskjema endrevakt)
@@ -24,7 +31,7 @@ namespace Jobbplan.Controllers
       
             if (ModelState.IsValid)
             {
-                bool ok = db.EndreVakt(endrevakt, userName);
+                bool ok = _VaktBLL.EndreVakt(endrevakt, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()

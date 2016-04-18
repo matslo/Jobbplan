@@ -12,7 +12,10 @@
 footer{
     position:fixed;
     bottom:0;
-
+   
+}
+li a {
+    margin-right: 8px;
 }
 #fullCalModal{
      margin-top:200px;
@@ -67,5 +70,17 @@ font-size:8.9vw;
    color:rgb(35,39,47);
 
 }
-
-
+#antallInnboks {
+    font-size: 15px;
+    color: lightcoral;
+    background-color: darkslategray;
+    margin-left: -4px;
+    z-index: 2;
+    margin-top:-110px;
+  
+}
+.menyIkoner {
+    margin-top: -8px;
+    color: darkslategray;
+    font-size: 22px;
+}

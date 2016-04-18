@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jobbplan.Model;
 
-namespace Jobbplan.Models
+namespace Jobbplan.BLL
 {
-    public interface InterfaceDbTVakt
+    public interface IVaktLogikk
     {
         bool RegistrerVakt(Vaktskjema innVakt, string brukernavn);
         bool LedigVakt(Vaktskjema inn);
         List<Vaktkalender> hentAlleVakter(int id, string b);
         List<Vaktkalender> hentAlleVakterBruker(int id, string brukernavn);
+        List<Vaktkalender> hentAlleVakterForBruker(string brukernavn);
+        List<Vaktkalender> hentAlleLedigeVakter(int id, string brukernavn);
         bool taLedigVakt(int id, string brukernavn);
         bool EndreVakt(Vaktskjema EndreVakt, string brukernavn);
         bool SlettVakt(int vaktId, string brukernavn);

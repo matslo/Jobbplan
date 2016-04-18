@@ -5,11 +5,13 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity;
+using Jobbplan.Model;
 
-namespace Jobbplan.Models
+namespace Jobbplan.DAL
 {
-    public partial class Dbkontekst : DbContext
+    public class Dbkontekst : DbContext
     {
+
         public Dbkontekst()
             : base("JobbplanDb")
         {
@@ -17,7 +19,7 @@ namespace Jobbplan.Models
             Database.CreateIfNotExists();
         }
         
-        public DbSet<dbBruker> Brukere { get; set; }
+        public virtual DbSet<dbBruker> Brukere { get; set; }
         public DbSet<Vakt> Vakter { get; set; }
         public DbSet<Prosjekt> Prosjekter { get; set; }
         public DbSet<Prosjektdeltakelse> Prosjektdeltakelser { get; set; }

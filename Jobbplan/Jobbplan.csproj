@@ -299,21 +299,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JobbPlanAuthentication.cs" />
-    <Compile Include="Models\InterfaceDbTProsjekt.cs" />
-    <Compile Include="Models\Maler.cs" />
-    <Compile Include="Models\Sjef.cs" />
-    <Compile Include="Models\Bruker.cs" />
-    <Compile Include="Models\Db.cs" />
-    <Compile Include="Models\DbTransaksjonerBruker.cs" />
-    <Compile Include="Models\DbTransaksjonerProsjekt.cs" />
-    <Compile Include="Models\DbTransaksjonerVakt.cs" />
-    <Compile Include="Models\InterfaceDbTVakt.cs" />
-    <Compile Include="Models\InterfaceDbTBruker.cs" />
-    <Compile Include="Models\Prosjekt.cs" />
-    <Compile Include="Models\Prosjektdeltakelse.cs" />
-    <Compile Include="Models\Timeliste.cs" />
-    <Compile Include="Models\Vakt.cs" />
-    <Compile Include="Models\Varsler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +328,17 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\bootstrap\" />
     <Folder Include="Content\fonts\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{2e5c4b12-4fa8-46bf-96e4-f732da975410}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{083ff6e9-4bbd-4564-ab7c-f47f9e5d2a93}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -121,9 +121,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{2e5c4b12-4fa8-46bf-96e4-f732da975410}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{5a00d333-a3bf-4000-b3bf-e61e8d4b7bc3}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jobbplan\Jobbplan.csproj">
       <Project>{66332e02-af80-4a58-b576-49a35852808b}</Project>
       <Name>Jobbplan</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{083ff6e9-4bbd-4564-ab7c-f47f9e5d2a93}</Project>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

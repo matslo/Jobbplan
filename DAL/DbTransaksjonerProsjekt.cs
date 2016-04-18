@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Http;
+using Jobbplan.Model;
 
-namespace Jobbplan.Models
+namespace Jobbplan.DAL
 {
     public class DbTransaksjonerProsjekt : InterfaceDbTProsjekt
     {       
@@ -162,7 +161,7 @@ namespace Jobbplan.Models
                            }).ToList();
             return eventer;
         }
-        public List<ProsjektVis> HentProsjekter (string Brukernavn)
+        public virtual List<ProsjektVis> HentProsjekter (string Brukernavn)
         {
             int id = BrukerId(Brukernavn);
                List<ProsjektVis> pros = (from p in dbs.Prosjektdeltakelser 

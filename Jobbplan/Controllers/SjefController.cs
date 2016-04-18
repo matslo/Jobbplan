@@ -5,18 +5,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Jobbplan.Models;
+using Jobbplan.BLL;
+using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
     public class SjefController : ApiController
     {
-        DbTransaksjonerBruker db = new DbTransaksjonerBruker();
+        private IBrukerLogikk _BrukerBLL;
+
+        public SjefController()
+        {
+            _BrukerBLL = new BrukerBLL();
+        }
+       
         public HttpResponseMessage Post(Sjef innBruker)
         {
             string userName = User.Identity.Name;
           
-                bool ok = db.GiBrukerAdminTilgang(innBruker, userName);
+                bool ok = _BrukerBLL.GiBrukerAdminTilgang(innBruker, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()
@@ -35,7 +42,7 @@ namespace Jobbplan.Controllers
         {
             string userName = User.Identity.Name;
 
-            bool ok = db.FjernAdminTilgang(innBruker, userName);
+            bool ok = _BrukerBLL.FjernAdminTilgang(innBruker, userName);
             if (ok)
             {
                 return new HttpResponseMessage()
@@ -52,7 +59,7 @@ namespace Jobbplan.Controllers
         }
         public HttpResponseMessage Delete(int id)
         {
-            var dbtp = new DbTransaksjonerProsjekt();
+            var dbtp = new ProsjektBLL();
             string userName = User.Identity.Name;
 
             bool ok = dbtp.SlettRequestSomAdmin(userName,id);
