@@ -34,7 +34,7 @@ function OpprettMal() {
             data: JSON.stringify(mal),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Godkjent!');
+                $('#malok').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Mal ble vellykket opprettet </div>");
                 HentMaler();
                 $this.removeAttr('disabled').html('Legg til mal');
               
