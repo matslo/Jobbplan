@@ -41,6 +41,7 @@
             data: JSON.stringify(EndreBrukerInfo),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
+                $('#endrebrukerinfo').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Din informasjon har blitt oppdatert. </div>");
                 HentBruker();
             },
             error: function (x, y, z) {
@@ -77,5 +78,6 @@
  Etternavn   <input type="text" id="EtternavnTxt" class="form-control"/>
   Adresse  <input type="text" id="AdresseTxt" class="form-control"/>
 <button onclick="EndreBrukerInfo()" class="btn btn-info">Endre Informasjon</button>
+    <div id="endrebrukerinfo"></div>
 <button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button>
 </div>

@@ -50,7 +50,8 @@
                 data: JSON.stringify(EndreProsjekt),
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert('Godkjent!');
+                    $('#Endretxt').val('');
+                    $('#endreprosjekt').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Endring av navn på bedrift var vellykket. </div>");
                 },
                 error: function (x, y, z) {
                     alert(x + '\n' + y + '\n' + z);
@@ -122,5 +123,6 @@
         <td class="vaktEndring" style="display: none"><input type="text" id="Endretxt" class="form-control" placeholder="Nytt navn på bedrift"/></td>
         <td class="vaktEndring" style="display: none"><button onclick="EndreProsjekt()" class="btn btn-info">Endre Prosjekt</button></td>
         <td class="vaktEndring" style="display: none"><button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button></td>
+        <div id="endreprosjekt"></div>
     </tr>
 </table> 
