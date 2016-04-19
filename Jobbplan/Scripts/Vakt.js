@@ -40,7 +40,7 @@ function OpprettMal() {
               
             },
             error: function (data) {
-                alert(data.responseText);
+                $('#malok').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Det ble ikke opprettet mal. Er du sikker på at du valgte all nødvendig informasjon? </div>");
                 $this.removeAttr('disabled').html('Legg til mal');
             }
         });
@@ -72,7 +72,7 @@ $('body').on('click', '#LeggTilVakt', function () {
                 $('#calendar').fullCalendar('refetchEvents');
             },
             error: function (data) {
-                alert(data.responseText);
+                $('#vaktikkeok').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Ingen vakt ble lagt til i kalenderen. Har du fylt ut all nødvendig informasjon? </div>");
                 $this.removeAttr('disabled').html('Legg til vakt');
            }
         });

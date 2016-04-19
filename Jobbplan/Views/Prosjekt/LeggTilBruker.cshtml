@@ -13,7 +13,7 @@
                     HentRequester();
                 },
                 error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
+                    $('#slettbrukerprosj').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Bruker ble ikke lagt til bedrift.</div>");
                 }
             });
         })
@@ -28,11 +28,11 @@
                 type: 'DELETE',
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    alert("Ok");
+                    $('#brukerprosjekt').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Bruker slettet fra bedrift. </div>");
                     HentBrukere();
                 },
                 error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
+                    $('#brukerprosjekt').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Det oppsto en feil. Ingen brukere slettet fra bedriften. </div>");
                 }
             });}
         })
@@ -73,7 +73,7 @@
                     HentBrukere();
                 },
                 error: function (data) {
-                    alert(data.responseText);
+                    $('#brukerprosjekt').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Det oppsto en feil. Brukeren fikk ikke administratorrettigheter. </div>");
                 }
             });
         })
@@ -93,7 +93,7 @@
                     HentBrukere();
                 },
                 error: function (data) {
-                    alert(data.responseText);
+                    $('#brukerprosjekt').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Det oppsto en feil. Brukeren har fortsatt administratorrettigheter.</div>");
                 }
             });
         })
@@ -116,8 +116,9 @@
                     HentRequester();
                 },
                 error: function () {
-                    alert("bruker ikke funnet");
+                    $('#brukerprosjekt').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Brukeren ble ikke funnet. For å kunne legge til brukere til din bedrift, må de ha registrert sin profil. </div>");
                     $this.removeAttr('disabled').html('<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send forespørsel');
+                    $('#TilTxt').val('')
                 }
             });
          
@@ -192,6 +193,7 @@
     });
 </script>
 <h2>Legg til bruker</h2>
+<div id="brukerprosjekt"></div>
     <div class="container">     
         <div class="row">
             <div class='col-sm-3'>

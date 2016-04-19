@@ -42,10 +42,14 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 $('#endrebrukerinfo').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Din informasjon har blitt oppdatert. </div>");
+                $('#FornavnTxt').val('');
+                $('#EtternavnTxt').val('');
+                $('#AdresseTxt').val('');
+                
                 HentBruker();
             },
             error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+                $('#endrebrukerinfo').html("<div class='alert alert-warning' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Det ble ikke gjort endringer på brukerinformasjonen. </div>");
             }
         });
     };
@@ -68,6 +72,7 @@
 
 </script>
 <h2>Profil</h2>
+<div id="endrebrukerinfo"></div>
 
 <div id="brukerliste" style="width:40%;"></div>
 
@@ -78,6 +83,5 @@
  Etternavn   <input type="text" id="EtternavnTxt" class="form-control"/>
   Adresse  <input type="text" id="AdresseTxt" class="form-control"/>
 <button onclick="EndreBrukerInfo()" class="btn btn-info">Endre Informasjon</button>
-    <div id="endrebrukerinfo"></div>
 <button onclick="VisKnapper()" class="btn btn-warning">Avbryt</button>
 </div>
