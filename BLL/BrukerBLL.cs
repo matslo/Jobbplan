@@ -15,6 +15,10 @@ namespace Jobbplan.BLL
         {
             _repository = new DbTransaksjonerBruker();
         }
+        public BrukerBLL(InterfaceDbTBruker moqs)
+        {
+            _repository = moqs;
+        }
         public int AntallMeldinger(string brukernavn)
         {
             return _repository.AntallMeldinger(brukernavn);

@@ -108,7 +108,8 @@ namespace Jobbplan.DAL
                                Brukernavn = dbtB.BrukerNavn(k.BrukerId),
                                title = k.title +": "+ dbtB.FultNavn(k.BrukerId),
                                color = k.color,
-                               VaktId = k.VaktId
+                               VaktId = k.VaktId,
+                               ProsjektId = k.ProsjektId
                            }).ToList();
             return eventer;
         }

@@ -8,7 +8,7 @@ namespace Jobbplan.DAL
 {
     public class DbTransaksjonerBruker : InterfaceDbTBruker
     {
-        public virtual bool RegistrerBruker(Registrer innBruker)
+        public bool RegistrerBruker(Registrer innBruker)
         {
             if (EmailDb(innBruker))
             {
@@ -42,6 +42,7 @@ namespace Jobbplan.DAL
         }
         public bool GiBrukerAdminTilgang(Sjef innBruker, string brukernavn)
         {
+            
             Dbkontekst dbs = new Dbkontekst();
             DbTransaksjonerProsjekt DbTp = new DbTransaksjonerProsjekt();
 

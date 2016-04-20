@@ -13,6 +13,7 @@ using System.Transactions;
 using System.Net;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Jobbplan.BLL;
 using Jobbplan.DAL;
 
@@ -22,6 +23,60 @@ namespace EnhetsTestJobbplan
     [TestClass]
     public class VaktTest
     {
+        private InterfaceDbTVakt mockProductRepository;
+        public VaktTest()
+        { 
+            // create some mock products to play with
+           
+            List<Vaktkalender> vakter = new List<Vaktkalender>
+                {
+                    new Vaktkalender {ProsjektId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
+                    new Vaktkalender {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
+                    new Vaktkalender {ProsjektId = 3, Brukernavn = "", start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
+                };
+            List<Vakt> vakterDB = new List<Vakt>
+                {
+                    new Vakt {ProsjektId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
+                    new Vakt {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
+                    new Vakt {ProsjektId = 3, BrukerId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
+                };
+            List<dbBruker> bruker = new List<dbBruker>
+                {
+                    new dbBruker {BrukerId = 1, Email = "testing123@hotmail.com"}
+                };
+            // Mock the Products Repository using Moq
+            Mock<InterfaceDbTVakt> mockProductRepository = new Mock<InterfaceDbTVakt>();
+
+            // Return all the products
+
+            // return a product by Id
+            mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(),It.IsAny<string>())).Returns((int i,string u) => vakter.Where(x => x.ProsjektId == i).ToList());
+            mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(), It.IsAny<string>()))
+                .Callback((int i, string u) => vakterDB.Where(x => x.ProsjektId == i))
+                .Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
+
+
+            // return a product by Name
+            mockProductRepository.Setup(mr => mr.hentAlleLedigeVakter(It.IsAny<int>(),It.IsAny<string>())).Returns((int s, string u) => vakter.Where(x => x.ProsjektId == s && x.Brukernavn==u).ToList());
+
+            // Allows us to test saving a product
+         
+            // Complete the setup of our Mock Product Repository
+            this.mockProductRepository = mockProductRepository.Object;
+        }
+        [TestMethod]
+        public void Hent_alle_vakter_ok()
+        {
+            // Try finding a product by id
+            List<Vaktkalender> testProduct = this.mockProductRepository.hentAlleVakter(1,"mats_loekken@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual(2, testProduct[i].ProsjektId);
+               
+            }
+            Assert.IsNotNull(testProduct); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
+          }
         //Inneholder Tester for VaktApiController/2/3, VaktController, DbtransaksjonerVakt
         //VaktController
         [TestMethod]
@@ -54,13 +109,13 @@ namespace EnhetsTestJobbplan
         {
 
             var _mock = new Mock<InterfaceDbTVakt>();
-
-            var vakter = new List<Vaktkalender>() { new Vaktkalender()
-            {  start = Convert.ToDateTime("22.12.2012 16.43"),
-                end =  Convert.ToDateTime("22.12.2012 16.43"),
-                title = "Dagvakt",
-                Beskrivelse = "Opplæring"
-             } };
+            List<Vaktkalender> vakter = new List<Vaktkalender>
+                {
+                    new Vaktkalender {ProsjektId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
+                    new Vaktkalender {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
+                    new Vaktkalender {ProsjektId = 3, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
+                };
+         
 
             _mock.Setup(x => x.hentAlleVakter(1, It.IsAny<string>())).Returns(vakter);
             _mock.Verify(framework => framework.hentAlleVakter(1, "mats_loekken@hotmail.com"), Times.AtMostOnce());
@@ -136,7 +191,6 @@ namespace EnhetsTestJobbplan
                 Vaktskjema vakt = new Vaktskjema()
                 {
                     start = "22.12.2012",
-                    end = "22.12.2012",
                     startTid = "16.43",
                     endTid = "15.43",
                     title = "Dagvakt",
@@ -162,9 +216,9 @@ namespace EnhetsTestJobbplan
             
             bool expected = false;
             bool actual;
-            actual = _target.RegistrerVakt(vakt2,"mats_loekken@hotmail.com");
-            _mock.Verify(e => e.RegistrerVakt(It.Is<Vaktskjema>(d => d.start == "22.12.2012" && d.end== "22.12.2012" && d.startTid=="17.00" && d.endTid=="17.30"),"mats_loekkn@hotmai.com"), Times.AtLeastOnce);
-           // Assert.AreEqual(expected, actual);
+            actual = _target.RegistrerVakt(vakt,"mats_loekken@hotmail.com");
+            _mock.Verify(e => e.RegistrerVakt(It.Is<Vaktskjema>(d => d.start == "22.12.2012" && d.startTid=="17.43" && d.endTid=="16.43"),It.IsAny<String>()), Times.Never);
+            Assert.AreEqual(expected, actual);
         }
         [TestMethod]
         public void SettInnMal_OK()
