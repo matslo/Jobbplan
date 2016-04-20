@@ -13,7 +13,9 @@ using System.Transactions;
 using System.Net;
 using System.Linq;
 using System.Collections.Generic;
-/*
+using Jobbplan.BLL;
+using Jobbplan.DAL;
+
 namespace EnhetsTestJobbplan
 {
    
@@ -130,9 +132,7 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void SettInnVakt_End_Before_start()
         {
-            using (TransactionScope scope = new TransactionScope())
-            {
-                InterfaceDbTVakt Dbt = new DbTransaksjonerVakt();
+            
                 Vaktskjema vakt = new Vaktskjema()
                 {
                     start = "22.12.2012",
@@ -144,9 +144,27 @@ namespace EnhetsTestJobbplan
                     BrukerId = 1,
                     ProsjektId = 1
                 };
-                bool id = Dbt.RegistrerVakt(vakt, "mats_loekken@hotmail.com");
-                Assert.AreEqual(false, id);
-            }
+            Vaktskjema vakt2 = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                end = "22.12.2012",
+                startTid = "16.43",
+                endTid = "17.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            var _mock = new Mock<InterfaceDbTVakt>();
+            var _target = new VaktBLL(_mock.Object);
+           
+            _mock.Setup(x => x.RegistrerVakt(vakt2,It.IsAny<String>())).Returns(true);
+            
+            bool expected = false;
+            bool actual;
+            actual = _target.RegistrerVakt(vakt2,"mats_loekken@hotmail.com");
+            _mock.Verify(e => e.RegistrerVakt(It.Is<Vaktskjema>(d => d.start == "22.12.2012" && d.end== "22.12.2012" && d.startTid=="17.00" && d.endTid=="17.30"),"mats_loekkn@hotmai.com"), Times.AtLeastOnce);
+           // Assert.AreEqual(expected, actual);
         }
         [TestMethod]
         public void SettInnMal_OK()
@@ -200,4 +218,3 @@ namespace EnhetsTestJobbplan
         
     }
 }
-*/

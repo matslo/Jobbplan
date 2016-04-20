@@ -17,6 +17,10 @@ namespace Jobbplan.BLL
         {
             _repository = new DbTransaksjonerVakt();
         }
+        public VaktBLL(InterfaceDbTVakt moqs)
+        {
+            _repository = moqs;
+        }
         public bool EndreVakt(Vaktskjema EndreVakt, string brukernavn)
         {
             return _repository.EndreVakt(EndreVakt, brukernavn);

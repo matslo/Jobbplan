@@ -12,7 +12,9 @@ using System.Web.Http.Results;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data.Entity;
-/*
+using Jobbplan.DAL;
+using Jobbplan.BLL;
+
 namespace EnhetsTestJobbplan
 {
     [TestClass]
@@ -262,4 +264,3 @@ namespace EnhetsTestJobbplan
        
     }
 }
-*/

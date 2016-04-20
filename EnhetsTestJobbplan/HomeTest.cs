@@ -11,8 +11,9 @@ using System.Net;
 using System.Transactions;
 using Jobbplan.Model;
 using Moq;
+using Jobbplan.DAL;
+using Jobbplan.BLL;
 
-/*
 namespace EnhetsTestJobbplan
 {
     [TestClass]
@@ -89,4 +90,3 @@ namespace EnhetsTestJobbplan
 
     }
 }
-*/

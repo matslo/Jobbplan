@@ -6,11 +6,11 @@ namespace EnhetsTestJobbplan
 {
     [TestClass]
     public class ProfilTest
-    {
+    {/*
         [TestMethod]
         public void TestMethod1()
         {
-          /*  //Arrange
+            //Arrange
             var controller = new ProfilController();
            var innBruker = new ();
             controller.ModelState.AddModelError("Arbeidsplass", "Arbeidsplass må oppgis");
@@ -18,8 +18,8 @@ namespace EnhetsTestJobbplan
             var result = controller.Post(innBruker);
             //Assert
 
-            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);*/
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
 
-        }
+        }*/
     }
 }

@@ -10,7 +10,10 @@ using System.Linq;
 using System.Transactions;
 using Moq;
 using System.Net;
-/*
+using Jobbplan.Model;
+using Jobbplan.BLL;
+using Jobbplan.DAL;
+
 namespace EnhetsTestJobbplan
 {
     
@@ -51,7 +54,7 @@ namespace EnhetsTestJobbplan
             return db.HentBrukere(id,brukernavn);
           
         }
-        
+        *//*
         [TestMethod]
         public void Get_Brukere_Ok()
         {
@@ -70,15 +73,15 @@ namespace EnhetsTestJobbplan
             mockSet.As<IQueryable<dbBruker>>().Setup(m => m.ElementType).Returns(data.ElementType);
             mockSet.As<IQueryable<dbBruker>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
-            var mockContext = new Mock<DIbruker>();
+            var mockContext = new Mock<IBrukerLogikk>();
             mockContext.Setup(c => c.HentBruker("mats_loekken@hotmail.com")).Returns(data1);
 
-            var service = new DIbruker(mockContext.Object);
+            var service = new Mock<InterfaceDbTBruker>(mockContext.Object);
             var blogs = service.HentBruker("mats_loekken@hotmail.com");
 
             Assert.AreEqual(1, blogs.Count);
             Assert.AreEqual(1, blogs[0].id);
-        }
+        }*/
         [TestMethod]
         public void Registrer_POST_Ok()
         {
@@ -157,7 +160,7 @@ namespace EnhetsTestJobbplan
             // Arrange 
             var mockEntityRepository = new Mock<InterfaceDbTBruker>();
             mockEntityRepository.Setup(m => m.RegistrerBruker(It.IsAny<Registrer>()));
-            var entity = new DIbruker(mockEntityRepository.Object);
+            var entity = new BrukerBLL();
             // Act 
             var name = entity.RegistrerBruker(NyBruker);
             // Assert
@@ -215,7 +218,6 @@ namespace EnhetsTestJobbplan
                  ProsjektId= 1,
                  BrukerId = 2
             };
-     
             
             _mock.Setup(x => x.GiBrukerAdminTilgang(adminBruker,It.IsAny<string>())).Returns(true);
             _mock.Verify(framework => framework.GiBrukerAdminTilgang(adminBruker, "mats_loekken@hotmail.com"), Times.AtMostOnce());
@@ -242,4 +244,3 @@ namespace EnhetsTestJobbplan
         
     }
 }
-*/
