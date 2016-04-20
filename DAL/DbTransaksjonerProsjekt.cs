@@ -13,7 +13,7 @@ namespace Jobbplan.DAL
             Dbkontekst dbs = new Dbkontekst();
 
             int userId = BrukerId(brukernavn);
-            if (innProsjekt.Arbeidsplass == null)
+            if (innProsjekt.Arbeidsplass == "")
             {
                 return false;
             }
