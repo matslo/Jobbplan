@@ -26,7 +26,7 @@ namespace EnhetsTestJobbplan
         private InterfaceDbTVakt mockProductRepository;
         public VaktTest()
         { 
-            // create some mock products to play with
+            // Lager mocks som vi kan gjøre spørringer mot
            
             List<Vaktkalender> vakter = new List<Vaktkalender>
                 {
@@ -44,12 +44,10 @@ namespace EnhetsTestJobbplan
                 {
                     new dbBruker {BrukerId = 1, Email = "testing123@hotmail.com"}
                 };
-            // Mock the Products Repository using Moq
+            
             Mock<InterfaceDbTVakt> mockProductRepository = new Mock<InterfaceDbTVakt>();
 
-            // Return all the products
-
-            // return a product by Id
+            
             mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(),It.IsAny<string>()))
                 .Returns((int i,string u) => 
                 vakter.Where(x => x.ProsjektId == i).ToList());

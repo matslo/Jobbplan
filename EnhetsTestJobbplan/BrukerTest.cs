@@ -24,7 +24,7 @@ namespace EnhetsTestJobbplan
         private InterfaceDbTBruker mockProductRepository;
         public BrukerTest()
         {
-            // create some mock products to play with
+            // Lager mock som vi kan gjøre spørringer mot
 
             List<BrukerListe> brukere = new List<BrukerListe>
                 {
