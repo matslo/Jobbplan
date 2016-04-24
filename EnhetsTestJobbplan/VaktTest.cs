@@ -50,10 +50,21 @@ namespace EnhetsTestJobbplan
             // Return all the products
 
             // return a product by Id
-            mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(),It.IsAny<string>())).Returns((int i,string u) => vakter.Where(x => x.ProsjektId == i).ToList());
-            mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(), It.IsAny<string>()))
-                .Callback((int i, string u) => vakterDB.Where(x => x.ProsjektId == i))
-                .Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
+            mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(),It.IsAny<string>()))
+                .Returns((int i,string u) => 
+                vakter.Where(x => x.ProsjektId == i).ToList());
+
+            /*mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(), It.IsAny<string>()))
+                .Callback((int i, string u) =>
+                    vakterDB.Where(x => x.ProsjektId == i ))
+                .Returns((int i,string u) =>
+                    new List<Vaktkalender>() {new Vaktkalender(){ProsjektId = i}});*/
+               //vakter.Where(x => x.ProsjektId == i).ToList());
+
+
+
+            //.Callback((int i, string u) => vakterDB.Where(x => x.ProsjektId == i))
+            //.Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
 
 
             // return a product by Name
@@ -68,14 +79,14 @@ namespace EnhetsTestJobbplan
         public void Hent_alle_vakter_ok()
         {
             // Try finding a product by id
-            List<Vaktkalender> testProduct = this.mockProductRepository.hentAlleVakter(1,"mats_loekken@hotmail.com");
+            List<Vaktkalender> testProduct = this.mockProductRepository.hentAlleVakter(3,"mats_loekken@hotmail.com");
             for (var i = 0; i < testProduct.Count; i++)
             {
-                Assert.AreEqual(2, testProduct[i].ProsjektId);
+              Assert.AreEqual(3, testProduct[i].ProsjektId);
                
             }
-            Assert.IsNotNull(testProduct); // Test if null
-            Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
+           Assert.AreNotEqual(0,testProduct.Count); // Test if null
+           Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
           }
         //Inneholder Tester for VaktApiController/2/3, VaktController, DbtransaksjonerVakt
         //VaktController

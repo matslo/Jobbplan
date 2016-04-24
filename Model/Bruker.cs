@@ -62,6 +62,7 @@ namespace Jobbplan.Model
         }
     public class BrukerListe
     {
+        public int ProsjektId { get; set; }
         public int ProsjektDeltakerId { get; set; }
         public string Navn { get; set; }
         public string Brukernavn { get; set; }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Transactions;
 using Moq;
 using System.Net;
+using System.Threading;
 using Jobbplan.Model;
 using Jobbplan.BLL;
 using Jobbplan.DAL;
@@ -20,11 +21,90 @@ namespace EnhetsTestJobbplan
     [TestClass]
     public class BrukerTest
     {
+        private InterfaceDbTBruker mockProductRepository;
+        public BrukerTest()
+        {
+            // create some mock products to play with
+
+            List<BrukerListe> brukere = new List<BrukerListe>
+                {
+                   new BrukerListe() {Brukernavn = "mats_loekken@hotmail.com", ProsjektDeltakerId = 1, Admin = false, Navn="Mats"},
+                    new BrukerListe() {Brukernavn = "gordo@hotmail.com", ProsjektDeltakerId = 2, Admin=true, Navn = "Gordo"}
+                };
+            List<dbBruker> brukereDB = new List<dbBruker>
+                {
+                   new dbBruker() {Email = "mats_loekken@hotmail.com", BrukerId = 1},
+                    new dbBruker() {Email = "gordo@hotmail.com", BrukerId = 2}
+                };
+            List<Vakt> vakterDB = new List<Vakt>
+                {
+                    new Vakt {ProsjektId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
+                    new Vakt {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
+                    new Vakt {ProsjektId = 3, BrukerId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
+                };
+            List<Prosjektdeltakelse> deltakelser = new List<Prosjektdeltakelse>
+                {
+                    new Prosjektdeltakelse() {BrukerId = 1, ProsjektId = 1, ProsjektDeltakerId = 1}
+                };
+            // Mock the Products Repository using Moq
+            Mock<InterfaceDbTBruker> mockProductRepository = new Mock<InterfaceDbTBruker>();
+
+            // Return all the products
+
+            // return a product by Id
+           /* mockProductRepository.Setup(mr => mr.HentBrukere(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((int i, string u) =>
+                brukere.Where(x => x.ProsjektDeltakerId == i).ToList());*/
+             
+            mockProductRepository.Setup(mr => mr.HentBrukere(It.IsAny<int>(), It.IsAny<string>()))
+                .Callback((int i, string u) =>
+                    deltakelser.Where(x => x.ProsjektId == i).ToList())
+                .Returns(() =>
+                {
+                    List<BrukerListe> testliste = new List<BrukerListe>();
+                    foreach (var del in deltakelser)
+                    {
+                        testliste.Add(new BrukerListe() { ProsjektId = del.ProsjektId, ProsjektDeltakerId = del.ProsjektDeltakerId, Admin = del.Admin });
+                    }
+                    return testliste;
+                });
+
+                   // {});
+
+                   //new List<Vaktkalender>() {new Vaktkalender(){ProsjektId = i}});
+                   //vakter.Where(x => x.ProsjektId == i).ToList());
+
+
+
+                   //.Callback((int i, string u) => vakterDB.Where(x => x.ProsjektId == i))
+                   //.Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
+
+
+                   // return a product by Name
+                   //  mockProductRepository.Setup(mr => mr.hentAlleLedigeVakter(It.IsAny<int>(), It.IsAny<string>())).Returns((int s, string u) => vakter.Where(x => x.ProsjektId == s && x.Brukernavn == u).ToList());
+
+                   // Allows us to test saving a product
+
+                   // Complete the setup of our Mock Product Repository
+                   this.mockProductRepository = mockProductRepository.Object;
+        }
 
         //Inneholder Tester for BrukerApiController, BrukerController, DbtransaksjonerBruker
         //REGISTRER Bruker
         //BrukerController
-      
+        [TestMethod]
+        public void Hent_brukere_ok()
+        {
+            // Try finding a product by id
+            List<BrukerListe> testProduct = this.mockProductRepository.HentBrukere(1, "mats_loekken@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual(1, testProduct[i].ProsjektId);
+
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<BrukerListe>)); // Test type
+        }
         [TestMethod]
         public void Registrer_ViewName()
         {

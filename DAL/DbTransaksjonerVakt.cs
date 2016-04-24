@@ -120,9 +120,8 @@ namespace Jobbplan.DAL
             var dbtB = new DbTransaksjonerProsjekt();
             var liste = dbtB.SjekkTilgangProsjekt(brukernavn);
             int brukerId = dbtB.BrukerId(brukernavn);
-
-
             List<Vakt> vakter = VakterProsjekt(id);
+
             var eventer = (from k in vakter
                            from s in liste
                            where k.ProsjektId == id && k.ProsjektId == s.Id && k.BrukerId == brukerId
