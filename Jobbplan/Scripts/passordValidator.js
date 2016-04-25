@@ -6,13 +6,13 @@
     var badColor = "#ff6666";
     var goodColor1 = "#75FF7F";
 
-    if (pass1.value == pass2.value) {
+    if (pass1.value == pass2.value && pass1.value != "" && pass1.value.length > 7) {
         $("#ok").removeClass('glyphicon glyphicon-remove');
         $("#ok").addClass('glyphicon glyphicon-ok');
-        
+       
         pass2.style.backgroundColor = goodColor;
         $("#oktd").style.color = goodColor1;
-    } else {
+    } else{
         $("#ok").removeClass('glyphicon glyphicon-ok');
         $("#ok").addClass('glyphicon glyphicon-remove');
         

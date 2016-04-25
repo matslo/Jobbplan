@@ -16,13 +16,31 @@
     <script src="~/Scripts/passordValidator.js"></script>
 </head>
 <body>
-    <a href="~/Home/Index"><span class="glyphicon glyphicon-arrow-left"> Tilbake til forsiden</span></a>
+    <a href="~/Home/Index" class="btn btn-danger"><span class="glyphicon glyphicon-arrow-left"> </span>Tilbake til forsiden</a>
     <script type="text/javascript">
         $(document).ready(function () {
             leggTilBruker();
-         
+           
+            $(function () {
+                var text = "Passordet må inneholde minst 8 karakterer. "+
+                    "Det anbefales at disse består av store/små bokstaver, tall og spesialtegn. \n";
+                $('#passord').tooltip({ 'trigger': 'focus', 'title': text });
+            })
         });
-       
+        function sjekkPassordLengde() {
+            var pass1 = document.getElementById('passord');
+          
+            var goodColor = "#7FFF7F";
+            var badColor = "#ff6666";
+            var goodColor1 = "#75FF7F";
+
+            if (pass1.value.length > 7) {
+                pass1.style.backgroundColor = goodColor;
+            }
+            else {
+                pass1.style.backgroundColor = badColor;
+            }
+        }
         function leggTilBruker() {
             $("body").on('click', '#leggTilBruker', function () {
                 var $btn = $('#leggTilBruker');
@@ -58,21 +76,16 @@
     @{
         ViewBag.Title = "RegistrerAPI";
     }
-
-    <div id="regContainer" class="container">
-       
+     <div id="regContainer" class="container">
         <div>
-            <table id="registrerSkjema" class="table-responsive">
+            <table id="registrerSkjema" class="table-responsive" style="width:400px;">
                 <tr><td></td><th id="regDeg">REGISTRER DEG</th><td></td></tr>
-                <tr><td><label>Fornavn:</label></td><td><input class="form-control" type="text" id="FornavnTxt" placeholder="Fornavn" /></td><td></td></tr>
-                <tr><td><label>Etternavn:</label></td><td><input class="form-control" type="text" id="EtternavnTxt" placeholder="Etternavn" /></td><td></td></tr> 
-                <tr><td><label>Telefonnummer:</label></td><td><input class="form-control" type="text" id="TelefonnummerTxt" placeholder="Telefonnummer" /></td><td></td></tr>
-                <tr><td><label>E-post:</label></td><td><input class="form-control" type="text" id="EmailTxt" placeholder="e-post adresse" /></td><td></td></tr>
-                <tr><td></td><td></td><td></td></tr>
-                <tr><td></td><td>Passordet må inneholde minst 8 karakterer. </td><td></td></tr>
-                <tr><td></td><td>Det anbefales at disse består av store/små bokstaver, tall og spesialtegn.</td><td></td></tr>
-                <tr><td><label>Passord:</label></td><td><input class="form-control" type="password" id="passord" placeholder="Passord" /></td><td></td></tr>
-                <tr><td><label>Gjenta passord:</label></td><td><input class="form-control" type="password" id="passord2" placeholder="Gjenta passord" onkeyup="checkPasswordMatch();return false;" /></td><td id="oktd"> <span id="ok" class=""></span></td></tr>
+                <tr><td><label>Fornavn:</label></td><td><input class="form-control" type="text" id="FornavnTxt" placeholder="Fornavn" /></td><td>*</td></tr>
+                <tr><td><label>Etternavn:</label></td><td><input class="form-control" type="text" id="EtternavnTxt" placeholder="Etternavn" /></td><td>*</td></tr> 
+                <tr><td><label>Telefonnummer:</label></td><td><input class="form-control" type="text" id="TelefonnummerTxt" placeholder="Telefonnummer" /></td><td>*</td></tr>
+                <tr><td><label>E-post:</label></td><td><input class="form-control" type="text" id="EmailTxt" placeholder="e-post adresse" /></td><td>*</td></tr>
+                <tr><td><label>Passord:</label></td><td><input class="form-control" type="password" id="passord" placeholder="Passord" data-toggle="tooltip" data-placement="right" onkeyup="sjekkPassordLengde(); return false;"/></td><td>*</td></tr>
+                <tr><td><label>Gjenta passord:</label></td><td><input class="form-control" type="password" id="passord2" placeholder="Gjenta passord" onkeyup="checkPasswordMatch();return false;" /></td><td id="oktd">* <span id="ok" class=""></span></td></tr>
                 <tr><td></td><td><button id="leggTilBruker" class="btn btn-primary">Registrer</button></td> <td></td></tr>
                
 
