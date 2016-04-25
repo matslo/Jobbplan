@@ -9,9 +9,13 @@ namespace Jobbplan.Model
     {
         [Key]
         public int ProsjektDeltakerId { get; set; }
+        [Required]
         public int BrukerId { get; set; }
+        [Required]
         public int ProsjektId { get; set; }
+        [Required]
         public DateTime Medlemsdato { get; set; }
+        [Required]
         public bool Admin { get; set; }
 
         public virtual Prosjekt Prosjekt { get; set; }
@@ -23,10 +27,15 @@ namespace Jobbplan.Model
     {
         [Key]
         public int MeldingId { get; set; }
+        [Required]
         public int BrukerIdFra { get; set; }
+        [Required]
         public int BrukerIdTil { get; set; }
+        [Required]
         public int ProsjektId { get; set; }
+        [Required]
         public bool Akseptert { get; set; }
+        [Required]
         public DateTime Sendt { get; set; }
 
         public virtual Prosjekt Prosjekt { get; set; }

@@ -235,7 +235,19 @@ namespace EnhetsTestJobbplan
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
         }
+        [TestMethod]
+        public void Hent_alle_vakter_feil()
+        {
+            //Arrange
+            var controller = new VaktApiController();
+            var innBruker = new Vaktskjema();
+            controller.ModelState.AddModelError("start", "Dato må oppgis");
+            //Act
+            var result = controller.Post(innBruker);
+            //Assert
 
+            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
+        }
         [TestMethod]
         public void Hent_alle_vakter_for_bruker_ok()
         {
@@ -319,17 +331,31 @@ namespace EnhetsTestJobbplan
         }
         //DbtransaksjonerVakt
         [TestMethod]
-        public void SettInnVaktOkMOCK()
+        public void Post_Vakt_Ok()
         {
-            var vakter = new Vaktskjema();
-            var vakte = new Vaktskjema();
-            var moq = new Mock<InterfaceDbTVakt>();
-            moq.Setup(foo => foo.RegistrerVakt(vakter, "mats_loekken@hotmail.com")).Returns(true);
+            Vaktskjema vakter = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            var _mock = new Mock<IVaktLogikk>();
+           
 
-            InterfaceDbTVakt lovable = moq.Object;
-            bool download = lovable.RegistrerVakt(vakter, "mats_loekken@hotmail.com");
+            _mock.Setup(x => x.RegistrerVakt(vakter,"mats@hotmial.com")).Returns(true);
 
-            moq.Verify(framework => framework.RegistrerVakt(vakte, "mats_loekken@hotmail.com"), Times.AtMostOnce());
+             var _target = new VaktApiController(_mock.Object);
+            HttpResponseMessage actual;
+            actual = _target.Post(vakter);
+            //            _mock.Verify(e => e.RegistrerVakt(It.Is<Registrer>(d => d.start == "22.12.2012" && d.startTid == "17.43" && d.endTid == "16.43"), It.IsAny<String>()), Times.Never);
+           
+            Assert.AreEqual(HttpStatusCode.Created, actual.StatusCode);
+
+           // moq.Verify(framework => framework.RegistrerVakt(vakter, "mats_loekken@hotmail.com"), Times.AtMostOnce());
         }
         [TestMethod]
         public void SettInnVaktikkeOkMOCK()
@@ -351,42 +377,7 @@ namespace EnhetsTestJobbplan
             Assert.IsFalse(download);
             Mock.Get(lovable).Verify(framework => framework.RegistrerVakt(vakter, "mats_loekken@hotmail.com"));
         }     
-        [TestMethod]
-        public void SettInnVakt_End_Before_start()
-        {
-            
-                Vaktskjema vakt = new Vaktskjema()
-                {
-                    start = "22.12.2012",
-                    startTid = "16.43",
-                    endTid = "15.43",
-                    title = "Dagvakt",
-                    Beskrivelse = "Opplæring",
-                    BrukerId = 1,
-                    ProsjektId = 1
-                };
-            Vaktskjema vakt2 = new Vaktskjema()
-            {
-                start = "22.12.2012",
-                end = "22.12.2012",
-                startTid = "16.43",
-                endTid = "17.43",
-                title = "Dagvakt",
-                Beskrivelse = "Opplæring",
-                BrukerId = 1,
-                ProsjektId = 1
-            };
-            var _mock = new Mock<InterfaceDbTVakt>();
-            var _target = new VaktBLL(_mock.Object);
-           
-            _mock.Setup(x => x.RegistrerVakt(vakt2,It.IsAny<String>())).Returns(true);
-            
-            bool expected = false;
-            bool actual;
-            actual = _target.RegistrerVakt(vakt,"mats_loekken@hotmail.com");
-            _mock.Verify(e => e.RegistrerVakt(It.Is<Vaktskjema>(d => d.start == "22.12.2012" && d.startTid=="17.43" && d.endTid=="16.43"),It.IsAny<String>()), Times.Never);
-            Assert.AreEqual(expected, actual);
-        }
+      
         [TestMethod]
         public void SettInnMal_OK()
         {

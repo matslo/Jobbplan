@@ -7,14 +7,9 @@ namespace Jobbplan.Model
 {
     public class Sjef
     {
-        [Key]
-        public int SjefId { get; set; }
         public int BrukerId { get; set; }
         public int ProsjektId { get; set; }
         public string Tittel { get; set; }
-
-        public virtual Prosjekt Prosjekt { get; set; }
-        public virtual dbBruker dbBruker { get; set; }
     }
     public class AdminSjekk
     {

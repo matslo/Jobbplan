@@ -10,7 +10,9 @@ namespace Jobbplan.Model
     {
         [Key]
         public int VaktId { get; set; }
+        [Required]
         public DateTime start { get; set; }
+        [Required]
         public DateTime end { get; set; }
         public string title { get; set; }
         public string color { get; set; }

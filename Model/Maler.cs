@@ -10,9 +10,13 @@ namespace Jobbplan.Model
     {
         [Key]
         public int MalId { get; set; }
+        [Required]
         public string Tittel { get; set; }
+        [Required]
         public string startTid { get; set; }
+        [Required]
         public string sluttTid { get; set; }
+        [Required]
         public int ProsjektId { get; set; }
 
         public virtual Prosjekt Prosjekt { get; set; }
