@@ -156,8 +156,7 @@ namespace Jobbplan.DAL
                                VaktId = k.VaktId
                            }).ToList();
             return eventer;
-        }
-        
+        }        
         public List<Vaktkalender> hentAlleLedigeVakter(int id, string brukernavn)
         {
 
