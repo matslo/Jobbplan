@@ -10,12 +10,12 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 $('#NavnTxt').val('');
-                $('#godkjentProsjekt').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Gratulerer! Du har nå opprettet bedriften din. </div>");
+                $('#godkjentProsjekt').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span>&times;</span></button>Gratulerer! Du har nå opprettet bedriften din. </div>");
 
                 setTimeout("window.location.href='/Vakt/Index';", 2000);
             },
             error: function (data) {
-                $('#godkjentProsjekt').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Det skjedde en feil ved opprettelsen av bedrift. Prøv igjen. </div>");
+                $('#godkjentProsjekt').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span>&times;</span></button>Det skjedde en feil ved opprettelsen av bedrift. Prøv igjen. </div>");
              
             }
         });

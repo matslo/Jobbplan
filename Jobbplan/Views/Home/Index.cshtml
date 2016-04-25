@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
+    
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title -  ASP.NET Application</title>
@@ -13,7 +14,7 @@
 </head>
 <body>
     <div class="alert alert-warning alert-dismissible" role="alert" style="width:200px; float:right;">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
         <strong>Denne siden bruker cookies!</strong> Ved å logge inn aksepterer du vilkårene.
     </div>
    <!--<p class="cookieAlert">Denne siden bruker cookies. Ved å logge deg inn aksepterer du vilkårene</p>-->
@@ -50,7 +51,7 @@
       
 </script>
     <div class="container" id="LogoDiv">
-    <span class="glyphicon glyphicon-cloud" id="skyLogo" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-cloud" id="skyLogo"></span>
     </div>
    <!--<h1 id="JobbPlanLogo"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>JobbPlan</h1>-->
 <div class="container" id="logginnskjema"> 
@@ -60,15 +61,17 @@
     </div>       
    
     <div class="row">   
+        <label style="color:white">Brukernavn</label>
        <input class="form-control" type="text" id="brukernavntxt" placeholder="Brukernavn(E-post)" />
     </div>
    
      <div class="row">
+         <label style="color:white">Passord</label>
         <input class="form-control" type="password" id="passordtxt" placeholder="Passord" />
     </div>
     
     <div class="row">
-        <button id="LogginnKnapp" class="btn btn-primary" style="color:wheat;"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Logg inn</button>
+        <button id="LogginnKnapp" class="btn btn-primary" style="color:wheat;"><span class="glyphicon glyphicon-log-in" ></span> Logg inn</button>
         <a id="registrer" class="btn btn-primary" href="~/Bruker/RegistrerAPI">Registrer deg</a>
     </div>
 </div>
