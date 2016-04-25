@@ -157,8 +157,6 @@ namespace Jobbplan.DAL
             var ProsjektReq = dbTP.VisRequester(brukernavn);
             var VaktReq = dbTV.visVaktRequester(brukernavn);
             int AntallMeldinger = 0;
-
-
             foreach (var a in ProsjektReq)
             {
                 AntallMeldinger++;

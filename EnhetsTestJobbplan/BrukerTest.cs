@@ -34,7 +34,7 @@ namespace EnhetsTestJobbplan
             List<dbBruker> brukereDB = new List<dbBruker>
                 {
                    new dbBruker() {Email = "mats_loekken@hotmail.com", BrukerId = 1},
-                    new dbBruker() {Email = "gordo@hotmail.com", BrukerId = 2}
+                   new dbBruker() {Email = "gordo@hotmail.com", BrukerId = 2}
                 };
             List<Vakt> vakterDB = new List<Vakt>
                 {
@@ -44,25 +44,37 @@ namespace EnhetsTestJobbplan
                 };
             List<Prosjektdeltakelse> deltakelser = new List<Prosjektdeltakelse>
                 {
-                    new Prosjektdeltakelse() {BrukerId = 1, ProsjektId = 1, ProsjektDeltakerId = 1}
+                    new Prosjektdeltakelse() {BrukerId = 1, ProsjektId = 1, ProsjektDeltakerId = 1, Admin = false},
+                    new Prosjektdeltakelse() {BrukerId = 2, ProsjektId = 2, ProsjektDeltakerId = 1, Admin = false}
                 };
+            List<Prosjekt> prosjekt  = new List<Prosjekt>
+                {
+                    new Prosjekt() {ProsjektId = 1, EierId = 2},
+                    new Prosjekt() {ProsjektId = 2, EierId = 1}
+                };
+
             // Mock the Products Repository using Moq
             Mock<InterfaceDbTBruker> mockProductRepository = new Mock<InterfaceDbTBruker>();
 
             // Return all the products
 
             // return a product by Id
-           /* mockProductRepository.Setup(mr => mr.HentBrukere(It.IsAny<int>(), It.IsAny<string>()))
-                .Returns((int i, string u) =>
-                brukere.Where(x => x.ProsjektDeltakerId == i).ToList());*/
+            /* mockProductRepository.Setup(mr => mr.HentBrukere(It.IsAny<int>(), It.IsAny<string>()))
+                 .Returns((int i, string u) =>
+                 brukere.Where(x => x.ProsjektDeltakerId == i).ToList());*/
+
+            //.Callback((int i, string u) =>
+
+            //deltakelser.Where(x => x.ProsjektId == i).ToList())
+                
              
             mockProductRepository.Setup(mr => mr.HentBrukere(It.IsAny<int>(), It.IsAny<string>()))
-                .Callback((int i, string u) =>
-                    deltakelser.Where(x => x.ProsjektId == i).ToList())
-                .Returns(() =>
+                .Returns(
+                (int i, string u) =>
                 {
+                    var deltakels = deltakelser.Where(x => x.ProsjektId == i).ToList();
                     List<BrukerListe> testliste = new List<BrukerListe>();
-                    foreach (var del in deltakelser)
+                    foreach (var del in deltakels)
                     {
                         testliste.Add(new BrukerListe() { ProsjektId = del.ProsjektId, ProsjektDeltakerId = del.ProsjektDeltakerId, Admin = del.Admin });
                     }
@@ -94,6 +106,19 @@ namespace EnhetsTestJobbplan
         //BrukerController
         [TestMethod]
         public void Hent_brukere_ok()
+        {
+            // Try finding a product by id
+            List<BrukerListe> testProduct = this.mockProductRepository.HentBrukere(2, "mats_loekken@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual(2, testProduct[i].ProsjektId);
+
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<BrukerListe>)); // Test type
+        }
+        [TestMethod]
+        public void Hent_brukere_Ikke_Admin()
         {
             // Try finding a product by id
             List<BrukerListe> testProduct = this.mockProductRepository.HentBrukere(1, "mats_loekken@hotmail.com");
@@ -226,7 +251,7 @@ namespace EnhetsTestJobbplan
                 {
                     Fornavn="Mats",
                     Etternavn="Lokken",
-                    Email="tesbruker@hotmail.com",
+                    Email="tesbruker111@hotmail.com",
                     Telefonnummer="93686771",
                     BekreftPassord="password"
                 };
@@ -275,7 +300,7 @@ namespace EnhetsTestJobbplan
             var _mock = new Mock<InterfaceDbTBruker>();
             var _target = new BrukerBLL(_mock.Object);
 
-            _mock.Setup(x => x.RegistrerBruker(NyBruker)).Returns(true);
+            _mock.Setup(x => x.RegistrerBruker(NyBruker)).Returns(false);
 
             bool expected = false;
             bool actual;
