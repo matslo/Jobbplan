@@ -41,7 +41,7 @@
                         location.href = "/Vakt/Index";
                     },
                     error: function (data) {
-                        alert(data.responseText);
+                        $('#loggeinn').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span>&times;</span></button>Brukernavn eller passord er feil. Prøv på nytt.</div>");
                         $this.removeAttr('disabled').html('Logg inn');
 
                     }
@@ -50,6 +50,7 @@
         };
       
 </script>
+    <div id="loggeinn"></div>
     <div class="container" id="LogoDiv">
     <span class="glyphicon glyphicon-cloud" id="skyLogo"></span>
     </div>
