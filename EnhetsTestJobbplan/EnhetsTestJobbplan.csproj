@@ -108,12 +108,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BrukerApiControllerTest.cs" />
     <Compile Include="BrukerTest.cs" />
     <Compile Include="HomeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProsjektTest.cs" />
     <Compile Include="ProfilTest.cs" />
     <Compile Include="TimelisteTest.cs" />
+    <Compile Include="ProsjektApiControllerTest.cs" />
+    <Compile Include="MalerApiController.cs" />
+    <Compile Include="UnitTest2.cs" />
+    <Compile Include="VaktApiControllerTest.cs" />
     <Compile Include="VaktTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +142,11 @@
       <Project>{083ff6e9-4bbd-4564-ab7c-f47f9e5d2a93}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bruker\" />
+    <Folder Include="Prosjekt\" />
+    <Folder Include="Vakt\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

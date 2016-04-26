@@ -16,6 +16,10 @@ namespace Jobbplan.BLL
         {
             _repository = new DbTransaksjonerProsjekt();
         }
+        public ProsjektBLL(InterfaceDbTProsjekt moqs)
+        {
+            _repository = moqs;
+        }
         public int BrukerId(string brukernavn)
         {
             return _repository.BrukerId(brukernavn);

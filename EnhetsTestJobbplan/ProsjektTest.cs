@@ -57,7 +57,7 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Opprett_Prosjekt_POST_Ok()
         {
-            var _mock = new Mock<ProsjektApiController>();
+            var _mock = new Mock<Jobbplan.Controllers.ProsjektApiController>();
 
             var innProsjekt = new Prosjekt()
             {
@@ -72,24 +72,12 @@ namespace EnhetsTestJobbplan
             _mock.Setup(x => x.Post(innProsjekt)).Returns(http);
             _mock.Verify(framework => framework.Post(innProsjekt), Times.AtMostOnce());
 
-            ProsjektApiController lovable = _mock.Object;
+            Jobbplan.Controllers.ProsjektApiController lovable = _mock.Object;
             var actual = lovable.Post(innProsjekt);
 
             Assert.AreEqual(HttpStatusCode.OK, actual.StatusCode);
         }
-        [TestMethod]
-        public void Opprett_Prosjekt_Feil_Validering()
-        {
-            //Arrange
-            var controller = new ProsjektApiController();
-            var innBruker = new Prosjekt();
-            controller.ModelState.AddModelError("Arbeidsplass", "Arbeidsplass må oppgis");
-            //Act
-            var result = controller.Post(innBruker);
-            //Assert
 
-            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
-        }
         //ProsjektDeltakelseApiController
         [TestMethod]
         public void RegistrerDeltakelse_POST_Ok()

@@ -41,7 +41,7 @@ namespace Jobbplan.Controllers
            
             if (ModelState.IsValid)
             {
-                 bool ok = _VaktBLL.RegistrerVakt(vaktInn, userName);
+                bool ok = _VaktBLL.RegistrerVakt(vaktInn, userName);
                 if (ok)
                 {
                     var response = Request.CreateResponse(HttpStatusCode.Created, vaktInn);

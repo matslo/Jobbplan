@@ -47,11 +47,12 @@ namespace Jobbplan.Controllers
                     return response;
                 }
             }
-            return new HttpResponseMessage()
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            /*return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
                 Content = new StringContent("Kunne ikke ta ledig vakt")
-            };
+            };*/
         }
 
         public HttpResponseMessage Put(int id)

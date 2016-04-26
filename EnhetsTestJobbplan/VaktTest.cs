@@ -236,19 +236,7 @@ namespace EnhetsTestJobbplan
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
         }
-        [TestMethod]
-        public void Hent_alle_vakter_feil()
-        {
-            //Arrange
-            var controller = new VaktApiController();
-            var innBruker = new Vaktskjema();
-            controller.ModelState.AddModelError("start", "Dato må oppgis");
-            //Act
-            var result = controller.Post(innBruker);
-            //Assert
-
-            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
-        }
+       
         [TestMethod]
         public void Hent_alle_vakter_for_bruker_ok()
         {
@@ -317,88 +305,10 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(result.ViewName, "");
         }
         //VaktApiController
-        [TestMethod]
-        public void RegistrerFeilValideringTestVakt()
-        {
-            //Arrange
-            var controller = new VaktApiController();
-            var innBruker = new Vaktskjema();
-            var _Moq = new Mock<IVaktLogikk>();
-            controller.ModelState.AddModelError("start", "Dato må oppgis");
-            //Act
-            var result = controller.Post(innBruker);
-            //Assert
-           _Moq.Verify(e => e.RegistrerVakt(innBruker,"mats"), Times.Never);
-            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
-        }
+       
         //DbtransaksjonerVakt
        
-        [TestMethod]
-        public void Post_Vakt_Ok()
-        {
-            Vaktskjema vakter = new Vaktskjema()
-            {
-                start = "22.12.2012",
-                startTid = "16.43",
-                endTid = "18.43",
-                title = "Dagvakt",
-                Beskrivelse = "Opplæring",
-                BrukerId = 1,
-                ProsjektId = 1
-            };
-            var commandBus = new Mock<IVaktLogikk>();
-            commandBus.Setup(c => c.RegistrerVakt(It.IsAny<Vaktskjema>(),It.IsAny<string>())).Returns(true);
-           // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
-            var httpConfiguration = new HttpConfiguration();
-            WebApiConfig.Register(httpConfiguration);
-            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
-                new HttpRouteValueDictionary { { "controller", "VaktApi" } });
-            var controller = new VaktApiController(commandBus.Object)
-            {
-                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi/")
-                {
-                    Properties =
-            {
-                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
-                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
-            }
-                }
-            };
-            // Act
-            var response = controller.Post(vakter);
-            // Assert
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-           // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
-            Assert.AreEqual(string.Format("http://localhost/api/VaktApi/{0}", vakter.Vaktid), response.Headers.Location.ToString());
-        }
-        [TestMethod]
-        public void Post_Ta_Ledig_Vakt_Ok()
-        {
-            var commandBus = new Mock<IVaktLogikk>();
-            commandBus.Setup(c => c.taLedigVakt(It.IsAny<int>(), It.IsAny<string>())).Returns(true);
-            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
-            var httpConfiguration = new HttpConfiguration();
-            WebApiConfig.Register(httpConfiguration);
-            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
-                new HttpRouteValueDictionary { { "controller", "VaktApi3" } });
-            var controller = new VaktApi3Controller(commandBus.Object)
-            {
-                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi3/")
-                {
-                    Properties =
-            {
-                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
-                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
-            }
-                }
-            };
-            // Act
-            var response = controller.Post(1);
-            // Assert
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
-            Assert.AreEqual(string.Format("http://localhost/api/VaktApi3/{0}", 1), response.Headers.Location.ToString());
-        }
+      
         [TestMethod]
         public void SettInnVaktikkeOkMOCK()
         {

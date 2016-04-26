@@ -17,7 +17,11 @@ namespace Jobbplan.Controllers
         public ProsjektApiController()
         {
             _ProsjektBLL = new ProsjektBLL();
-        }    
+        }
+        public ProsjektApiController(IProsjektLogikk moq)
+        {
+            _ProsjektBLL = moq;
+        }
         public List<ProsjektVis> Get()
         {
            string userName = User.Identity.Name;
@@ -31,17 +35,13 @@ namespace Jobbplan.Controllers
                bool ok = _ProsjektBLL.RegistrerProsjekt(prosjektInn, userName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.OK,
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, prosjektInn);
+                    string uri = Url.Link("DefaultApi", new { id = prosjektInn.ProsjektId });
+                    response.Headers.Location = new Uri(uri);
+                    return response;
                 }
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sette inn databasen")
-            }; 
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
         public void Delete(int id)
         {
