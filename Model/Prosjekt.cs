@@ -10,7 +10,7 @@ namespace Jobbplan.Model
     {
         [Key]
         public int ProsjektId { get; set; }
-        [Required]
+        
         public int EierId { get; set; }
         [Required]
         public string Arbeidsplass { get; set; }

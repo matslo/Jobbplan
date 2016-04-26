@@ -19,7 +19,11 @@ namespace Jobbplan.Controllers
         {
             _BrukerBLL = new BrukerBLL();
         }
-        
+        public BrukerApiController(IBrukerLogikk moq)
+        {
+            _BrukerBLL = moq;
+        }
+
         public int Get()
         {
             string Username = User.Identity.Name;
@@ -41,17 +45,20 @@ namespace Jobbplan.Controllers
                 bool ok = _BrukerBLL.RegistrerBruker(personInn);   
                  if (ok)
                  {
-                 return  new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.OK,    
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, personInn);
+                    string uri = Url.Link("DefaultApi", new { id = personInn.id });
+                    response.Headers.Location = new Uri(uri);
+                    return response;
+                  
                  }
+                
             }
-            return new HttpResponseMessage()
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            /*return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
                 Content = new StringContent("Kunne ikke sette inn databasen")
-            };
+            };*/
        }
         public void Delete (int id)
         {

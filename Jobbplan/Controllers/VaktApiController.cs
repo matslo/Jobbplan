@@ -38,22 +38,24 @@ namespace Jobbplan.Controllers
         public HttpResponseMessage Post(Vaktskjema vaktInn)
         {
             string userName = User.Identity.Name;
+           
             if (ModelState.IsValid)
             {
-                bool ok = _VaktBLL.RegistrerVakt(vaktInn, userName);
+                 bool ok = _VaktBLL.RegistrerVakt(vaktInn, userName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, vaktInn);
+                    string uri = Url.Link("DefaultApi", new { id = vaktInn.Vaktid });
+                    response.Headers.Location = new Uri(uri);
+                    return response;
                 }
             }
-            return new HttpResponseMessage()
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+          /*  return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke opprette vakt")
-            };
+                Content = new StringContent("Kunne i")
+            };*/
         } 
         public HttpResponseMessage Put(int id)
         {

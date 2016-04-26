@@ -17,7 +17,10 @@ namespace Jobbplan.Controllers
         {
             _VaktBLL = new VaktBLL();
         }
-
+        public VaktApi3Controller(IVaktLogikk moq)
+        {
+            _VaktBLL = moq;
+        }
         //Get api/KalenderApi
         public List<VaktRequestMelding> Get()
         {
@@ -38,10 +41,10 @@ namespace Jobbplan.Controllers
                 bool ok = _VaktBLL.taLedigVakt(id, brukernavn);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, id);
+                    string uri = Url.Link("DefaultApi", new { id = id });
+                    response.Headers.Location = new Uri(uri);
+                    return response;
                 }
             }
             return new HttpResponseMessage()

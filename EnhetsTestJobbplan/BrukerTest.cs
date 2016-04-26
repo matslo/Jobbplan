@@ -14,6 +14,10 @@ using System.Threading;
 using Jobbplan.Model;
 using Jobbplan.BLL;
 using Jobbplan.DAL;
+using System.Web.Http;
+using System.Web.Http.Routing;
+using System.Net.Http;
+using System.Web.Http.Hosting;
 
 namespace EnhetsTestJobbplan
 {
@@ -187,6 +191,42 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(1, blogs.Count);
             Assert.AreEqual(1, blogs[0].id);
         }*/
+        [TestMethod]
+        public void Post_Bruker_Ok()
+        {
+            Registrer nyBruker = new Registrer()
+            {
+                Fornavn = "Mats",
+                Etternavn = "Lokken",
+                Email = "tesbruker@hotmail.com",
+                Telefonnummer = "93686771",
+                BekreftPassord = "password"
+            };
+            var commandBus = new Mock<IBrukerLogikk>();
+            commandBus.Setup(c => c.RegistrerBruker(It.IsAny<Registrer>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "BrukerApi" } });
+            var controller = new BrukerApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Post(nyBruker);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
+            Assert.AreEqual(string.Format("http://localhost/api/BrukerApi/{0}", nyBruker.id), response.Headers.Location.ToString());
+        }
         [TestMethod]
         public void Registrer_POST_Ok()
         {
