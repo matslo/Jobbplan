@@ -17,7 +17,11 @@ namespace Jobbplan.Controllers
         {
             _VaktBLL = new VaktBLL();
         }
-       
+        public MalerController(IVaktLogikk moqs)
+        {
+            _VaktBLL = moqs;
+        }
+
         public List<VisMaler> Get(int id)
         {
             string brukernavn = User.Identity.Name;
@@ -32,17 +36,18 @@ namespace Jobbplan.Controllers
                 bool ok = _VaktBLL.RegistrerMal(mal, userName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, mal);
+                    string uri = Url.Link("DefaultApi",null);
+                    response.Headers.Location = new Uri(uri);
+                    return response;
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sette inn databasen")
+                };
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke opprette mal")
-            };
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
         public HttpResponseMessage Put(int id)
         {

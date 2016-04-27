@@ -51,14 +51,15 @@ namespace Jobbplan.Controllers
                     return response;
                   
                  }
-                
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sette inn databasen")
+                };
+
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            /*return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sette inn databasen")
-            };*/
+           
        }
         public void Delete (int id)
         {

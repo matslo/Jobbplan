@@ -42,9 +42,9 @@ namespace EnhetsTestJobbplan
             WebApiConfig.Register(httpConfiguration);
             var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
                 new HttpRouteValueDictionary { { "controller", "BrukerApi" } });
-            var controller = new Jobbplan.Controllers.BrukerApiController(commandBus.Object)
+            var controller = new BrukerApiController(commandBus.Object)
             {
-                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi/")
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/BrukerApi/")
                 {
                     Properties =
             {
@@ -194,19 +194,19 @@ namespace EnhetsTestJobbplan
            // Assert.AreEqual(string.Format("http://localhost/api/Authenticate/", nyBruker.Brukernavn), response.Headers.Location.ToString());
         }
         [TestMethod]
-        public void Post_Logginn_Bad_request()
+        public void Post_Logginn_Not_Found()
         {
 
             var commandBus = new Mock<IBrukerLogikk>();
-            commandBus.Setup(c => c.RegistrerBruker(It.IsAny<Registrer>())).Returns(true);
+            commandBus.Setup(c => c.BrukerIdb(It.IsAny<LogInn>())).Returns(true);
             // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
             var httpConfiguration = new HttpConfiguration();
             WebApiConfig.Register(httpConfiguration);
             var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
-                new HttpRouteValueDictionary { { "controller", "BrukerApi" } });
-            var controller = new BrukerApiController(commandBus.Object)
+                new HttpRouteValueDictionary { { "controller", "Authenticate" } });
+            var controller = new AuthenticateController(commandBus.Object)
             {
-                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/BrukerApi/")
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/Authenticate/")
                 {
                     Properties =
             {
@@ -215,14 +215,47 @@ namespace EnhetsTestJobbplan
             }
                 }
             };
-            Registrer nyBruker = new Registrer();
-            nyBruker.Email = "";
+            LogInn nyBruker = new LogInn();
+            nyBruker.Brukernavn = "";
             // The ASP.NET pipeline doesn't run, so validation don't run. 
             controller.ModelState.AddModelError("Email", "mock error message");
             var response = controller.Post(nyBruker);
             // Assert
-            commandBus.Verify(e => e.RegistrerBruker(nyBruker), Times.Never);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            commandBus.Verify(e => e.BrukerIdb(nyBruker), Times.Never);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            // Act
+
+        }
+        [TestMethod]
+        public void Post_Logginn_NOT_Found_I_DB()
+        {
+            LogInn bruker = new LogInn();
+            bruker.Brukernavn = "test@test.com";
+            bruker.Passord = "passord123";
+
+            var commandBus = new Mock<IBrukerLogikk>();
+            commandBus.Setup(c => c.BrukerIdb(bruker)).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "Authenticate" } });
+            var controller = new AuthenticateController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/Authenticate/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            LogInn nyBruker = new LogInn();
+            nyBruker.Brukernavn = "ikkeIDB@test.com";
+            nyBruker.Passord = "yolo1231";
+            var response = controller.Post(nyBruker);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
             // Act
 
         }

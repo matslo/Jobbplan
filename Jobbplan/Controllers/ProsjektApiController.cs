@@ -40,13 +40,30 @@ namespace Jobbplan.Controllers
                     response.Headers.Location = new Uri(uri);
                     return response;
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sette inn i databasen")
+                };
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
             string userName = User.Identity.Name;
-            _ProsjektBLL.SlettProsjekt(userName,id);       
+            bool ok =_ProsjektBLL.SlettProsjekt(userName,id);
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                };
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke slette prosjekt")
+            };
         }
         public HttpResponseMessage Put(Prosjekt EndreProsjekt)
         {

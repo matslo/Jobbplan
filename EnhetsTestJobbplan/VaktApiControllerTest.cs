@@ -96,6 +96,53 @@ namespace EnhetsTestJobbplan
 
         }
         [TestMethod]
+        public void Post_Vakt_NOT_FOUND()
+        {
+            Vaktskjema vakter = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            Vaktskjema vakter1 = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "19.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            var commandBus = new Mock<IVaktLogikk>();
+            commandBus.Setup(c => c.RegistrerVakt(vakter, It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "VaktApi" } });
+            var controller = new Jobbplan.Controllers.VaktApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            var response = controller.Post(vakter1);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            // Act
+
+        }
+        [TestMethod]
         public void Post_Ta_Ledig_Vakt_Ok()
         {
             var commandBus = new Mock<IVaktLogikk>();

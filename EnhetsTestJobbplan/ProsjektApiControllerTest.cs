@@ -85,5 +85,35 @@ namespace EnhetsTestJobbplan
             // Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
+        [TestMethod]
+        public void Post_Legg_til_prosjekt_NOT_FOUND()
+        {
+            var pros = new Prosjekt();
+            pros.Arbeidsplass = "";
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.RegistrerProsjekt(pros, "test")).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektApi" } });
+            var controller = new ProsjektApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/ProsjektApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+          
+            
+            var response = controller.Post(pros);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }
