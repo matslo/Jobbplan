@@ -19,6 +19,10 @@ namespace Jobbplan.Controllers
         {
             _BrukerBLL = new BrukerBLL();
         }
+        public AuthenticateController(IBrukerLogikk moqs)
+        {
+            _BrukerBLL = moqs;
+        }
         public HttpResponseMessage Post(LogInn personInn)
         {
             if (ModelState.IsValid)

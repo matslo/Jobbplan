@@ -52,9 +52,16 @@ namespace Jobbplan.DAL
             int bIdTil = BrukerId(pReq.TilBruker);
             int pId = pReq.ProsjektId;
 
-            if (bIdTil != 0)
+            if (!ErAdmin(brukernavn, pReq.ProsjektId) || !ErEier(brukernavn, pReq.ProsjektId))
             {
-                var nyRequest = new Prosjektrequest()
+                return false;
+            }
+
+            if (bIdTil == 0)
+            {
+                return false;
+            }
+            var nyRequest = new Prosjektrequest()
                 {
                     BrukerIdFra = bId,
                     BrukerIdTil = bIdTil,
@@ -76,8 +83,9 @@ namespace Jobbplan.DAL
                         return false;
                     }
                 }
-            }
-            return false;
+            
+
+            
         }     
         public bool RegistrerProsjektdeltakelse(ProsjektrequestMelding pid,string brukernavn)
         {

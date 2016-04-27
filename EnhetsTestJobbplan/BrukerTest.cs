@@ -122,7 +122,7 @@ namespace EnhetsTestJobbplan
             Assert.IsInstanceOfType(testProduct, typeof(List<BrukerListe>)); // Test type
         }
         [TestMethod]
-        public void Hent_brukere_Ikke_Admin()
+        public void Hent_brukere_Ikke_Vis_Ikke_Admin()
         {
             // Try finding a product by id
             List<BrukerListe> testProduct = this.mockProductRepository.HentBrukere(1, "mats_loekken@hotmail.com");
@@ -191,63 +191,8 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(1, blogs.Count);
             Assert.AreEqual(1, blogs[0].id);
         }*/
-        [TestMethod]
-        public void Post_Bruker_Ok()
-        {
-            Registrer nyBruker = new Registrer()
-            {
-                Fornavn = "Mats",
-                Etternavn = "Lokken",
-                Email = "tesbruker@hotmail.com",
-                Telefonnummer = "93686771",
-                BekreftPassord = "password"
-            };
-            var commandBus = new Mock<IBrukerLogikk>();
-            commandBus.Setup(c => c.RegistrerBruker(It.IsAny<Registrer>())).Returns(true);
-            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
-            var httpConfiguration = new HttpConfiguration();
-            WebApiConfig.Register(httpConfiguration);
-            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
-                new HttpRouteValueDictionary { { "controller", "BrukerApi" } });
-            var controller = new Jobbplan.Controllers.BrukerApiController(commandBus.Object)
-            {
-                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi/")
-                {
-                    Properties =
-            {
-                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
-                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
-            }
-                }
-            };
-            // Act
-            var response = controller.Post(nyBruker);
-            // Assert
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-            // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
-            Assert.AreEqual(string.Format("http://localhost/api/BrukerApi/{0}", nyBruker.id), response.Headers.Location.ToString());
-        }
-      /*  [TestMethod]
-        public void Registrer_POST_Ok()
-        {
-            using (TransactionScope scope = new TransactionScope())
-            {
-                var controller = new BrukerApiController();
-                Registrer NyBruker = new Registrer()
-                {
-                    Fornavn = "Mats",
-                    Etternavn = "Lokken",
-                    Email = "tesbruker99@hotmail.com",
-                    Telefonnummer = "93686771",
-                    BekreftPassord = "password"
-                };
-                //Act
-                var result = controller.Post(NyBruker);
-                //Assert
-
-                Assert.AreEqual(HttpStatusCode.Created, result.StatusCode);
-            }
-        }*/
+       
+     
        
         //DBTransaksjonerBruker
         [TestMethod]

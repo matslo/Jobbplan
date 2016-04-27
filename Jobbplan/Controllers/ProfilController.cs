@@ -17,7 +17,11 @@ namespace Jobbplan.Controllers
         {
             _BrukerBLL = new BrukerBLL();
         }
-        
+        public ProfilController(IBrukerLogikk moqs)
+        {
+            _BrukerBLL = moqs;
+        }
+
         public List<Profil> Get()
         {
             string brukernavn = User.Identity.Name;
@@ -37,11 +41,7 @@ namespace Jobbplan.Controllers
                     };
                 }
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sette inn databasen")
-            };
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
     }
 }
