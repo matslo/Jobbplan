@@ -49,42 +49,5 @@ namespace Jobbplan.Controllers
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
-        public HttpResponseMessage Put(int id)
-        {
-            string brukernavn = User.Identity.Name;
-            bool ok = _VaktBLL.taLedigVakt(id, brukernavn);
-            if (ok)
-            {
-                return new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.Created,
-                };
-            }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke ta vakt")
-            };
-
-        }
-        public HttpResponseMessage Delete(int id)
-        {
-            string userName = User.Identity.Name;
-
-            bool ok = _VaktBLL.SlettVakt(id, userName);
-
-            if (ok)
-            {
-                return new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.OK,
-                };
-            }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke slette mal")
-            };
-        }
     }
 }

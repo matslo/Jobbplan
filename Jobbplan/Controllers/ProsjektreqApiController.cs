@@ -21,7 +21,6 @@ namespace Jobbplan.Controllers
         {
             _ProsjektBLL = moqs;
         }
-
         public List<ProsjektrequestMelding> Get()
         {
             string UserName = User.Identity.Name;
@@ -32,7 +31,6 @@ namespace Jobbplan.Controllers
             string UserName = User.Identity.Name;
             return _ProsjektBLL.VisRequesterForProsjekt(id,UserName);
         }
-
         public HttpResponseMessage Post(ProsjektrequestSkjema reqInn)
         {
             string UserName = User.Identity.Name;
@@ -54,7 +52,6 @@ namespace Jobbplan.Controllers
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
-         
         public List<ProsjektrequestMelding> Delete(int id)
         {
             string UserName = User.Identity.Name;

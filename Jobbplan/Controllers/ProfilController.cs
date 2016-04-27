@@ -40,6 +40,12 @@ namespace Jobbplan.Controllers
                         StatusCode = HttpStatusCode.OK,
                     };
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sette inn i databasen")
+
+                };
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
