@@ -52,11 +52,22 @@ namespace Jobbplan.Controllers
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
-        public List<ProsjektrequestMelding> Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
             string UserName = User.Identity.Name;
-            _ProsjektBLL.SlettRequest(id,UserName);
-            return _ProsjektBLL.VisRequester(UserName);
+            bool ok = _ProsjektBLL.SlettRequest(id, UserName);
+            if (ok)
+            {
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke Slette bruker")
+            };
         }
     }
 }

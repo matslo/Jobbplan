@@ -18,7 +18,10 @@ namespace Jobbplan.Controllers
         {
             _ProsjektBLL = new ProsjektBLL();
         }
-       
+        public ProsjektDeltakelseApiController(IProsjektLogikk moqs)
+        {
+            _ProsjektBLL = moqs;
+        }
         public virtual HttpResponseMessage Post(ProsjektrequestMelding pid )
         {
             string userName = User.Identity.Name;
@@ -27,18 +30,20 @@ namespace Jobbplan.Controllers
                 bool ok = _ProsjektBLL.RegistrerProsjektdeltakelse(pid, userName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, pid);
+                    string uri = Url.Link("DefaultApi", null);
+                    response.Headers.Location = new Uri(uri);
+                    return response;
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sende melding")
+                };
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sende melding")
-            };
-          
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+
+
         }
         public HttpResponseMessage Delete(int id)
         {

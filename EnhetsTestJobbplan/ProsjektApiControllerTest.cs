@@ -215,5 +215,212 @@ namespace EnhetsTestJobbplan
             // Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
+        [TestMethod]
+        public void Post_Registrer_ProsjektDeltakelse_Ok()
+        {
+            ProsjektrequestMelding nyttProsjekt = new ProsjektrequestMelding()
+            {
+                MeldingId = 1
+            };
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.RegistrerProsjektdeltakelse(It.IsAny<ProsjektrequestMelding>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektDeltakelseApi" } });
+            var controller = new ProsjektDeltakelseApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/ProsjektDeltakelseApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Post(nyttProsjekt);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
+            Assert.AreEqual(string.Format("http://localhost/api/ProsjektDeltakelseApi"), response.Headers.Location.ToString());
+        }
+        [TestMethod]
+        public void Post_Registrer_ProsjektDeltakelse_Bad_Request()
+        {
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.RegistrerProsjektdeltakelse(It.IsAny<ProsjektrequestMelding>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektDeltakelseApi" } });
+            var controller = new ProsjektDeltakelseApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/ProsjektDeltakelseApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var pros = new ProsjektrequestMelding();
+            pros.MeldingId = 0;
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
+            controller.ModelState.AddModelError("MeldingId", "mock error message");
+            var response = controller.Post(pros);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+        [TestMethod]
+        public void Post_Registrer_ProsjektDeltakelse_NOT_FOUND()
+        {
+            var pros = new ProsjektrequestMelding();
+            pros.MeldingId = 0;
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.RegistrerProsjektdeltakelse(pros, "test")).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektDeltakelseApi" } });
+            var controller = new ProsjektDeltakelseApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/ProsjektDeltakelseApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+
+
+            var response = controller.Post(pros);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+        [TestMethod]
+        public void Delete_Prosjekt_ok()
+        {
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.SlettProsjekt(It.IsAny<string>(), It.IsAny<int>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektApi" } });
+            var controller = new ProsjektApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/ProsjektApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Delete(1);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        [TestMethod]
+        public void Delete_Prosjekt_NOT_FOUND()
+        {
+            
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.SlettProsjekt(It.IsAny<string>(), 1)).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektApi" } });
+            var controller = new ProsjektApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost/api/ProsjektApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+
+            // Act
+            var response = controller.Delete(0);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+        [TestMethod]
+        public void Delete_ProsjektDeltakelse_Ok()
+        {
+            ProsjektrequestMelding nyttProsjekt = new ProsjektrequestMelding()
+            {
+                MeldingId = 1
+            };
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.SlettBrukerFraProsjekt(It.IsAny<string>(), It.IsAny<int>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektDeltakelseApi" } });
+            var controller = new ProsjektDeltakelseApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost/api/ProsjektDeltakelseApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Delete(1);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        [TestMethod]
+        public void Delete_ProsjektDeltakelse_Bad_Request()
+        {
+            var pros = new ProsjektrequestMelding();
+            pros.MeldingId = 0;
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.RegistrerProsjektdeltakelse(pros, It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektDeltakelseApi" } });
+            var controller = new ProsjektDeltakelseApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost/api/ProsjektDeltakelseApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
+            controller.ModelState.AddModelError("MeldingId", "mock error message");
+            var response = controller.Delete(0);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }

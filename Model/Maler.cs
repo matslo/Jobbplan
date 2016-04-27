@@ -38,6 +38,7 @@ namespace Jobbplan.Model
 
     public class VisMaler
     {
+        public int ProsjektId { get; set; }
         public string Tittel { get; set; }
         public string startTid { get; set; }
         public string sluttTid { get; set; }

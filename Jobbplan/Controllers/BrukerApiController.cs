@@ -23,7 +23,6 @@ namespace Jobbplan.Controllers
         {
             _BrukerBLL = moq;
         }
-
         public int Get()
         {
             string Username = User.Identity.Name;

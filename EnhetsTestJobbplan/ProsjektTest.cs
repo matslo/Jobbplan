@@ -53,71 +53,7 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, "");
         }
-        //ProsjektApiController
-        [TestMethod]
-        public void Opprett_Prosjekt_POST_Ok()
-        {
-            var _mock = new Mock<Jobbplan.Controllers.ProsjektApiController>();
-
-            var innProsjekt = new Prosjekt()
-            {
-                ProsjektId = 1,
-                Arbeidsplass = "Kiwi",
-                EierId = 1
-            };
-
-            var http = new HttpResponseMessage();
-            http.StatusCode = HttpStatusCode.OK;
-
-            _mock.Setup(x => x.Post(innProsjekt)).Returns(http);
-            _mock.Verify(framework => framework.Post(innProsjekt), Times.AtMostOnce());
-
-            Jobbplan.Controllers.ProsjektApiController lovable = _mock.Object;
-            var actual = lovable.Post(innProsjekt);
-
-            Assert.AreEqual(HttpStatusCode.OK, actual.StatusCode);
-        }
-
-        //ProsjektDeltakelseApiController
-        [TestMethod]
-        public void RegistrerDeltakelse_POST_Ok()
-        {
-            var _mock = new Mock<ProsjektDeltakelseApiController>();
-
-            var innBruker = new ProsjektrequestMelding()
-            {
-                ProsjektId = 1,
-                FraBruker = "mats_loekken@hotmail.com",
-                TilBruker = "gordo@hotmail.com",
-                MeldingId = 2,
-                Prosjektnavn = "Bunnpris",
-                Tid = Convert.ToDateTime("22.12.2012 16.43")
-            };
-            var http = new HttpResponseMessage();
-            http.StatusCode = HttpStatusCode.OK;
-
-            _mock.Setup(x => x.Post(innBruker)).Returns(http);
-            _mock.Verify(framework => framework.Post(innBruker), Times.AtMostOnce());
-
-            ProsjektDeltakelseApiController lovable = _mock.Object;
-            var download = lovable.Post(innBruker);
-
-            Assert.AreEqual(download.StatusCode, HttpStatusCode.OK);
-        }
-        [TestMethod]
-        public void RegistrerDeltakelse_Feil_Validering()
-        {
-            //Arrange
-            var controller = new ProsjektDeltakelseApiController();
-            var melding = new ProsjektrequestMelding();
-            melding.ProsjektId = 0;
-            controller.ModelState.AddModelError("ProsjektId", "");
-            //Act
-            var result = controller.Post(melding);
-            //Assert
-
-            Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
-        }
+      
         // DbtransaksjonerProsjekt
         [TestMethod]
         public void Registrer_Prosjekt_OK()

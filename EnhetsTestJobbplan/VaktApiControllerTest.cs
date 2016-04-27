@@ -201,6 +201,34 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
         [TestMethod]
+        public void Post_Ta_Ledig_Vakt_Not_Found()
+        {
+            var commandBus = new Mock<IVaktLogikk>();
+            commandBus.Setup(c => c.taLedigVakt(0, It.IsAny<string>())).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "VaktApi3" } });
+            var controller = new VaktApi3Controller(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/VaktApi3/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            int id = 0;
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
+            var response = controller.Post(id);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+        [TestMethod]
         public void PUT_Endre_Vakt_Ok()
         {
             Vaktskjema vakter = new Vaktskjema()
@@ -270,6 +298,34 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             // Act
 
+        }
+        [TestMethod]
+        public void PUT_Endre_vakt_NOT_found()
+        {
+            Vaktskjema vakt = new Vaktskjema();
+            vakt.Vaktid = 0;
+            var commandBus = new Mock<IVaktLogikk>();
+            commandBus.Setup(c => c.EndreVakt(vakt, It.IsAny<string>())).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "VaktApi2" } });
+            var controller = new VaktApi2Controller(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Put, "http://localhost/api/VaktApi2/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            var response = controller.Put(vakt);
+
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            
         }
     }
 }

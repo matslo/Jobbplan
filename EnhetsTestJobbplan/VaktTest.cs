@@ -41,13 +41,16 @@ namespace EnhetsTestJobbplan
                     new Vakt {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
                     new Vakt {ProsjektId = 3, BrukerId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
                     new Vakt {ProsjektId = 3, BrukerId = 0, Ledig = true, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
-
             };
             List<dbBruker> bruker = new List<dbBruker>
                 {
                     new dbBruker {BrukerId = 1, Email = "testing123@hotmail.com"}
                 };
-            
+            List<Maler> maler = new List<Maler>
+                {
+                    new Maler {ProsjektId=1,startTid = "07.15", sluttTid = "14.15", Tittel = "dagvakt"}
+                };
+
             Mock<InterfaceDbTVakt> mockProductRepository = new Mock<InterfaceDbTVakt>();
 
 
@@ -69,6 +72,21 @@ namespace EnhetsTestJobbplan
                   }
                   return testliste;
               });
+
+            List<Maler> malene = null;
+            mockProductRepository.Setup(mr => mr.hentAlleMaler(It.IsAny<int>(), It.IsAny<string>()))
+            .Callback((int i, string u) =>
+            malene = maler.Where(x => x.ProsjektId == i).ToList())
+            .Returns(() =>
+             {
+              List<VisMaler> testliste = new List<VisMaler>();
+                foreach (var mal in malene)
+                {
+                testliste.Add(new VisMaler() { ProsjektId = mal.ProsjektId, startTid = mal.startTid, sluttTid = mal.sluttTid, Tittel= mal.Tittel });
+                }
+                return testliste;
+            });
+
 
             mockProductRepository.Setup(mr => mr.hentAlleLedigeVakter(It.IsAny<int>(), It.IsAny<string>()))
              .Callback((int i, string u) =>
@@ -100,67 +118,7 @@ namespace EnhetsTestJobbplan
             //.Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
             // Allows us to test saving a product
 
-            /*var dbtp = new DbTransaksjonerProsjekt();
-
-            if (!dbtp.ErAdmin(brukernavn, innVakt.ProsjektId) && !dbtp.ErEier(brukernavn, innVakt.ProsjektId))
-            {
-                return false;
-            }
-
-
-            string start = innVakt.start+" "+innVakt.startTid;
-            string end;
-
-            IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            DateTime dt2;
-           
-            if (innVakt.end != "")
-            {
-                end = innVakt.end + " " + innVakt.endTid;
-               dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);        
-            }
-            else
-            {
-                end = innVakt.start + " " + innVakt.endTid;
-                dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-            }
-
-            int result = DateTime.Compare(dt1, dt2);
-            if (result > 0 || result==0)
-            {
-                return false;
-            }
-            var nyVakt = new Vakt()
-            {
-               start = dt1,
-               end = dt2,
-               title = innVakt.title,
-               Beskrivelse = innVakt.Beskrivelse,
-               BrukerId = innVakt.BrukerId,
-               ProsjektId = innVakt.ProsjektId
-            };
-            if (LedigVakt(innVakt))
-            {
-                nyVakt.Ledig = true;
-                nyVakt.color = "#5CB85C";
-            }
-
-            using (var db = new Dbkontekst())
-            {
-                try
-                {
-                    db.Vakter.Add(nyVakt);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch (Exception feil)
-                {
-                    return false;
-                }
-
-            }*/
-
+          
 
             mockProductRepository.Setup(mr => mr.RegistrerVakt(It.IsAny<Vaktskjema>(), It.IsAny<string>())).Returns(
                 (Vaktskjema vakt, string u) =>
@@ -250,6 +208,20 @@ namespace EnhetsTestJobbplan
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
         }
+        [TestMethod]
+        public void Hent_alle_Maler_ok()
+        {
+            // Try finding a product by id
+            List<VisMaler> testProduct = this.mockProductRepository.hentAlleMaler(1, "mats_loekken@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual(1, testProduct[i].ProsjektId);
+
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<VisMaler>)); // Test type
+        }
+
 
         [TestMethod]
         public void Registrer_Vakt_End_before_start()
