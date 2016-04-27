@@ -46,6 +46,11 @@ namespace Jobbplan.Controllers
                     response.Headers.Location = new Uri(uri);
                     return response;
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sette inn databasen")
+                };
             }
             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             /*return new HttpResponseMessage()
@@ -81,7 +86,7 @@ namespace Jobbplan.Controllers
             {
                 return new HttpResponseMessage()
                 {
-                    StatusCode = HttpStatusCode.Created,
+                    StatusCode = HttpStatusCode.OK,
                 };
             }
 

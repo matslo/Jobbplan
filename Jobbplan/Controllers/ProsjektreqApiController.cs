@@ -17,7 +17,11 @@ namespace Jobbplan.Controllers
         {
             _ProsjektBLL = new ProsjektBLL();
         }
-       
+        public ProsjektreqApiController(IProsjektLogikk moqs)
+        {
+            _ProsjektBLL = moqs;
+        }
+
         public List<ProsjektrequestMelding> Get()
         {
             string UserName = User.Identity.Name;
@@ -37,18 +41,18 @@ namespace Jobbplan.Controllers
                 bool ok = _ProsjektBLL.LeggTilBrukerRequest(reqInn, UserName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                    var response = Request.CreateResponse(HttpStatusCode.Created, reqInn);
+                    string uri = Url.Link("DefaultApi", null);
+                    response.Headers.Location = new Uri(uri);
+                    return response;
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sende melding")
+                };
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sende melding")
-            };
-           
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
          
         public List<ProsjektrequestMelding> Delete(int id)

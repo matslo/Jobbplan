@@ -145,6 +145,7 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Post_Ta_Ledig_Vakt_Ok()
         {
+
             var commandBus = new Mock<IVaktLogikk>();
             commandBus.Setup(c => c.taLedigVakt(It.IsAny<int>(), It.IsAny<string>())).Returns(true);
             // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
@@ -198,6 +199,77 @@ namespace EnhetsTestJobbplan
             var response = controller.Post(id);
             // Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+        [TestMethod]
+        public void PUT_Endre_Vakt_Ok()
+        {
+            Vaktskjema vakter = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            var commandBus = new Mock<IVaktLogikk>();
+            commandBus.Setup(c => c.EndreVakt(It.IsAny<Vaktskjema>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "VaktAPi3" } });
+            var controller = new VaktApi2Controller(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Put, "http://localhost/api/VaktAPi2/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Put(vakter);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
+         
+        }
+        [TestMethod]
+        public void PUT_Endre_vakt_Bad_request()
+        {
+
+            var commandBus = new Mock<IVaktLogikk>();
+            commandBus.Setup(c => c.EndreVakt(It.IsAny<Vaktskjema>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "VaktApi2" } });
+            var controller = new VaktApi2Controller(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Put, "http://localhost/api/VaktApi2/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            Vaktskjema nyVakt = new Vaktskjema();
+            nyVakt.start = "";
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
+            controller.ModelState.AddModelError("start", "mock error message");
+            var response = controller.Put(nyVakt);
+            // Assert
+            commandBus.Verify(e => e.EndreVakt(nyVakt, "brukernavn"), Times.Never);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            // Act
+
         }
     }
 }

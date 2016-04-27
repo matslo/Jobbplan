@@ -17,7 +17,11 @@ namespace Jobbplan.Controllers
         {
             _VaktBLL = new VaktBLL();
         }
-     
+        public VaktApi2Controller(IVaktLogikk moqs)
+        {
+            _VaktBLL = moqs;
+        }
+
         //Get api/KalenderApi
         public List<Vaktkalender> Get(int id)
         {
@@ -34,17 +38,16 @@ namespace Jobbplan.Controllers
                 bool ok = _VaktBLL.EndreVakt(endrevakt, userName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                    return Request.CreateResponse(HttpStatusCode.OK, endrevakt);
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke endre vakt")
+                };
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke endre vakt")
-            };
+          
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
 
         }
     }

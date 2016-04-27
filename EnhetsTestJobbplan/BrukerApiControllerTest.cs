@@ -94,6 +94,46 @@ namespace EnhetsTestJobbplan
 
         }
         [TestMethod]
+        public void Post_Bruker_NOT_FOUND()
+        {
+            Registrer nyBruker = new Registrer()
+            {
+                Fornavn = "Mats",
+                Etternavn = "Lokken",
+                Email = "tesbruker@hotmail.com",
+                Telefonnummer = "93686771",
+                BekreftPassord = "password"
+            };
+
+            var commandBus = new Mock<IBrukerLogikk>();
+            commandBus.Setup(c => c.RegistrerBruker(nyBruker)).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "BrukerApi" } });
+            var controller = new BrukerApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/BrukerApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+          
+           
+            var response = controller.Post(nyBruker);
+            // Assert
+          
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            
+            // Act
+
+        }
+        [TestMethod]
         public void PUT_Bruker_Ok()
         {
             Profil nyBruker = new Profil()
@@ -258,6 +298,79 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
             // Act
 
+        }
+        [TestMethod]
+        public void Post_Sjef_OK()
+        {
+
+            Sjef innBruker = new Sjef()
+            {
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            var commandBus = new Mock<IBrukerLogikk>();
+            commandBus.Setup(c => c.GiBrukerAdminTilgang(It.IsAny<Sjef>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "SjefApi" } });
+            var controller = new SjefController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/SjefApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Post(innBruker);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+            
+            Assert.AreEqual(string.Format("http://localhost/api/SjefApi"), response.Headers.Location.ToString());
+
+        }
+        [TestMethod]
+        public void Post_Sjef_NOT_FOund()
+        {
+
+            Sjef innBruker = new Sjef()
+            {
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            Sjef innBruker1 = new Sjef()
+            {
+                BrukerId = 0,
+                ProsjektId = 1
+            };
+            var commandBus = new Mock<IBrukerLogikk>();
+            commandBus.Setup(c => c.GiBrukerAdminTilgang(innBruker, It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "SjefApi" } });
+            var controller = new SjefController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Post, "http://localhost/api/SjefApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Post(innBruker1);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            
         }
     }
 }

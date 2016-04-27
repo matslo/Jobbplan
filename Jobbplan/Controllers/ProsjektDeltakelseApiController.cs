@@ -54,7 +54,7 @@ namespace Jobbplan.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sende melding")
+                Content = new StringContent("Kunne ikke slette bruker")
             };
         }
     }

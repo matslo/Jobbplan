@@ -18,7 +18,10 @@ namespace Jobbplan.Controllers
         {
             _BrukerBLL = new BrukerBLL();
         }
-       
+        public SjefController(IBrukerLogikk moqs)
+        {
+            _BrukerBLL = moqs;
+        }
         public HttpResponseMessage Post(Sjef innBruker)
         {
             string userName = User.Identity.Name;
@@ -26,10 +29,10 @@ namespace Jobbplan.Controllers
                 bool ok = _BrukerBLL.GiBrukerAdminTilgang(innBruker, userName);
                 if (ok)
                 {
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Created,
-                    };
+                var response = Request.CreateResponse(HttpStatusCode.Created, innBruker);
+                string uri = Url.Link("DefaultApi", null);
+                response.Headers.Location = new Uri(uri);
+                return response;
                 }
             
             return new HttpResponseMessage()
