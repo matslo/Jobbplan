@@ -13,6 +13,15 @@ namespace Jobbplan.Controllers
         public ActionResult Index()
         {
             return View();
-        }     
+        }
+        public ActionResult Informasjonskapsler()
+        {
+            return View();
+        }
+
+        public ActionResult OmJobbplan()
+        {
+            return View();
+        }
     }
 }
