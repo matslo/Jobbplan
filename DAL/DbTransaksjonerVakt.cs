@@ -26,7 +26,7 @@ namespace Jobbplan.DAL
             DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
             DateTime dt2;
            
-            if (innVakt.end != "")
+            if (innVakt.end != "" && innVakt.endDato == true)
             {
                 end = innVakt.end + " " + innVakt.endTid;
                dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);        
@@ -224,7 +224,7 @@ namespace Jobbplan.DAL
             DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
             DateTime dt2;
 
-            if (EndreVakt.end != "")
+            if (EndreVakt.end != "" && EndreVakt.endDato == true)
             {
                 end = EndreVakt.end + " " + EndreVakt.endTid;
                 dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);

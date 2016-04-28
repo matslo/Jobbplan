@@ -48,6 +48,10 @@ function OpprettMal() {
 };
 function OpprettVakt() {
 $('body').on('click', '#LeggTilVakt', function () {
+    var endDate = false;
+    if ($("#checkAllDay").is(':checked')) {
+         endDate = true;
+    }  // checked
 
     var $this = $(this);
     $this.attr('disabled', 'disabled').html("Legger til...");
@@ -59,8 +63,9 @@ $('body').on('click', '#LeggTilVakt', function () {
         title: $('#Tittel').val(),
         Beskrivelse: $('#Beskrivelse').val(),
         ProsjektId: $('#selectProsjekt').val(),
-        BrukerId: $('#brukere').val()
-    };
+        BrukerId: $('#brukere').val(),
+        endDato: endDate
+};
     
         $.ajax({
             url: '/api/VaktApi/',
@@ -80,6 +85,10 @@ $('body').on('click', '#LeggTilVakt', function () {
 }
 function EndreVakt() {
     $('body').on('click', '.btnEndreVakt', function () {
+        var endDate = false;
+        if ($("#echeckAllDay").is(':checked')) {
+            endDate = true;
+        }  
         var id = $(this).attr("value");
         var endrevakt = {
             VaktId: id,
@@ -90,8 +99,8 @@ function EndreVakt() {
             title: $('#eTittel').val(),
             Beskrivelse: $('#eBeskrivelse').val(),
             ProsjektId: $('#selectProsjekt').val(),
-            BrukerId: $('#ebrukere').val()
-
+            BrukerId: $('#ebrukere').val(),
+            endDato: endDate
         };
         $.ajax({
             url: '/api/VaktApi2/',
@@ -345,9 +354,11 @@ function Heldags() {
       
         if (text.is(':hidden')) {
             text.slideDown('500');
-
+            text.val(" ");
+            
         } else {
             text.slideUp('500');
+            text.val("");
         }
     })
 };

@@ -52,6 +52,8 @@ namespace Jobbplan.Model
         [Display(Name = "Tid Dato")]
         public string endTid { get; set; }
 
+        public bool endDato { get; set; }
+
         [Display(Name = "Til Dato")]
         public string end { get; set; }
 
