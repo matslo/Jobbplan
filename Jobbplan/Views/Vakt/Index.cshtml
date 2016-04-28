@@ -55,11 +55,11 @@
 <div class="container" id="vaktRegistrering" style="display:none;">
     <div class="row">
         <div class='col-sm-2'>
-            <label>Dato:</label>         
+            <label for="datetimepicker4">Dato:</label>         
             <input type="text" class="form-control input-sm" id='datetimepicker4' aria-describedby="start-date">
         </div>
         <div class='col-sm-1'>
-            <label>Sluttdato</label>
+            <label for="checkAllDay">Sluttdato</label>
             <input type='checkbox' class="" id='checkAllDay' />
         </div>
         <div class='col-sm-2' id="tilDato" style="display: none;">
@@ -73,12 +73,12 @@
             </select>
         </div>
         <div class='col-sm-1'>
-            <label>Tid fra:</label>     
+            <label for="timepicker6">Tid fra:</label>     
                 <input type="text" class="form-control input-sm" id='timepicker6' aria-describedby="end-date">    
          
         </div>
         <div class='col-sm-1'>
-            <label>Tid til:</label>          
+            <label for="timepicker7">Tid til:</label>          
                 <input type="text" class="form-control input-sm" id='timepicker7' aria-describedby="start-date">
         </div>
         
@@ -116,7 +116,7 @@
             });
         </script>
         <div class='col-sm-1'>
-            <label>Legg til</label>
+            <label for="LeggTilVakt">Legg til</label>
             <button class="btn btn-success btn-sm" rows="1" id="LeggTilVakt">Legg til vakt</button>
         </div>
        </div>
@@ -171,30 +171,30 @@
 
                     <div class="row">
                         <div class='col-sm-3'>
-                            <label>Dato:</label>
+                            <label for="datetimepicker1">Dato:</label>
                             <input type="text" class="form-control input-sm" id='datetimepicker1' aria-describedby="start-date">
                         </div>
 
                         <div class='col-sm-3'>
-                            <label>Annen sluttdato</label>
+                            <label for="echeckAllDay">Annen sluttdato</label>
                             <input type='checkbox' class="" id='echeckAllDay'/>
                         </div>
 
                         <div class='col-sm-2' id="etilDato" style="display: none;">
-                            <label>Til:</label>
+                            <label for="datetimepicker2">Til:</label>
                             <input type='text' class="form-control input-sm" id='datetimepicker2'/>
                         </div>
 
 
                         <div class='col-sm-2'>
-                            <label>Tid fra:</label>
+                            <label for="etimepicker6">Tid fra:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control input-sm" id='etimepicker6' aria-describedby="start-date">
 
                             </div>
                         </div>
                         <div class='col-sm-2'>
-                            <label>Tid til:</label>
+                            <label for="etimepicker7">Tid til:</label>
                             <div class="input-group">
                                 <input type="text" class="form-control input-sm" id='etimepicker7' aria-describedby="start-date">
                             </div>
@@ -209,12 +209,12 @@
                         </div>
 
                         <div class='col-sm-2'>
-                            <label>Tittel:</label>
+                            <label for="eTittel">Tittel:</label>
                             <input type='text' class="form-control input-sm" id='eTittel'/>
                         </div>
 
                         <div class='col-sm-2'>
-                            <label>Notater:</label>
+                            <label for="eBeskrivelse">Notater:</label>
                             <textarea class="form-control input-sm" rows="1" id="eBeskrivelse"></textarea>
                         </div>
                         <script type="text/javascript">
@@ -235,7 +235,7 @@
                         </script>
 
                         <div class='col-sm-2'>
-                            <label></label>
+                            <label for="endrevakt"></label>
                             <div id="endrevakt"></div>
                         </div>
                         <div class="col-sm-2">
