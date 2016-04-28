@@ -1,17 +1,22 @@
 ﻿body {
-    background-color:rgb(35,39,47);
-    color:white;
+     height: 100px;
+    background: blue; /* For browsers that do not support gradients */        
+    background: -webkit-linear-gradient(90deg, lightblue, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(90deg, lightblue, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(90deg, lightblue, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(90deg, lightblue, white); /* Standard syntax (must be last) */
+   
 }
 #innhold{
    background-color:rgb(35,39,47);
 }
 #registrerSkjema{
+    width: 300px;
     margin:auto;
-    margin-top:5%;
+    margin-top:150px;
 }
 #registrerSkjema, td{
     padding:4px;
-   
 }
 #regDeg{
     font-size:25px;
@@ -25,7 +30,6 @@ input, select, textarea{
     font-family:Arial;
    
 }
-
 
 ::-webkit-input-placeholder {
    text-align: center;
