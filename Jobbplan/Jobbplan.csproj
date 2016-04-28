@@ -317,6 +317,8 @@
     <Content Include="Views\Timeliste\Index.cshtml" />
     <Content Include="Views\Vakt\VaktPlanTest.cshtml" />
     <Content Include="Views\Bruker\MinProfil.cshtml" />
+    <Content Include="Views\Shared\OmJobbplan.cshtml" />
+    <Content Include="Views\Shared\Informasjonskapsler.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
