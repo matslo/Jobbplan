@@ -188,7 +188,11 @@ namespace Jobbplan.DAL
         {
             Dbkontekst db = new Dbkontekst();
             var SlettProsjekt = db.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektDeltakerId == PId);
-
+            var sjekkEier = db.Prosjekter.FirstOrDefault(p => p.EierId == SlettProsjekt.BrukerId);
+            if (sjekkEier != null)
+            {
+                return false; // kan ikke slette eier fra prosjekt
+            }
             if (ErAdmin(brukernavn, SlettProsjekt.ProsjektId) == true || ErEier(brukernavn, SlettProsjekt.ProsjektId) == true)
             {
                     try
