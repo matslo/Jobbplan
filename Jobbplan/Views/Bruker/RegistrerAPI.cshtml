@@ -65,7 +65,7 @@
                     },
                     error: function (data) {
                         $this.removeAttr('disabled').html('Prøv igjen');
-                        alert(data.Message);
+                        $('#reg').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Bruker ble ikke opprettet. Prøv på nytt. </div>");
 
                     }
                 });
@@ -77,6 +77,7 @@
         ViewBag.Title = "RegistrerAPI";
     }
      <div id="regContainer" class="container">
+         <div id="reg"></div>
         <div>
             <table id="registrerSkjema" class="table-responsive" style="width:400px;">
                 <tr><td></td><th id="regDeg">REGISTRER DEG</th><td></td></tr>
