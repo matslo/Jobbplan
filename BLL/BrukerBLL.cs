@@ -23,17 +23,14 @@ namespace Jobbplan.BLL
         {
             return _repository.AntallMeldinger(brukernavn);
         }
-
         public bool BrukerIdb(LogInn innBruker)
         {
             return _repository.BrukerIdb(innBruker);
         }
-
         public bool EmailDb(Registrer innBruker)
         {
             return _repository.EmailDb(innBruker);
         }
-
         public bool EndreBrukerInfo(Profil EndreBrukerInfo, string brukernavn)
         {
             return _repository.EndreBrukerInfo(EndreBrukerInfo, brukernavn);
@@ -46,7 +43,6 @@ namespace Jobbplan.BLL
         {
             return _repository.GiBrukerAdminTilgang(innBruker, brukernavn);
         }
-
         public List<Profil> HentBruker(string Brukernavn)
         {
             return _repository.HentBruker(Brukernavn);
@@ -57,9 +53,9 @@ namespace Jobbplan.BLL
             return _repository.HentBrukere(ProsjektId, b);
         }
 
-        public List<Timeliste> HentVakter(string Brukernavn)
+        public List<Timeliste> HentVakter(string Brukernavn, int Pid)
         {
-            return _repository.HentVakter(Brukernavn);
+            return _repository.HentVakter(Brukernavn, Pid);
         }
 
         public bool RegistrerBruker(Registrer innBruker)

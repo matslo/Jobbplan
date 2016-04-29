@@ -15,6 +15,7 @@ namespace Jobbplan.Model
         public DateTime PeriodeStart { get; set; }
         public DateTime PeriodeSlutt { get; set; }
         public decimal Sum { get; set; }
+        public int ProsjektId { get; set;}
 
     }
 

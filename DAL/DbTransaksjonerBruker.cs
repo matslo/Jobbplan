@@ -181,22 +181,23 @@ namespace Jobbplan.DAL
             }
             return null;
         }
-        public List<Timeliste> HentVakter(string Brukernavn)
+        public List<Timeliste> HentVakter(string Brukernavn, int Pid)
         {
             var db = new Dbkontekst();
             var dbtb = new DbTransaksjonerProsjekt();
 
             int id = dbtb.BrukerId(Brukernavn);
+            
             List<Timeliste> pros = (from p in db.Vakter
-                                    where p.BrukerId == id
+                                    where p.BrukerId == id && p.ProsjektId == Pid
                                     select
                                         new Timeliste()
                                         {
                                             PeriodeStart = p.start,
                                             PeriodeSlutt = p.end
                                         }).ToList();
+           
             return pros;
-
         }
         public List<Profil> HentBruker(string Brukernavn)
         {

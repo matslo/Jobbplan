@@ -1,29 +1,64 @@
 ﻿ <script type="text/javascript">
 
-    $(document).ready(function () {
-        Hentvakter();
-    });
-    function Hentvakter() {
-        $.ajax({
-            url: '/api/TimelisteApi',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                VisTimeliste(data);
-            },
-            error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
-            }
-        });
-    };
-function VisTimeliste(vakter) {
-    var strResult = "<table class='table table-striped'>";
-    $.each(vakter, function (i, p) {
-        strResult += "<tr><td> Fra: " + p.PeriodeStart + "</td><td>Til: " + p.PeriodeSlutt + "</td><td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
-    });
-    strResult += "</table>";
-    $("#timeliste").html(strResult);
-}
-</script>
+     $(document).ready(function() {
+         Hentvakter();
+         selOnChange();
+     });
+    
+     function ProId() {
+         var prosjektid = $('#selectProsjekt').val();
+         if ($("#selectProsjekt:selected").length) {
+             prosjektid = ($(this).find(":selected").val());
+
+         }
+
+         return prosjektid;
+     }
+
+     function selOnChange() {
+         $('#selectProsjekt').on('change', function() {
+             Hentvakter();
+         });
+     };
+
+     function Hentvakter() {
+         $.ajax({
+             url: '/api/TimelisteApi/' + ProId(),
+             type: 'GET',
+             dataType: 'json',
+             success: function(data) {
+                 VisTimeliste(data);
+             },
+             error: function(x, y, z) {
+                 alert(x + '\n' + y + '\n' + z);
+             }
+         });
+     };
+
+     function VisTimeliste(vakter) {
+         var strResult = "<table class='table table-striped'>";
+         var d = new Date();
+         var slutt = new Date();
+
+         $.each(vakter, function (i, p) {
+             var d = new Date(Date.parse(p.PeriodeStart));
+             var d1 = new Date(Date.parse(p.PeriodeSlutt));
+            
+             var date = d.toLocaleString();
+             var date2 = d1.toLocaleString();
+             strResult += "<tr><td><strong> Fra:</strong> "+ date+"</td><td><strong>Til:</strong> "+ date2 +"</td><td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
+         }); 
+         strResult += "</table>";
+         $("#timeliste").html(strResult);
+     }
+ </script>
+
+
+<div class='col-sm-2' style="margin-bottom:14px;">
+    <p>Velg jobb</p>
+    <select class="form-control input-sm" id="selectProsjekt">
+        @{Html.RenderAction("prosjektMeny", "Prosjekt");}
+    </select>
+</div>
 
 <div id="timeliste"></div>

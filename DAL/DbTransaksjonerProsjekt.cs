@@ -52,7 +52,7 @@ namespace Jobbplan.DAL
             int bIdTil = BrukerId(pReq.TilBruker);
             int pId = pReq.ProsjektId;
 
-            if (!ErAdmin(brukernavn, pReq.ProsjektId) || !ErEier(brukernavn, pReq.ProsjektId))
+            if (!ErAdmin(brukernavn, pReq.ProsjektId) && !ErEier(brukernavn, pReq.ProsjektId))
             {
                 return false;
             }

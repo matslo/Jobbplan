@@ -149,10 +149,11 @@
 
     };
     function VisAlle(brukere) {
-        var strResult = "<table id='sendemeldingSkjema'  class='table table-hover table-bordered' style='display:none;'>";
-        strResult += "<tr ><td><input class='form-control' type='text' id='TilTxt' placeholder='E-post'/></td><td><button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button></td><td><button type='button' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button></td></tr>";
-        strResult += "</table>";
-        strResult += "<table class='table table-hover table-bordered'>";
+       
+        var strResult = "<tr id='sendemeldingSkjema' style='display: none;'><td><input class='form-control' type='text' id='TilTxt' placeholder='E-post'/></td>"+
+        "<td><button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button></td>"+
+        "<td><button type='button'id='sendReq' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button></td>"+
+        "</tr>";
         $.each(brukere, function (i, p) {
             var knapp = "<button type='button' id='adminTilgang' class='btn btn-info' value=" + p.BrukerId + "><span class='glyphicon glyphicon-plus' aria-hidden='true'></span> Administrator</button>";
             if (p.Admin == true)
@@ -161,7 +162,6 @@
             }
             strResult += "<tr><td>" + p.Navn + "</td><td>" + knapp + "</td><td><button type='button' class='btn btn-danger' id='slettBruker' value=" + p.ProsjektDeltakerId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
-        strResult += "</table>";
         $(".brukere").html(strResult);
     }
     function selOnChange() {
@@ -183,43 +183,51 @@
         $("#leggTilBruker").click(function () {
             var text = $("#sendemeldingSkjema");
             if (text.is(':hidden')) {
-                text.slideDown();
+                text.fadeIn(300);
             }
             else {
-                text.slideUp();
+                text.fadeOut(300);
                 
             }
         });
     });
 </script>
-<h2>Legg til bruker</h2>
+
 <div id="brukerprosjekt"></div>
-    <div class="container">     
         <div class="row">
             <div class='col-sm-3'>
-                <p>Jobb</p>
+                <p>Velg jobb</p>
                 <select class="form-control" id="selectProsjekt">
                     @{Html.RenderAction("prosjektMeny", "Prosjekt");}
                 </select>
             </div>
-            <div class='col-sm-3'>
-                <p>Epost</p>
-                <input class="form-control" type="text" id="TilTxt" placeholder="E-post" />
-            </div>
-            <div class='col-sm-3'>
-                <p>Send</p>
-                <button id="sendReq" class="btn btn-primary"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send forespørsel</button>
-            </div>
         </div>
-    </div>
 <br />
 <h2>Ansatte</h2><button type="button" id="leggTilBruker" class="btn btn-block btn-success btn-sm" style="position:center;">
     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Legg til bruker
 </button>
-<div class="brukere"></div>
+<table class="brukere table class='table table-hover table-bordered">
+    <tr id="sendemeldingSkjema" style='display: none;'>
+        <td>
+            <input class='form-control' type='text' id='TilTxt' placeholder='E-post'/>
+        </td>
+        <td>
+            <button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button>
+        </td>
+        <td>
+            <button type='button'id="sendReq" class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button>
+        </td>
+    </tr>
+
+</table>
+
+<table id='sendemeldingSkjema' class='table table-hover table-bordered' '>
+</table>
 <hr />
 <h2>Venter på godkjenning:</h2>
 
 <div class="requester"></div>
+
+
 
 

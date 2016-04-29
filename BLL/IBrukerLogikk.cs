@@ -16,7 +16,7 @@ namespace Jobbplan.BLL
         bool BrukerIdb(LogInn innBruker);
         bool EmailDb(Registrer innBruker);
         int AntallMeldinger(string brukernavn);
-        List<Timeliste> HentVakter(string Brukernavn);
+        List<Timeliste> HentVakter(string Brukernavn, int Pid);
         List<Profil> HentBruker(string Brukernavn);
         bool EndreBrukerInfo(Profil EndreBrukerInfo, string brukernavn);
 

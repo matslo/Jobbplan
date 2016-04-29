@@ -63,7 +63,7 @@
             <input type='checkbox' class="" id='checkAllDay' />
         </div>
         <div class='col-sm-2' id="tilDato" style="display: none;">
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><label>Til:</label>
+            <label for="datetimepicker5">Til:</label>
             <input type='text' class="form-control input-sm" id='datetimepicker5'/>
         </div>
         <div class='col-sm-2'>
@@ -78,8 +78,8 @@
          
         </div>
         <div class='col-sm-1'>
-            <label for="timepicker7">Tid til:</label>          
-                <input type="text" class="form-control input-sm" id='timepicker7' aria-describedby="start-date">
+            <label for="timepicker7">Tid til:</label>
+            <input type="text" class="form-control input-sm" id='timepicker7' aria-describedby="start-date">
         </div>
         
 
@@ -90,13 +90,13 @@
                 <option></option>
             </select>
         </div>
-        <div class='col-sm-2' >
-            <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label>Vakt tittel:</label>
+        <div class='col-sm-2' ><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
+           <label for="Tittel">Vakt tittel:</label>
             <input type='text' class="form-control input-sm" id='Tittel' />
         </div>
-   
+
         <div class='col-sm-2'>
-            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><label>Notater:</label>
+            <label for="Beskrivelse">Notater:</label>
             <textarea class="form-control input-sm" rows="1" id="Beskrivelse"></textarea>
         </div>
         <script type="text/javascript">
@@ -134,7 +134,7 @@
         </select>
     </div>
     <div style="margin-left: 275px;">
-        <button class="btn btn-primary btn-sm" id="alleMineVakter">Alle mine vakter</button>
+        <button class="btn btn-primary btn-sm" id="alleMineVakter">For alle jobber</button>
         <button class="btn btn-primary btn-sm" id="mineVakter">Mine vakter</button>
         <button class="btn btn-primary btn-sm" disabled="disabled" id="visAlleVakter">Alle vakter</button>
         <button class="btn btn-success btn-sm" id="ledigeVakter">Ledige vakter</button>
@@ -239,8 +239,8 @@
                             <div id="endrevakt"></div>
                         </div>
                         <div class="col-sm-2">
-                         
-                            <button onclick="VisKnapper();" class="btn btn-danger" rows="1" id="visKnapp"><label>Avbryt</label></button>
+                            <label for="visKnapp"></label>
+                            <button onclick="VisKnapper();" class="btn btn-danger" rows="1" id="visKnapp">Avbryt</button>
                         </div>
 
                     </div>

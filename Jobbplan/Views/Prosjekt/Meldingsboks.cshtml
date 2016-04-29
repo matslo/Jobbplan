@@ -45,12 +45,18 @@
         
         var strResult = "";
         var antallMeldinger = 0;
-        
+        var d = new Date();
         $.each(melding, function (i, m) {
-            antallMeldinger+=antallMeldinger+1;
-            strResult += "<p> " + m.Tid + " " + m.FraBruker + " " + m.Melding + " " + m.Prosjektnavn + "</p> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button><button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button>";
+            var d = new Date(Date.parse(m.Tid));
+            antallMeldinger += antallMeldinger + 1;
+            var s = new Date(Date.parse(m.Tid));
+            var sendt = s.toLocaleString();
+            strResult += "<tr><th>Sendt</th><th>Fra</th><th>Jobbinvitasjon</th><th>Bedrift</th><th></th></tr><tr><td> " + sendt + "</td><td> " + m.FraBruker + "</td><td>" + m.Melding + "</td><td> " + m.Prosjektnavn + "</td><td> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button> <button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button></td></tr>";
         });
-        $('#antallmeldinger').html("Du har <span class='badge'>"+ parseInt(antallMeldinger) + "</span> meldinger")
+        var invitasjon = "jobbinvitasjoner";
+        if (antallMeldinger == 1)
+        { var invitasjon = "jobbinvitasjon"; }
+        $('#antallmeldinger').html("Du har <span class='badge'>"+ parseInt(antallMeldinger) + "</span> "+ invitasjon)
         $("#meldinger").html(strResult);
  }
     function slettVaktRequest() {
@@ -124,17 +130,36 @@
         });
     }
     function VisAlleVaktReq(melding) {
+        var antallMeldinger = 0;
+        var d = new Date();
+        var d1 = new Date();
+        var sendt = new Date();
 
         var strResult = "<table class='table table-hover table-bordered meldinger'>";
         $.each(melding, function (i, m) {
-            strResult += "<th>Sendt</th><th>Fra</th><th>Melding</th><th>Jobb</th><th>+-</th><tr><td> " + m.Tid + "</td><td> " + m.FraBruker + "</td><td> " + m.Melding + " " + m.start + m.end + " <td>" + m.Prosjektnavn + "</td><td> <button class='GodkjennVakt btn btn-success' id='GodtaVakt' value=" + m.MeldingId + " >Godta</button><button class='Avslag btn btn-danger' id='SlettReq' value=" + m.MeldingId + " >Avslå</button></td></tr>";
+            var s = new Date(Date.parse(m.Tid));
+            var d = new Date(Date.parse(m.start));
+            var d1 = new Date(Date.parse(m.end));
+            antallMeldinger += antallMeldinger + 1;
+            var sendt = s.toLocaleString();
+            var date = d.toLocaleString();
+            var date2 = d1.toLocaleString();
+            strResult += "<th>Sendt</th><th>Fra</th><th>Vaktforespørsel</th><th>Bedrift</th><th> </th><tr><td> " + sendt + "</td><td> " + m.FraBruker + "</td><td> " + m.Melding + " " + date +"<strong>-</strong>" +date2 + " <td>" + m.Prosjektnavn +
+                "</td><td> <button class='GodkjennVakt btn btn-success' id='GodtaVakt' value=" + m.MeldingId + " >Godta</button>   <button class='Avslag btn btn-danger' id='SlettReq' value="
+                + m.MeldingId + " >Avslå</button></td></tr>";
         });
         strResult += "</table>";
+        var invitasjon = "vaktforespørsler";
+        if (antallMeldinger == 1)
+        { var invitasjon = "vaktforespørsel"; }
         $("#vaktEndringer").html(strResult);
+        $('#vaktmeldinger').html("Du har <span class='badge'>" + parseInt(antallMeldinger) + "</span> " + invitasjon)
     }
 </script>
 <br />
-<div id="antallmeldinger"></div>
-<hr />
+<div id="antallmeldinger"></div><div id="vaktmeldinger"></div>
+<hr/>
+<table id="meldinger" class="table table-hover table-bordered meldinger">
+    
+</table>
 <div id="vaktEndringer"></div>
-<div id="meldinger"></div>

@@ -19,10 +19,10 @@ namespace Jobbplan.Controllers
             _BrukerBLL = new BrukerBLL();
         }
        
-        public List<Timeliste> Get ()
+        public List<Timeliste> Get (int id)
         {
             string username = User.Identity.Name;
-            return _BrukerBLL.HentVakter(username);
+            return _BrukerBLL.HentVakter(username, id);
         }
 
     }
