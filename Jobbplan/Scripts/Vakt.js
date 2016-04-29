@@ -7,12 +7,12 @@
             type: 'PUT',
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                alert('Forespørsel sendt!');
+                $('#malok').html("<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Forespørsel sendt.</div>");
                 $('#calendar').fullCalendar('refetchEvents');
                 $('#fullCalModal').modal('hide');
             },
             error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+                $('#malok').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Forespørsel ble ikke sendt.</div>");
             }
         });
     })
@@ -112,7 +112,7 @@ function EndreVakt() {
                 $('#fullCalModal').modal('hide');
             },
             error: function (x, y, z) {
-                alert(x + '\n' + y + '\n' + z);
+                $('#malok').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Vakten ble ikke endret.</div>");
             }
         });
     })
@@ -130,7 +130,7 @@ function SlettVakt() {
                         $('#calendar').fullCalendar('refetchEvents');
                     },
                     error: function(x, y, z) {
-                        alert(x + '\n' + y + '\n' + z);
+                        $('#malok').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Vakten ble ikke slettet fra kalenderen.</div>");
                     }
                 });
             

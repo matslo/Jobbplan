@@ -17,7 +17,7 @@
         });
     };
 function VisTimeliste(vakter) {
-    var strResult = "<table class='table table-hover table-bordered'>";
+    var strResult = "<table class='table table-striped'>";
     $.each(vakter, function (i, p) {
         strResult += "<tr><td> Fra: " + p.PeriodeStart + "</td><td>Til: " + p.PeriodeSlutt + "</td><td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
     });
