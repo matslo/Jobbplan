@@ -202,7 +202,6 @@ namespace EnhetsTestJobbplan
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
         }
-      
         [TestMethod]
         public void Hent_alle_vakter_for_bruker_ok()
         {
@@ -229,8 +228,6 @@ namespace EnhetsTestJobbplan
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<VisMaler>)); // Test type
         }
-
-
         [TestMethod]
         public void Registrer_Vakt_End_before_start()
         {

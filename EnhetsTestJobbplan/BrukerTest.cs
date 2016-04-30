@@ -85,20 +85,7 @@ namespace EnhetsTestJobbplan
                     return testliste;
                 });
 
-                   // {});
-
-                   //new List<Vaktkalender>() {new Vaktkalender(){ProsjektId = i}});
-                   //vakter.Where(x => x.ProsjektId == i).ToList());
-
-
-
-                   //.Callback((int i, string u) => vakterDB.Where(x => x.ProsjektId == i))
-                   //.Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
-
-
-                   // return a product by Name
-                   //  mockProductRepository.Setup(mr => mr.hentAlleLedigeVakter(It.IsAny<int>(), It.IsAny<string>())).Returns((int s, string u) => vakter.Where(x => x.ProsjektId == s && x.Brukernavn == u).ToList());
-
+                 
                    // Allows us to test saving a product
 
                    // Complete the setup of our Mock Product Repository
