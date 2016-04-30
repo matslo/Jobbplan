@@ -68,9 +68,10 @@ namespace Jobbplan.Controllers
         public HttpResponseMessage Put(Prosjekt EndreProsjekt)
         {
             string userName = User.Identity.Name;
+           
             if (ModelState.IsValid)
             {
-                bool ok = _ProsjektBLL.EndreProsjekt(EndreProsjekt, userName);
+               bool ok = _ProsjektBLL.EndreProsjekt(EndreProsjekt, userName);
                 if (ok)
                 {
                     return new HttpResponseMessage()
@@ -78,12 +79,13 @@ namespace Jobbplan.Controllers
                         StatusCode = HttpStatusCode.OK,
                     };
                 }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Content = new StringContent("Kunne ikke sette inn databasen")
+                };
             }
-            return new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Content = new StringContent("Kunne ikke sette inn databasen")
-            };
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
     }
 }

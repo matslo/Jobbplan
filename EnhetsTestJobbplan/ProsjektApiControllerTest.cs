@@ -308,6 +308,104 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
         [TestMethod]
+        public void PUT_Endre_Prosjekt_Ok()
+        {
+            Prosjekt vakter = new Prosjekt()
+            {
+                Arbeidsplass="test",
+                EierId=1
+            };
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.EndreProsjekt(It.IsAny<Prosjekt>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektApi" } });
+            var controller = new ProsjektApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Put, "http://localhost/api/ProsjektApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Put(vakter);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            // var newCategory = JsonConvert.DeserializeObject<CategoryModel>(response.Content.ReadAsStringAsync().Result);
+
+        }
+        [TestMethod]
+        public void PUT_Endre_Prosjekt_Bad_request()
+        {
+
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.EndreProsjekt(It.IsAny<Prosjekt>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektApi" } });
+            var controller = new ProsjektApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Put, "http://localhost/api/ProsjektApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            Prosjekt eProsj = new Prosjekt();
+            eProsj.Arbeidsplass = "";
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
+            controller.ModelState.AddModelError("start", "mock error message");
+            var response = controller.Put(eProsj);
+            // Assert
+            commandBus.Verify(e => e.EndreProsjekt(eProsj, "brukernavn"), Times.Never);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            // Act
+
+        }
+        [TestMethod]
+        public void PUT_Endre_Prosjekt_NOT_found()
+        {
+
+            var commandBus = new Mock<IProsjektLogikk>();
+            Prosjekt test = null;
+            commandBus.Setup(c => c.EndreProsjekt(test, It.IsAny<string>())).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektApi" } });
+            var controller = new ProsjektApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Put, "http://localhost/api/ProsjektApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
+            
+            var response = controller.Put(test);
+            // Assert
+            commandBus.Verify(e => e.EndreProsjekt(test, "brukernavn"), Times.Never);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            // Act
+
+        }
+        [TestMethod]
         public void Delete_Prosjekt_ok()
         {
             var commandBus = new Mock<IProsjektLogikk>();
@@ -418,6 +516,60 @@ namespace EnhetsTestJobbplan
             
             // The ASP.NET pipeline doesn't run, so validation don't run. 
             controller.ModelState.AddModelError("MeldingId", "mock error message");
+            var response = controller.Delete(0);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+        [TestMethod]
+        public void Delete_ProsjektReq_Ok()
+        {
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.SlettRequest(It.IsAny<int>(), It.IsAny<string>())).Returns(true);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektreqApi" } });
+            var controller = new ProsjektreqApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost/api/ProsjektreqApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+            var response = controller.Delete(1);
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        [TestMethod]
+        public void Delete_ProsjektReq_Not_FOund()
+        {
+            var commandBus = new Mock<IProsjektLogikk>();
+            commandBus.Setup(c => c.SlettRequest(0, It.IsAny<string>())).Returns(false);
+            // Mapper.CreateMap<CategoryFormModel, CreateOrUpdateCategoryCommand>();
+            var httpConfiguration = new HttpConfiguration();
+            WebApiConfig.Register(httpConfiguration);
+            var httpRouteData = new HttpRouteData(httpConfiguration.Routes["DefaultApi"],
+                new HttpRouteValueDictionary { { "controller", "ProsjektreqApi" } });
+            var controller = new ProsjektreqApiController(commandBus.Object)
+            {
+                Request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost/api/ProsjektreqApi/")
+                {
+                    Properties =
+            {
+                { HttpPropertyKeys.HttpConfigurationKey, httpConfiguration },
+                { HttpPropertyKeys.HttpRouteDataKey, httpRouteData }
+            }
+                }
+            };
+            // Act
+
+            // The ASP.NET pipeline doesn't run, so validation don't run. 
             var response = controller.Delete(0);
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);

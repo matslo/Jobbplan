@@ -32,6 +32,26 @@ namespace EnhetsTestJobbplan
             //Assert
             Assert.AreEqual(result.ViewName, ""); 
         }
+        [TestMethod]
+        public void OmTest()
+        {
+            //Arrange
+            var controller = new HomeController();
+            //Act
+            var result = controller.OmJobbplan() as ViewResult;
+            //Assert
+            Assert.AreEqual(result.ViewName, "");
+        }
+        [TestMethod]
+        public void CookieViwTest()
+        {
+            //Arrange
+            var controller = new HomeController();
+            //Act
+            var result = controller.Informasjonskapsler() as ViewResult;
+            //Assert
+            Assert.AreEqual(result.ViewName, "");
+        }
         //AuthenticateController
         [TestMethod]
         public void LoggInn_POST_Ok()

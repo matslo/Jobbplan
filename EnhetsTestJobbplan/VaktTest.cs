@@ -182,6 +182,14 @@ namespace EnhetsTestJobbplan
            Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
           }
         [TestMethod]
+        public void Hent_alle_vakter_Ikke_ok()
+        {
+            // Try finding a product by id
+            List<Vaktkalender> testProduct = this.mockProductRepository.hentAlleVakter(0, "mats_loekken@hotmail.com");
+            Assert.AreEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
+        }
+        [TestMethod]
         public void Hent_alle_Ledige_vakter_ok()
         {
             // Try finding a product by id
@@ -194,7 +202,7 @@ namespace EnhetsTestJobbplan
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<Vaktkalender>)); // Test type
         }
-       
+      
         [TestMethod]
         public void Hent_alle_vakter_for_bruker_ok()
         {

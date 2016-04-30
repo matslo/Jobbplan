@@ -292,11 +292,11 @@ namespace EnhetsTestJobbplan
                 PeriodeSlutt =  Convert.ToDateTime("22.12.2012 16.43")
              }};
 
-            _mock.Setup(x => x.HentVakter(It.IsAny<string>())).Returns(timer);
-            _mock.Verify(framework => framework.HentVakter("mats_loekken@hotmail.com"), Times.AtMostOnce());
+            _mock.Setup(x => x.HentVakter(It.IsAny<string>(), It.IsAny<int>())).Returns(timer);
+            _mock.Verify(framework => framework.HentVakter("mats_loekken@hotmail.com",1), Times.AtMostOnce());
 
             InterfaceDbTBruker lovable = _mock.Object;
-            var actual = lovable.HentVakter("mats_loekken@hotmail.com");
+            var actual = lovable.HentVakter("mats_loekken@hotmail.com",1);
 
             Assert.AreEqual(timer,actual);
         }
