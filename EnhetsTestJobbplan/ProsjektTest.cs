@@ -34,7 +34,9 @@ namespace EnhetsTestJobbplan
                 // new Vaktkalender {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
                 //new Vaktkalender {ProsjektId = 3, Brukernavn = "", start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
             };
-            var req = new List<Prosjektrequest>() { new Prosjektrequest()
+            var req = new List<Prosjektrequest>() {
+
+                new Prosjektrequest()
             {
                ProsjektId = 1,
                BrukerIdFra = 1,
@@ -42,7 +44,14 @@ namespace EnhetsTestJobbplan
                MeldingId = 1,
                Sendt = Convert.ToDateTime("22.12.2012 16.43")
 
-             } };
+             }, new Prosjektrequest() { ProsjektId = 2,
+               BrukerIdFra = 2,
+               BrukerIdTil = 1,
+               MeldingId = 1,
+               Sendt = Convert.ToDateTime("22.12.2012 16.43")
+
+             }
+            };
             List<dbBruker> bruker = new List<dbBruker>
                 {
                     new dbBruker
@@ -56,9 +65,13 @@ namespace EnhetsTestJobbplan
                 };
         List<Prosjekt> prosjekter = new List<Prosjekt>
                 {
-                    new Prosjekt
+                    new Prosjekt()
                     {
                         ProsjektId=1,EierId=1
+                    },
+                     new Prosjekt()
+                    {
+                        ProsjektId=2,EierId=2
                     }
 
                 };
@@ -154,31 +167,72 @@ namespace EnhetsTestJobbplan
               });
 
 
+            mockProductRepository.Setup(mr => mr.SjekkTilgangProsjekt(It.IsAny<string>()))
+               .Returns(
+                   (string u) =>
+                   {
+                       int BrukerId = this.mockProductRepository.BrukerId(u);
+                       List<ProsjektVis> pros = (from p in deltakelser
+                                                 from s in prosjekter
+                                                 where p.BrukerId == BrukerId && p.ProsjektId == s.ProsjektId
+                                                 select
+                                                     new ProsjektVis()
+                                                     {
+                                                         Id = p.ProsjektId,
+                                                     }).ToList();
 
+                       return pros;
+                   });
 
             mockProductRepository.Setup(mr => mr.VisRequesterForProsjekt(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(
                     (int i, string u) =>
                     {
-                        string testProduct = this.mockProductRepository.BrukerNavn(1);
-                        return null;
+                        var tilganger = this.mockProductRepository.SjekkTilgangProsjekt(u);
+                        var eventer = (from k in req
+                                       from s in tilganger
+                                       where k.ProsjektId == i && k.ProsjektId == s.Id
+                                       select new ProsjektrequestMelding
+                                       {
+                                           MeldingId = k.MeldingId,
+                                           TilBruker = this.mockProductRepository.BrukerNavn(k.BrukerIdTil),
+                                           Tid = k.Sendt,
+                                           ProsjektId = k.ProsjektId
+                                           
+                                       }).ToList();
+                        return eventer;
+ 
                     });
-                /*Dbkontekst db = new Dbkontekst();
+            mockProductRepository.Setup(mr => mr.VisRequester(It.IsAny<string>()))
+              .Returns(
+                  (string u) =>
+                  {
+                      int id = this.mockProductRepository.BrukerId(u);
 
-            var tilganger = SjekkTilgangProsjekt(brukernavn);
-           
-            List<Prosjektrequest> proReq = db.Prosjektrequester.ToList();
-            var eventer = (from k in proReq
-                           from s in tilganger
-                           where k.ProsjektId == id && k.ProsjektId == s.Id
-                           select new ProsjektrequestMelding
-                           {
-                               MeldingId = k.MeldingId,
-                               TilBruker = BrukerNavn(k.BrukerIdTil),
-                               Tid = k.Sendt
-                           }).ToList();
-            return eventer;*/
-                // Complete the setup of our Mock Product Repository
+                      List<ProsjektrequestMelding> pros = (from p in req
+                                                           from b in bruker
+                                                           from s in prosjekter
+                                                           where p.BrukerIdTil == id && p.BrukerIdFra == b.BrukerId && p.ProsjektId == s.ProsjektId
+                                                           select
+                                                               new ProsjektrequestMelding()
+                                                               {
+                                                                   ProsjektId = p.ProsjektId,
+                                                                   FraBruker = b.Email,
+                                                                   Melding = " har invitert deg til å bli medlem av: ",
+                                                                   Prosjektnavn = p.Prosjekt.Arbeidsplass,
+                                                                   Tid = p.Sendt,
+                                                                   TilBruker = u
+                                                               }).ToList();
+                      return pros;
+
+                  });
+
+            /*
+            
+            
+            
+            */
+
             this.mockProductRepository = mockProductRepository.Object;
         }
         //Inneholder Tester for ProsjektApiController,ProsjektDeltakelseApiController, ProsjektReqApiController, ProsjektController, DbtransaksjonerProsjekt
@@ -195,11 +249,9 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Er_Ikke_eier()
         {
-            // Try finding a product by id
             bool testProduct = this.mockProductRepository.ErEier("testing123@hotmail.com", 0);
 
-            Assert.IsFalse(testProduct); // Test if null
-
+            Assert.IsFalse(testProduct); 
         }
         [TestMethod]
         public void Er_admin_ok()
@@ -255,18 +307,7 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Registrer_Prosjekt_OK()
         {
-            /*
-            using (TransactionScope scope = new TransactionScope())
-            {
-                InterfaceDbTProsjekt DBtp = new DbTransaksjonerProsjekt();
-                var nyProsjekt = new Prosjekt()
-                {
-                   ProsjektId = 1000,
-                   Arbeidsplass = "testing123"
-                 };
-                bool actual = DBtp.RegistrerProsjekt(nyProsjekt, "mats_loekken@hotmail.com");
-                Assert.AreEqual(true, actual);
-            }*/
+           
         }
         [TestMethod]
         public void Registrer_Prosjekt_Mangler_Arbeidplass()
@@ -283,99 +324,42 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Legg_Til_Bruker_Request_OK()
         {
-            var _mock = new Mock<InterfaceDbTProsjekt>();
-
-            var pReq = new ProsjektrequestSkjema();
-            var bruker = new Registrer();
-            bruker.Email = "mats_loekken@hotmail.com";
-            pReq.TilBruker = "gordo@hotmail.com";
-            pReq.ProsjektId = 1;
-
-            _mock.Setup(x => x.LeggTilBrukerRequest(pReq, bruker.Email)).Returns(true);
-            _mock.Verify(framework => framework.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com"), Times.AtMostOnce());
-
-            InterfaceDbTProsjekt lovable = _mock.Object;
-            var actual = lovable.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com");
-
-            Assert.AreEqual(true, actual);
+           
         }
         [TestMethod]
         public void Legg_Til_Bruker_Request_Ikke_OK_moq()
         {
-            var _mock = new Mock<InterfaceDbTProsjekt>();
-
-            var pReq = new ProsjektrequestSkjema();
-            pReq.TilBruker = null;
-            var bruker = new Registrer();
-
-            bruker.Email = "mats_loekken@hotmail.com";
-
-            _mock.Setup(x => x.LeggTilBrukerRequest(pReq, bruker.Email)).Returns(false);
-            _mock.Verify(framework => framework.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com"), Times.AtMostOnce());
-
-            InterfaceDbTProsjekt lovable = _mock.Object;
-            var actual = lovable.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com");
-
-            Assert.AreEqual(false, actual);
+          
         }
-        [TestMethod]
-        public void Legg_Til_Bruker_Request_Ikke_OK()
-        {/*
-            using (TransactionScope scope = new TransactionScope())
-            {
-                InterfaceDbTProsjekt Dbt = new DbTransaksjonerProsjekt();
-                var pReq = new ProsjektrequestSkjema();
-                pReq.TilBruker = null;
-                var bruker = new Registrer();
-                bool actual = Dbt.LeggTilBrukerRequest(pReq, "mats_loekken@hotmail.com");
-                Assert.AreEqual(false, actual);
-            }*/
-        }
+      
         [TestMethod]
         public void Hent_Bruker_Request()
         {
 
-            var _mock = new Mock<InterfaceDbTProsjekt>();
-
-            var req = new List<ProsjektrequestMelding>() { new ProsjektrequestMelding()
+            List<ProsjektrequestMelding> testProduct = this.mockProductRepository.VisRequester("testing123@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
             {
-               ProsjektId = 1,
-               FraBruker = "mats_loekk@hotmail.com",
-               TilBruker = "gordo@hotmail.com",
-               Melding = "",
-               Prosjektnavn = "Bunnpris",
-               MeldingId = 1,
-               Tid = Convert.ToDateTime("22.12.2012 16.43")
+                Assert.AreEqual("testing123@hotmail.com", testProduct[i].TilBruker);
 
-             } };
-
-            _mock.Setup(x => x.VisRequester("gordo@hotmail.com")).Returns(req);
-            _mock.Verify(framework => framework.VisRequester("gordo@hotmail.com"), Times.AtMostOnce());
-
-            InterfaceDbTProsjekt lovable = _mock.Object;
-            var actual = lovable.VisRequester("gordo@hotmail.com");
-
-            Assert.AreEqual(req, actual);
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<ProsjektrequestMelding>)); // Test type
 
         }
-        /*
+        
         [TestMethod]
         public void Hent_Bruker_Request_prosjekt()
         {
 
-            var _mock = new Mock<InterfaceDbTProsjekt>();
+            List<ProsjektrequestMelding> testProduct = this.mockProductRepository.VisRequesterForProsjekt(1, "testing123@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual(1, testProduct[i].ProsjektId);
 
-           
-
-           
-            _mock.Verify(framework => framework.VisRequesterForProsjekt(1,"gordo@hotmail.com"), Times.AtMostOnce());
-
-            InterfaceDbTProsjekt lovable = _mock.Object;
-            var actual = lovable.VisRequesterForProsjekt(1,"gordo@hotmail.com");
-
-            Assert.AreEqual(req, actual);
-
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<ProsjektrequestMelding>)); // Test type
         }
-       */
+      
     }
 }
