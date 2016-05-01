@@ -21,7 +21,6 @@ namespace Jobbplan.DAL
             {          
                 Arbeidsplass = innProsjekt.Arbeidsplass,
                 EierId = userId
-                
             };
             var nyProsjektDeltakelse = new Prosjektdeltakelse()
             {
