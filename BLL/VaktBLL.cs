@@ -30,6 +30,10 @@ namespace Jobbplan.BLL
         {
             return _repository.hentAlleMaler(id, brukernavn);
         }
+        public List<Vakt> VakterProsjekt(int id)
+        {
+            return _repository.VakterProsjekt(id);
+        }
 
         public List<Vaktkalender> hentAlleVakter(int id, string b)
         {
@@ -89,5 +93,6 @@ namespace Jobbplan.BLL
         {
             return _repository.visVaktRequester(Brukernavn);
         }
+        
     }
 }

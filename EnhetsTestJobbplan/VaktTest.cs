@@ -25,6 +25,7 @@ namespace EnhetsTestJobbplan
     public class VaktTest
     {
         private InterfaceDbTVakt mockProductRepository;
+        private InterfaceDbTProsjekt mockProductRepositoryProsjekt;
         public VaktTest()
         { 
             // Lager mocks som vi kan gjøre spørringer mot
@@ -35,31 +36,90 @@ namespace EnhetsTestJobbplan
                    // new Vaktkalender {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
                     //new Vaktkalender {ProsjektId = 3, Brukernavn = "", start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
                 };
+            List<VaktRequest> vaktReq = new List<VaktRequest>
+            {
+                new VaktRequest
+                {
+                    BrukerIdTil = 1,
+                    BrukerIdFra = 2,
+                    MeldingId = 1,
+                    VaktId = 1,
+                    ProsjektId = 1
+                }
+            };
+
             List<Vakt> vakterDB = new List<Vakt>
                 {
-                    new Vakt {ProsjektId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
+                    new Vakt {VaktId = 1, ProsjektId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
                     new Vakt {ProsjektId = 2, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring" },
                     new Vakt {ProsjektId = 3, BrukerId = 1, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"},
                     new Vakt {ProsjektId = 3, BrukerId = 0, Ledig = true, start = Convert.ToDateTime("22.12.2012 16.43"),end =  Convert.ToDateTime("22.12.2012 16.43"),title = "Dagvakt",Beskrivelse = "Opplæring"}
             };
-            List<dbBruker> bruker = new List<dbBruker>
-                {
-                    new dbBruker {BrukerId = 1, Email = "testing123@hotmail.com"}
-                };
-            List<Maler> maler = new List<Maler>
+             List<Maler> maler = new List<Maler>
                 {
                     new Maler {ProsjektId=1,startTid = "07.15", sluttTid = "14.15", Tittel = "dagvakt"}
                 };
 
+            List<dbBruker> bruker = new List<dbBruker>
+                {
+                    new dbBruker
+                    {
+                        BrukerId = 1, Email = "testing123@hotmail.com"
+                    },
+                    new dbBruker
+                    {
+                        BrukerId = 2, Email = "testing1@hotmail.com"
+                    },
+                    new dbBruker
+                    {
+                        BrukerId = 3, Email = "ikkeadmin@hotmail.com"
+                    }
+                };
+            List<Prosjekt> prosjekter = new List<Prosjekt>
+                {
+                    new Prosjekt()
+                    {
+                        ProsjektId=1,EierId=1
+                    },
+                     new Prosjekt()
+                    {
+                        ProsjektId=2,EierId=2
+                    }
+
+                };
+            List<Prosjektdeltakelse> deltakelser = new List<Prosjektdeltakelse>
+            {
+                new Prosjektdeltakelse
+                {
+                    ProsjektDeltakerId=1,
+                    BrukerId = 1,
+                    ProsjektId = 1,
+                    Admin = false,
+                    Medlemsdato = Convert.ToDateTime("22.12.2012 16.43")
+                },
+                 new Prosjektdeltakelse
+                {
+                    ProsjektDeltakerId=2,
+                    BrukerId = 2,
+                    ProsjektId = 1,
+                    Admin = true,
+                    Medlemsdato = Convert.ToDateTime("22.12.2012 16.43")
+                },
+                 new Prosjektdeltakelse
+                {
+                    ProsjektDeltakerId=3,
+                    BrukerId = 3,
+                    ProsjektId = 1,
+                    Admin = false,
+                    Medlemsdato = Convert.ToDateTime("22.12.2012 16.43")
+                }
+            };
+            Mock<InterfaceDbTProsjekt> mockProductRepositoryProsjekt = new Mock<InterfaceDbTProsjekt>();
+
             Mock<InterfaceDbTVakt> mockProductRepository = new Mock<InterfaceDbTVakt>();
 
-
-            /* mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(),It.IsAny<string>()))
-                 .Returns((int i,string u) => 
-                 vakter.Where(x => x.ProsjektId == i).ToList());
-
-             */
             List<Vakt> myFilteredFoos = null;
+
             mockProductRepository.Setup(mr => mr.hentAlleVakter(It.IsAny<int>(), It.IsAny<string>()))
               .Callback((int i, string u) =>
                 myFilteredFoos = vakterDB.Where(x => x.ProsjektId == i).ToList())
@@ -88,6 +148,55 @@ namespace EnhetsTestJobbplan
             });
 
 
+            mockProductRepository.Setup(mr => mr.visVaktRequester(It.IsAny<string>()))
+           .Returns(
+           (string u) =>
+           {
+               int id = this.mockProductRepositoryProsjekt.BrukerId(u);
+              
+               List<VaktRequestMelding> req = (from p in vaktReq
+                                               from b in bruker
+                                               from s in vakterDB
+                                               where p.BrukerIdTil == id && p.BrukerIdFra == b.BrukerId && p.VaktId == s.VaktId
+                                               select new VaktRequestMelding()
+                                               {
+                                                   MeldingId = p.MeldingId,
+                                                   ProsjektId = p.ProsjektId,
+                                                   FraBruker = b.Email,
+                                                   Melding = " vil ta vakten: ",
+                                                   title = p.Vakt.title,
+                                                   start = p.Vakt.start,
+                                                   end = p.Vakt.end,
+                                                   VaktId = p.VaktId,
+                                                   Prosjektnavn = p.Prosjekt.Arbeidsplass,
+                                                   Tid = p.Sendt,
+                                                   TilBruker = u
+                                               }).ToList();
+
+               return req;
+           });
+
+            mockProductRepository.Setup(mr => mr.requestOk(It.IsAny<int>()))
+          .Returns(
+          (int i) =>
+          {
+              try
+              {
+                  var Requester = vaktReq.FirstOrDefault(p => p.MeldingId == i);
+                  var OppdaterVakt = vakterDB.FirstOrDefault(p => p.VaktId == Requester.VaktId);
+                  OppdaterVakt.BrukerId = Requester.BrukerIdFra;
+                  OppdaterVakt.Ledig = false;
+                  OppdaterVakt.color = "#3A87AD";
+                  vaktReq.Remove(Requester);
+                 
+                  return true;
+              }
+              catch (Exception feil)
+              {
+                  return false;
+              }
+          });
+
             mockProductRepository.Setup(mr => mr.hentAlleLedigeVakter(It.IsAny<int>(), It.IsAny<string>()))
              .Callback((int i, string u) =>
                myFilteredFoos = vakterDB.Where(x => x.ProsjektId == i && x.BrukerId == 0).ToList())
@@ -114,58 +223,232 @@ namespace EnhetsTestJobbplan
                }
                return testliste;
            });
-            //.Callback((int i, string u) => vakterDB.Where(x => x.ProsjektId == i))
-            //.Returns((int i, string u) => vakter.Where(x => x.ProsjektId == i).ToList());
-            // Allows us to test saving a product
 
-          
+            mockProductRepository.Setup(mr => mr.SlettVakt(It.IsAny<int>(), It.IsAny<string>()))
+           .Returns((int i, string u) =>
+           {
+               var slettVakt = vakterDB.FirstOrDefault(p => p.VaktId == i);
+               if (!this.mockProductRepositoryProsjekt.ErAdmin(u, slettVakt.ProsjektId) && !this.mockProductRepositoryProsjekt.ErEier(u, slettVakt.ProsjektId))
+               {
+                   return false;
+               }
+               try
+               {
+                   vakterDB.Remove(slettVakt);
+                   return true;
+               }
+               catch (Exception feil)
+               {
+                   return false;
+               }
+           });
+
+            mockProductRepository.Setup(mr => mr.LedigVakt(It.IsAny<Vaktskjema>()))
+         .Returns((Vaktskjema i) =>
+         {
+             if (i.BrukerId == 0)
+             {
+                 return true;
+             }
+             return false;
+         });
+
+            mockProductRepository.Setup(mr => mr.taLedigVakt(It.IsAny<int>(), It.IsAny<string>()))
+          .Returns((int i, string u) =>
+          {
+              try
+              {
+                  // finn personen i databasen
+                  Vakt taVakt = vakterDB.FirstOrDefault(p => p.VaktId == i);
+
+                  VaktRequest nyRequest = new VaktRequest();
+                  // oppdater vakt fra databasen
+
+                  var pId = taVakt.ProsjektId;
+                  Prosjekt prosjekt = prosjekter.FirstOrDefault(p => p.ProsjektId == pId);
+
+                  nyRequest.VaktId = taVakt.VaktId;
+                  nyRequest.Sendt = DateTime.Now;
+                  nyRequest.BrukerIdFra = this.mockProductRepositoryProsjekt.BrukerId(u);
+                  nyRequest.BrukerIdTil = prosjekt.EierId;
+                  nyRequest.ProsjektId = prosjekt.ProsjektId;
+                  vaktReq.Add(nyRequest);
+                  return true;
+              }
+              catch (Exception feil)
+              {
+                  return false;
+              }
+          });
+
+            mockProductRepository.Setup(mr => mr.VakterProsjekt(It.IsAny<int>()))
+          .Returns((int i) =>
+          {
+              var eventer = (from k in vakterDB
+                             where k.ProsjektId == i
+                             select k
+                             ).ToList();
+              return eventer;
+          });
+            
 
             mockProductRepository.Setup(mr => mr.RegistrerVakt(It.IsAny<Vaktskjema>(), It.IsAny<string>())).Returns(
                 (Vaktskjema vakt, string u) =>
                 {
 
-                    Vakt nyVakt = new Vakt();
-                    nyVakt.ProsjektId = vakt.ProsjektId;
-                    nyVakt.BrukerId = vakt.ProsjektId;
-                    string start = vakt.start + " " + vakt.startTid;
-
-                    IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-                    DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-                    DateTime dt2;
-                    string end = "";
-                    if (vakt.end != null)
-                    {
-                        end = vakt.end + " " + vakt.endTid;
-                        dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-                    }
-                    else
-                    {
-                        end = vakt.start + " " + vakt.endTid;
-                        dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
-                    }
-                    nyVakt.start = dt1;
-                    nyVakt.end = dt2;
-
-                    int result = DateTime.Compare(dt1, dt2);
-                    if (result > 0 || result == 0)
+                    if (!this.mockProductRepositoryProsjekt.ErAdmin(u, vakt.ProsjektId) && !this.mockProductRepositoryProsjekt.ErEier(u, vakt.ProsjektId))
                     {
                         return false;
-                       
                     }
-                    else
-                    {
-                        vakterDB.Add(nyVakt);
-                    }
+
+                        Vakt nyVakt = new Vakt();
+                        nyVakt.ProsjektId = vakt.ProsjektId;
+                        nyVakt.BrukerId = vakt.ProsjektId;
+                        string start = vakt.start + " " + vakt.startTid;
+
+                        IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+                        DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+                        DateTime dt2;
+                        string end = "";
+                        if (vakt.end != null)
+                        {
+                            end = vakt.end + " " + vakt.endTid;
+                            dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+                        }
+                        else
+                        {
+                            end = vakt.start + " " + vakt.endTid;
+                            dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+                        }
+                        nyVakt.start = dt1;
+                        nyVakt.end = dt2;
+
+                        int result = DateTime.Compare(dt1, dt2);
+                        if (result > 0 || result == 0)
+                        {
+                            return false;
+
+                        }
+                        else
+                        {
+                            vakterDB.Add(nyVakt);
+                        }
+                    
 
                     return true;
                 });
 
-            // return a product by Name
-            //  mockProductRepository.Setup(mr => mr.hentAlleLedigeVakter(It.IsAny<int>(),It.IsAny<string>())).Returns((int s, string u) => vakter.Where(x => x.ProsjektId == s && x.Brukernavn==u).ToList());
+            mockProductRepository.Setup(mr => mr.EndreVakt(It.IsAny<Vaktskjema>(), It.IsAny<string>())).Returns(
+               (Vaktskjema vakt, string u) =>
+               {
+                   if (!this.mockProductRepositoryProsjekt.ErAdmin(u, vakt.ProsjektId) && !this.mockProductRepositoryProsjekt.ErEier(u, vakt.ProsjektId))
+                   {
+                       return false;
+                   }
+                   
+                   var NyEndreVakt = vakterDB.FirstOrDefault(p => p.VaktId == vakt.Vaktid);
+                   string start = vakt.start + " " + vakt.startTid;
+                   string end;
 
-            // Allows us to test saving a product
+                   IFormatProvider culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+                   DateTime dt1 = DateTime.ParseExact(start, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+                   DateTime dt2;
 
+                   if (vakt.end != "" && vakt.endDato == true)
+                   {
+                       end = vakt.end + " " + vakt.endTid;
+                       dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+                   }
+                   else
+                   {
+                       end = vakt.start + " " + vakt.endTid;
+                       dt2 = DateTime.ParseExact(end, "dd.MM.yyyy H:mm", culture, System.Globalization.DateTimeStyles.AssumeLocal);
+                   }
+
+                   int result = DateTime.Compare(dt1, dt2);
+                   if (result > 0 || result == 0)
+                   {
+                       return false;
+                   }
+                   if (!this.mockProductRepositoryProsjekt.ErAdmin(u, NyEndreVakt.ProsjektId) && !this.mockProductRepositoryProsjekt.ErEier(u, NyEndreVakt.ProsjektId))
+                   {
+                       return false;
+                   }
+                   try
+                   {
+                       NyEndreVakt.Beskrivelse = vakt.Beskrivelse;
+                       NyEndreVakt.BrukerId = vakt.BrukerId;
+                       NyEndreVakt.start = dt1;
+                       NyEndreVakt.end = dt2;
+                       NyEndreVakt.title = vakt.title;
+
+                       if (this.mockProductRepository.LedigVakt(vakt))
+                       {
+                           NyEndreVakt.Ledig = true;
+                           NyEndreVakt.color = "#5CB85C";
+                       }
+                       else
+                       {
+                           NyEndreVakt.Ledig = false;
+                           NyEndreVakt.color = "#3A87AD";
+                       }
+
+                       return true;
+                   }
+                   catch (Exception feil)
+                   {
+                       return false;
+                   }
+               });
+
+
+
+            mockProductRepositoryProsjekt.Setup(mr => mr.ErEier(It.IsAny<string>(), It.IsAny<int>()))
+             .Returns(
+               (string u, int i) =>
+               {
+                   var bId = this.mockProductRepositoryProsjekt.BrukerId(u);
+                   var TestOk = (from x in prosjekter
+                                 where x.EierId == bId && x.ProsjektId == i
+                                 select x.EierId).SingleOrDefault();
+                   bool ok = false;
+                   if (TestOk != 0)
+                   {
+                       ok = true;
+                       return ok;
+                   }
+                   return ok;
+               });
+
+            mockProductRepositoryProsjekt.Setup(mr => mr.ErAdmin(It.IsAny<string>(), It.IsAny<int>()))
+            .Returns(
+              (string u, int i) =>
+              {
+                  var okAdmin = false;
+                  var bId = this.mockProductRepositoryProsjekt.BrukerId(u);
+                  var TestOk = (from x in deltakelser
+                                where x.ProsjektId == i && x.BrukerId == bId
+                                select x.Admin).SingleOrDefault();
+
+                  if (TestOk != false)
+                  {
+                      okAdmin = true;
+                      return okAdmin;
+                  }
+                  return okAdmin;
+              });
+            mockProductRepositoryProsjekt.Setup(mr => mr.BrukerId(It.IsAny<string>()))
+              .Returns(
+                (string u) =>
+                {
+                    int userId = (from x in bruker
+                                  where x.Email == u
+                                  select x.BrukerId).SingleOrDefault();
+                    return userId;
+                });
+            
             // Complete the setup of our Mock Product Repository
+            this.mockProductRepositoryProsjekt = mockProductRepositoryProsjekt.Object;
             this.mockProductRepository = mockProductRepository.Object;
         }
         [TestMethod]
@@ -243,7 +526,7 @@ namespace EnhetsTestJobbplan
                 BrukerId = 1,
                 ProsjektId = 1
             };
-            bool ok = this.mockProductRepository.RegistrerVakt(vakt, "mats_loekken@hotmail.com");
+            bool ok = this.mockProductRepository.RegistrerVakt(vakt, "testing123@hotmail.com");
 
             Assert.IsFalse(ok);
 
@@ -252,7 +535,24 @@ namespace EnhetsTestJobbplan
         [TestMethod]
         public void Registrer_Vakt_OK()
         {
-            // Try finding a product by id
+            
+            Vaktskjema vakt = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            bool ok = this.mockProductRepository.RegistrerVakt(vakt, "testing123@hotmail.com");
+
+            Assert.IsTrue(ok);
+        }
+        [TestMethod]
+        public void Registrer_Vakt_False_Ikke_admin()
+        {
 
             Vaktskjema vakt = new Vaktskjema()
             {
@@ -264,11 +564,36 @@ namespace EnhetsTestJobbplan
                 BrukerId = 1,
                 ProsjektId = 1
             };
-            bool ok = this.mockProductRepository.RegistrerVakt(vakt, "mats_loekken@hotmail.com");
+            bool ok = this.mockProductRepository.RegistrerVakt(vakt, "ikkeadmin@hotmail.com");
+
+            Assert.IsFalse(ok);
+        }
+        [TestMethod]
+        public void Registrer_Vakt_OK_admin()
+        {
+
+            Vaktskjema vakt = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            bool ok = this.mockProductRepository.RegistrerVakt(vakt, "testing1@hotmail.com");
 
             Assert.IsTrue(ok);
         }
+        [TestMethod]
+        public void Ta_Ledig_Vakt_OK()
+        {
 
+            bool ok = this.mockProductRepository.taLedigVakt(1, "testing123@hotmail.com");
+
+            Assert.IsTrue(ok);
+        }
         //Inneholder Tester for VaktApiController/2/3, VaktController, DbtransaksjonerVakt
         //VaktController
         [TestMethod]
@@ -284,28 +609,6 @@ namespace EnhetsTestJobbplan
         //VaktApiController
        
         //DbtransaksjonerVakt
-       
-      
-        [TestMethod]
-        public void SettInnVaktikkeOkMOCK()
-        {
-
-            Vaktskjema vakter = new Vaktskjema()
-            {
-                start = "22.12.2012 16.43",
-                end = "22.12.2012 15.43",
-                title = "Dagvakt",
-                Beskrivelse = "Opplæring",
-                BrukerId = 1,
-                ProsjektId = 1
-            };
-            InterfaceDbTVakt lovable = Mock.Of<InterfaceDbTVakt>(l => l.RegistrerVakt(vakter, "mats_loekken@hotmail.com") == false);
-
-            bool download = lovable.RegistrerVakt(vakter, "mats_loekken@hotmail.com");
-
-            Assert.IsFalse(download);
-            Mock.Get(lovable).Verify(framework => framework.RegistrerVakt(vakter, "mats_loekken@hotmail.com"));
-        }     
       
         [TestMethod]
         public void SettInnMal_OK()
@@ -356,6 +659,98 @@ namespace EnhetsTestJobbplan
             Assert.AreEqual(false, actual);
 
         }
-        
+        [TestMethod]
+        public void Endre_Vakt_OK()
+        {
+
+            Vaktskjema vakt = new Vaktskjema()
+            {
+                Vaktid=1,
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            bool ok = this.mockProductRepository.EndreVakt(vakt, "testing123@hotmail.com");
+
+            Assert.IsTrue(ok);
+        }
+        [TestMethod]
+        public void Endre_Vakt_Ikke_Admin()
+        {
+
+            Vaktskjema vakt = new Vaktskjema()
+            {
+                Vaktid = 1,
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "18.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            bool ok = this.mockProductRepository.EndreVakt(vakt, "ikkeadmin@hotmail.com");
+
+            Assert.IsFalse(ok);
+        }
+        [TestMethod]
+        public void Endre_vakt_end_before_start()
+        {
+            // Try finding a product by id
+
+            Vaktskjema vakt = new Vaktskjema()
+            {
+                start = "22.12.2012",
+                startTid = "16.43",
+                endTid = "15.43",
+                title = "Dagvakt",
+                Beskrivelse = "Opplæring",
+                BrukerId = 1,
+                ProsjektId = 1
+            };
+            bool ok = this.mockProductRepository.EndreVakt(vakt, "testing123@hotmail.com");
+
+            Assert.IsFalse(ok);
+
+
+        }
+        [TestMethod]
+        public void SlettVakt_OK()
+        {
+            bool ok = this.mockProductRepository.SlettVakt(1, "testing123@hotmail.com");
+            Assert.IsTrue(ok);   
+        }
+        [TestMethod]
+        public void SlettVakt_Ikke_admin()
+        {
+            bool ok = this.mockProductRepository.SlettVakt(1, "ikkeadmin@hotmail.com");
+            Assert.IsFalse(ok);
+        }
+
+        [TestMethod]
+        public void Vis_Vaktrequester_ok()
+        {
+            // Try finding a product by id
+            List<VaktRequestMelding> testProduct = this.mockProductRepository.visVaktRequester("testing123@hotmail.com");
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual("testing123@hotmail.com", testProduct[i].TilBruker);
+
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<VaktRequestMelding>)); // Test type
+        }
+
+        [TestMethod]
+        public void Request_ok()
+        {
+            bool ok = this.mockProductRepository.requestOk(1);
+            Assert.IsTrue(ok);
+        }
+
     }
 }

@@ -84,8 +84,6 @@ namespace Jobbplan.DAL
                     }
                 }
             
-
-            
         }     
         public bool RegistrerProsjektdeltakelse(ProsjektrequestMelding pid,string brukernavn)
         {
@@ -169,7 +167,7 @@ namespace Jobbplan.DAL
                            }).ToList();
             return eventer;
         }
-        public virtual List<ProsjektVis> HentProsjekter (string Brukernavn)
+        public List<ProsjektVis> HentProsjekter (string Brukernavn)
         {
             int id = BrukerId(Brukernavn);
                List<ProsjektVis> pros = (from p in dbs.Prosjektdeltakelser 
@@ -188,7 +186,7 @@ namespace Jobbplan.DAL
         {
             Dbkontekst db = new Dbkontekst();
             var SlettProsjekt = db.Prosjektdeltakelser.FirstOrDefault(p => p.ProsjektDeltakerId == PId);
-            var sjekkEier = db.Prosjekter.FirstOrDefault(p => p.EierId == SlettProsjekt.BrukerId);
+            var sjekkEier = db.Prosjekter.FirstOrDefault(p => p.EierId == SlettProsjekt.BrukerId && p.ProsjektId == SlettProsjekt.ProsjektId);
             if (sjekkEier != null)
             {
                 return false; // kan ikke slette eier fra prosjekt

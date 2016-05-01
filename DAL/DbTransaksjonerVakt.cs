@@ -213,9 +213,15 @@ namespace Jobbplan.DAL
         }
         public bool EndreVakt(Vaktskjema EndreVakt, string brukernavn)
         {
+            var dbtp = new DbTransaksjonerProsjekt();
+
+            if (!dbtp.ErAdmin(brukernavn, EndreVakt.ProsjektId) && !dbtp.ErEier(brukernavn, EndreVakt.ProsjektId))
+            {
+                return false;
+            }
             Dbkontekst db = new Dbkontekst();
             var NyEndreVakt = db.Vakter.FirstOrDefault(p => p.VaktId == EndreVakt.Vaktid);
-            var dbtp = new DbTransaksjonerProsjekt();
+            
 
             string start = EndreVakt.start + " " + EndreVakt.startTid;
             string end;

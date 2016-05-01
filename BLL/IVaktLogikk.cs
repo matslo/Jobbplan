@@ -11,6 +11,7 @@ namespace Jobbplan.BLL
     {
         bool RegistrerVakt(Vaktskjema innVakt, string brukernavn);
         bool LedigVakt(Vaktskjema inn);
+        List<Vakt> VakterProsjekt(int id);
         List<Vaktkalender> hentAlleVakter(int id, string b);
         List<Vaktkalender> hentAlleVakterBruker(int id, string brukernavn);
         List<Vaktkalender> hentAlleVakterForBruker(string brukernavn);
