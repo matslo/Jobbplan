@@ -393,7 +393,6 @@ namespace Jobbplan.DAL
         }
         public List<VisMaler> hentAlleMaler(int id, string brukernavn)
         {
-
             Dbkontekst db = new Dbkontekst();
             var dbtB = new DbTransaksjonerProsjekt();
 
