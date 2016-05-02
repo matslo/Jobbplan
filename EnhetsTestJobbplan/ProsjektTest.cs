@@ -225,7 +225,6 @@ namespace EnhetsTestJobbplan
                                                                    ProsjektId = p.ProsjektId,
                                                                    FraBruker = b.Email,
                                                                    Melding = " har invitert deg til å bli medlem av: ",
-                                                                   Prosjektnavn = p.Prosjekt.Arbeidsplass,
                                                                    Tid = p.Sendt,
                                                                    TilBruker = u
                                                                }).ToList();
