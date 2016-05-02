@@ -5,7 +5,7 @@ HOST: http://polls.apiblueprint.org/
 
 For registrering av vakter
 
-## Questions Collection [/api/VaktApi]
+## Vakt Collection [/api/VaktApi]
 
 ### Se alle vakter [GET]
 
@@ -36,9 +36,7 @@ For registrering av vakter
 
 ### Legg til en ny vakt [POST]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+
 
 + Request (application/json)
            
@@ -59,6 +57,76 @@ form of choices.
     + Headers
     
             Location: /api/VaktApi/
+            
+            
+    + Body
+    
+             {
+                "Beskrivelse":"Opplæring",
+                "Brukernavn":"mats_loekken@hotmail.com",
+                "Ledig":false,
+                "VaktId":1,
+                "color":"#3A87AD",
+                "end":"2016-03-15T14:50:00",
+                "start":"2016-03-15T09:44:00",
+                "title":"Dagvakt: Mats Løkken"
+            }
+            
++ Response 404 (text/plain)
+
+        Kunne ikke oprette vakt!
+
+
+## Bruker Collection [/api/BrukerApi]
+
+### Se alle brukere [GET]
+
++ Response 200 (application/json)
+
+        [
+            {  
+                "start":"2016-04-16T07:15:00",
+                 "end":"2016-04-16T15:15:00",
+                 "title":"",
+                 "color":null,
+                 "VaktId":3,
+                 "ProsjektId":0,
+                 "Brukernavn":"mats_loekken@hotmail.com",
+                 "Ledig":false,
+                 "Beskrivelse":null
+            },
+            {   
+                "start":"2016-04-29T13:52:00",
+                "end":"2016-04-29T18:52:00",
+                "title":"",
+                "color":null,
+                "VaktId":21,
+                "ProsjektId":0,
+                "Brukernavn":"mats_loekken@hotmail.com",
+                "Ledig":false,
+                "Beskrivelse":null
+            }
+        ]
+
+### Legg til en ny bruker [POST]
+
+
++ Request (application/json)
+           
+            {
+                "Fornavn":"testing",
+                "Etternavn":"testing",
+                "Telefonnummer":"12312312",
+                "Email":"testing@testing.com",
+                "BekreftPassord":"123123123"
+            }
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/BrukerApi/
             
             
     + Body
