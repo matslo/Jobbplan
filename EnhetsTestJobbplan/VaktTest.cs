@@ -44,7 +44,8 @@ namespace EnhetsTestJobbplan
                     BrukerIdFra = 2,
                     MeldingId = 1,
                     VaktId = 1,
-                    ProsjektId = 1
+                    ProsjektId = 1,
+                    
                 }
             };
 
@@ -164,11 +165,9 @@ namespace EnhetsTestJobbplan
                                                    ProsjektId = p.ProsjektId,
                                                    FraBruker = b.Email,
                                                    Melding = " vil ta vakten: ",
-                                                   title = p.Vakt.title,
-                                                   start = p.Vakt.start,
-                                                   end = p.Vakt.end,
+                                                 
                                                    VaktId = p.VaktId,
-                                                   Prosjektnavn = p.Prosjekt.Arbeidsplass,
+                                                 
                                                    Tid = p.Sendt,
                                                    TilBruker = u
                                                }).ToList();
@@ -510,6 +509,19 @@ namespace EnhetsTestJobbplan
             }
             Assert.AreNotEqual(0, testProduct.Count); // Test if null
             Assert.IsInstanceOfType(testProduct, typeof(List<VisMaler>)); // Test type
+        }
+        [TestMethod]
+        public void VakterProsjekt_Ok()
+        {
+            // Try finding a product by id
+            var testProduct = this.mockProductRepository.VakterProsjekt(1);
+            for (var i = 0; i < testProduct.Count; i++)
+            {
+                Assert.AreEqual(1, testProduct[i].ProsjektId);
+
+            }
+            Assert.AreNotEqual(0, testProduct.Count); // Test if null
+            Assert.IsInstanceOfType(testProduct, typeof(List<Vakt>)); // Test type
         }
         [TestMethod]
         public void Registrer_Vakt_End_before_start()

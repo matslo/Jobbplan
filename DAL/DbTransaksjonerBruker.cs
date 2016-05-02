@@ -171,7 +171,7 @@ namespace Jobbplan.DAL
         {
             //Hash passord
             byte[] innData, utData;
-            var algoritme = System.Security.Cryptography.SHA256.Create();
+            var algoritme = System.Security.Cryptography.SHA256.Create(); 
             if (innPassord != null)
             {
                 innData = System.Text.Encoding.ASCII.GetBytes(innPassord);
