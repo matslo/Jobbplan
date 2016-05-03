@@ -268,6 +268,7 @@ function fullcal() {
 function selOnChange() {
     $('#selectProsjekt').on('change', function () {
         HentBrukere();
+        ErBrukerAdmin();
         $('#calendar').fullCalendar('refetchEvents');
     });
 };
@@ -374,7 +375,36 @@ function EndreHeldags() {
         }
     })
 };
-    
+function ErBrukerAdmin() {
+
+    $.ajax({
+        url: '/api/ProsjektDeltakelseApi/' + ProId(),
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            DisplayVaktreg(data);
+        },
+        error: function (x, y, z) {
+
+        }
+    });
+
+};
+function DisplayVaktreg(admin) {
+    var text = $("#mer");
+   
+    if (admin == true)
+    {
+        if (text.is(':hidden')) {
+            text.slideDown('500');
+
+        }
+    }
+    else {
+        text.slideUp('500');
+    }
+  
+};
 $(document).ready(function () {
     selMalOnChange();
     OpprettVakt();
@@ -389,6 +419,7 @@ $(document).ready(function () {
     EndreHeldags();
     OpprettMal();
     HentMaler();
+    ErBrukerAdmin();
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
     $('#calendar').fullCalendar('refetchEvents');
    // selOnChangeTEST();

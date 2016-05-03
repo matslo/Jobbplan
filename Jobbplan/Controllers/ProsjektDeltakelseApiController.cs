@@ -22,6 +22,16 @@ namespace Jobbplan.Controllers
         {
             _ProsjektBLL = moqs;
         }
+        public bool Get(int id)
+        {
+            string UserName = User.Identity.Name;
+            bool admin = false;
+            if (_ProsjektBLL.ErAdmin(UserName,id) || _ProsjektBLL.ErEier(UserName,id))
+            {
+                admin = true;
+            }
+            return admin;
+        }
         public virtual HttpResponseMessage Post(ProsjektrequestMelding pid )
         {
             string userName = User.Identity.Name;

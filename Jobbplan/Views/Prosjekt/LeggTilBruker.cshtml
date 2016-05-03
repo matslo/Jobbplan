@@ -168,7 +168,37 @@
         $('#selectProsjekt').on('change', function () {
             HentBrukere();
             HentRequester();
+            ErBrukerAdmin();
            });
+    };
+    function ErBrukerAdmin() {
+
+        $.ajax({
+            url: '/api/ProsjektDeltakelseApi/' + ProId(),
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                DisplayVaktreg(data);
+            },
+            error: function (x, y, z) {
+
+            }
+        });
+
+    };
+    function DisplayVaktreg(admin) {
+        var text = $(".innhold");
+
+        if (admin == true) {
+            if (text.is(':hidden')) {
+                text.slideDown('500');
+
+            }
+        }
+        else {
+            text.slideUp('500');
+        }
+
     };
     $(document).ready(function () {
         sendRequest();
@@ -179,7 +209,7 @@
         slettBrukerFraProsjekt();
         slettRequest();
         FjernAdminTilgang();
-
+        ErBrukerAdmin();
         $("#leggTilBruker").click(function () {
             var text = $("#sendemeldingSkjema");
             if (text.is(':hidden')) {
@@ -203,31 +233,31 @@
             </div>
         </div>
 <br />
-<h2>Ansatte</h2><button type="button" id="leggTilBruker" class="btn btn-block btn-success btn-sm" style="position:center;">
-    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Legg til bruker
-</button>
-<table class="brukere table class='table table-hover table-bordered" role="presentation">
-    <tr id="sendemeldingSkjema" style='display: none;'>
-        <td>
-            <input class='form-control' type='text' id='TilTxt' placeholder='E-post'/>
-        </td>
-        <td>
-            <button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button>
-        </td>
-        <td>
-            <button type='button'id="sendReq" class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button>
-        </td>
-    </tr>
+<div class="innhold" style="display:none;">
+    <h2>Ansatte</h2><button type="button" id="leggTilBruker" class="btn btn-block btn-success btn-sm" style="position:center;">
+        <span class="visb glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Legg til bruker
+    </button>
+    <table class="visb brukere table class='table table-hover table-bordered" role="presentation" >
+        <tr id="sendemeldingSkjema" style='display: none;'>
+            <td>
+                <input class='form-control' type='text' id='TilTxt' placeholder='E-post' />
+            </td>
+            <td>
+                <button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button>
+            </td>
+            <td>
+                <button type='button' id="sendReq" class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button>
+            </td>
+        </tr>
 
-</table>
+    </table>
 
-<table id='sendemeldingSkjema' class='table table-hover table-bordered' role="presentation">
-</table>
-<hr />
-<h2>Venter på godkjenning:</h2>
+    <table id='sendemeldingSkjema' class='table table-hover table-bordered' role="presentation"></table>
+    <hr />
+    <h2>Venter på godkjenning:</h2>
 
-<div class="requester"></div>
-
+    <div class="requester"></div>
+</div>
 
 
 

@@ -22,6 +22,7 @@ namespace Jobbplan.Controllers
         {
             _BrukerBLL = moqs;
         }
+       
         public HttpResponseMessage Post(Sjef innBruker)
         {
             string userName = User.Identity.Name;
