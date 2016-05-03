@@ -311,9 +311,7 @@ namespace EnhetsTestJobbplan
             var result = controller.MinProfil() as ViewResult;
             //Assert
             Assert.AreEqual(result.ViewName, "");
-        }
-       
-      
+        }   
         //DBTransaksjonerBruker
       
         [TestMethod]
