@@ -5,9 +5,73 @@ HOST: http://polls.apiblueprint.org/
 
 For registrering av vakter
 
-## Vakt Collection [/api/VaktApi]
+## Vakt Collection [/api/VaktApi/{id}]
+### Se alle vakter for prosjektId[GET]
 
-### Se alle vakter [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "Beskrivelse":null,
+                "Brukernavn":"mats_loekken@hotmail.com",
+                "Ledig":false,
+                "VaktId":1,
+                "color":"#3A87AD",
+                "end":"2016-03-15T14:50:00",
+                "start":"2016-03-15T09:44:00",
+                "title":"Dagvakt: Mats Løkken"
+            },
+            {
+                "Beskrivelse":null,
+                "Brukernavn":"mats_loekken@hotmail.com",
+                "Ledig":false,
+                "VaktId":1,
+                "color":"#3A87AD",
+                "end":"2016-03-15T14:50:00",
+                "start":"2016-03-15T09:44:00",
+                "title":"Dagvakt: Atle Aspelien"
+            }
+        ]
+### Ta ledig vakt [PUT]
+
+
+
++ Request (application/json)
+           
+           PUT /api/VaktApi/15
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/VaktApi/15
+            
+    + Body
+    
++ Response 404 (text/plain)
+
+        Kunne ikke ta vakt!
+        
+
+### Slett vakt [DELETE]
++ Request (application/json)
+
+            DELETE /api/VaktApi/15
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/VaktApi/15
+            
+    + Body
+            
++ Response 404 (text/plain)
+
+        Kunne ikke slette vakt!
+## Vakt Collection [/api/VaktApi/]
+### Se alle vakter for bruker[GET]
 
 + Response 200 (application/json)
 
@@ -33,22 +97,19 @@ For registrering av vakter
                 "title":"Dagvakt: Mats Løkken"
             }
         ]
-
 ### Legg til en ny vakt [POST]
-
-
-
 + Request (application/json)
            
             {
-                "Beskrivelse":"Opplæring",
-                "Brukernavn":"mats_loekken@hotmail.com",
-                "Ledig":false,
-                "VaktId":1,
-                "color":"#3A87AD",
-                "end":"2016-03-15T14:50:00",
-                "start":"2016-03-15T09:44:00",
-                "title":"Dagvakt: Mats Løkken"
+                "start":"05.05.2016",
+                "startTid":"12:36",
+                "endTid":"17:36",
+                "end":"06.05.2016",
+                "title":"Dagvakt",
+                "Beskrivelse":"",
+                "ProsjektId":"7",
+                "BrukerId":"8",
+                "endDato":true
             }
         
 
@@ -56,25 +117,81 @@ For registrering av vakter
 
     + Headers
     
-            Location: /api/VaktApi/
             
-            
+            Cache-Control: no-cache
+            Pragma: no-cache
+            Content-Length: 166
+            Expires: -1
+            Location: http://jobbplan2016.azurewebsites.net/api/VaktApi/0
+            Server: Microsoft-IIS/8.0
+            X-AspNet-Version: 4.0.30319
+            X-Powered-By: ASP.NET
+            Date: Tue, 03 May 2016 10:39:08 GMT
+
     + Body
     
-             {
-                "Beskrivelse":"Opplæring",
-                "Brukernavn":"mats_loekken@hotmail.com",
-                "Ledig":false,
-                "VaktId":1,
-                "color":"#3A87AD",
-                "end":"2016-03-15T14:50:00",
-                "start":"2016-03-15T09:44:00",
-                "title":"Dagvakt: Mats Løkken"
+            {  
+                "Vaktid":0,
+                "start":"05.05.2016",
+                "startTid":"12:36",
+                "endTid":"17:36",
+                "endDato":true,
+                "end":"06.05.2016",
+                "title":"Dagvakt",
+                "Beskrivelse":"",
+                "BrukerId":8,
+                "ProsjektId":7
             }
             
 + Response 404 (text/plain)
 
-        Kunne ikke oprette vakt!
+        Kunne ikke sette inn databasen
+        
+
+
+## Vakt2 Collection [/api/VaktApi2/]
+### Endre vakt [PUT]
+
++ Request (application/json)
+           
+           {
+                "VaktId":"14",
+                "start":"05.05.2016",
+                "startTid":"16:57",
+                "end":"",
+                "endTid":"20:57",
+                "title":"",
+                "Beskrivelse":"",
+                "ProsjektId":"7",
+                "BrukerId":"0",
+                "endDato":false
+            }
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            
+    + Body
+    
+            {   
+                "Vaktid":14,
+                "start":"05.05.2016",
+                "startTid":"16:57",
+                "endTid":"20:57",
+                "endDato":false,
+                "end":"",
+                "title":"",
+                "Beskrivelse":"",
+                "BrukerId":0,
+                "ProsjektId":7
+            }
+                
++ Response 404 (text/plain)
+
+        Kunne ikke ta vakt!
+        
 
 
 ## Bruker Collection [/api/BrukerApi]
@@ -132,16 +249,145 @@ For registrering av vakter
     + Body
     
              {
-                "Beskrivelse":"Opplæring",
-                "Brukernavn":"mats_loekken@hotmail.com",
-                "Ledig":false,
-                "VaktId":1,
-                "color":"#3A87AD",
-                "end":"2016-03-15T14:50:00",
-                "start":"2016-03-15T09:44:00",
-                "title":"Dagvakt: Mats Løkken"
+                "Fornavn":"testing",
+                "Etternavn":"testing",
+                "Telefonnummer":"12312312",
+                "Email":"testing@testing.com",
+                "BekreftPassord":"123123123"
             }
             
 + Response 404 (text/plain)
 
-        Kunne ikke oprette vakt!
+        Kunne ikke oprette bruker!
+
+## Prosjekt Collection [/api/ProsjektApi]
+
+### Se alle brukere [GET]
+
++ Response 200 (application/json)
+
+        [
+            {  
+                "start":"2016-04-16T07:15:00",
+                 "end":"2016-04-16T15:15:00",
+                 "title":"",
+                 "color":null,
+                 "VaktId":3,
+                 "ProsjektId":0,
+                 "Brukernavn":"mats_loekken@hotmail.com",
+                 "Ledig":false,
+                 "Beskrivelse":null
+            },
+            {   
+                "start":"2016-04-29T13:52:00",
+                "end":"2016-04-29T18:52:00",
+                "title":"",
+                "color":null,
+                "VaktId":21,
+                "ProsjektId":0,
+                "Brukernavn":"mats_loekken@hotmail.com",
+                "Ledig":false,
+                "Beskrivelse":null
+            }
+        ]
+
+### Legg til en ny bruker [POST]
+
+
++ Request (application/json)
+           
+            {
+                "Fornavn":"testing",
+                "Etternavn":"testing",
+                "Telefonnummer":"12312312",
+                "Email":"testing@testing.com",
+                "BekreftPassord":"123123123"
+            }
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/BrukerApi/
+            
+            
+    + Body
+    
+             {
+                "Fornavn":"testing",
+                "Etternavn":"testing",
+                "Telefonnummer":"12312312",
+                "Email":"testing@testing.com",
+                "BekreftPassord":"123123123"
+            }
+            
++ Response 404 (text/plain)
+
+        Kunne ikke oprette bruker!
+
+## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi]
+
+### Er Admin [GET]
+
++ Response 200 (application/json)
+
+        [
+            {  
+                "start":"2016-04-16T07:15:00",
+                 "end":"2016-04-16T15:15:00",
+                 "title":"",
+                 "color":null,
+                 "VaktId":3,
+                 "ProsjektId":0,
+                 "Brukernavn":"mats_loekken@hotmail.com",
+                 "Ledig":false,
+                 "Beskrivelse":null
+            },
+            {   
+                "start":"2016-04-29T13:52:00",
+                "end":"2016-04-29T18:52:00",
+                "title":"",
+                "color":null,
+                "VaktId":21,
+                "ProsjektId":0,
+                "Brukernavn":"mats_loekken@hotmail.com",
+                "Ledig":false,
+                "Beskrivelse":null
+            }
+        ]
+
+### Registrer Prosjektdeltakelse [POST]
+
+
++ Request (application/json)
+           
+            {
+                "Fornavn":"testing",
+                "Etternavn":"testing",
+                "Telefonnummer":"12312312",
+                "Email":"testing@testing.com",
+                "BekreftPassord":"123123123"
+            }
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/BrukerApi/
+            
+            
+    + Body
+    
+             {
+                "Fornavn":"testing",
+                "Etternavn":"testing",
+                "Telefonnummer":"12312312",
+                "Email":"testing@testing.com",
+                "BekreftPassord":"123123123"
+            }
+            
++ Response 404 (text/plain)
+
+        Kunne ikke oprette bruker!
