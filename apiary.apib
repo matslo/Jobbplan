@@ -196,34 +196,6 @@ For registrering av vakter
 
 ## Bruker Collection [/api/BrukerApi]
 
-### Se alle brukere [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {  
-                "start":"2016-04-16T07:15:00",
-                 "end":"2016-04-16T15:15:00",
-                 "title":"",
-                 "color":null,
-                 "VaktId":3,
-                 "ProsjektId":0,
-                 "Brukernavn":"mats_loekken@hotmail.com",
-                 "Ledig":false,
-                 "Beskrivelse":null
-            },
-            {   
-                "start":"2016-04-29T13:52:00",
-                "end":"2016-04-29T18:52:00",
-                "title":"",
-                "color":null,
-                "VaktId":21,
-                "ProsjektId":0,
-                "Brukernavn":"mats_loekken@hotmail.com",
-                "Ledig":false,
-                "Beskrivelse":null
-            }
-        ]
 
 ### Legg til en ny bruker [POST]
 
@@ -330,32 +302,14 @@ For registrering av vakter
 
 ### Er Admin [GET]
 
++ Request (application/json)
+           
+            GET /api/ProsjektDeltakelseApi/7 HTTP/1.1
+
+
 + Response 200 (application/json)
 
-        [
-            {  
-                "start":"2016-04-16T07:15:00",
-                 "end":"2016-04-16T15:15:00",
-                 "title":"",
-                 "color":null,
-                 "VaktId":3,
-                 "ProsjektId":0,
-                 "Brukernavn":"mats_loekken@hotmail.com",
-                 "Ledig":false,
-                 "Beskrivelse":null
-            },
-            {   
-                "start":"2016-04-29T13:52:00",
-                "end":"2016-04-29T18:52:00",
-                "title":"",
-                "color":null,
-                "VaktId":21,
-                "ProsjektId":0,
-                "Brukernavn":"mats_loekken@hotmail.com",
-                "Ledig":false,
-                "Beskrivelse":null
-            }
-        ]
+                true
 
 ### Registrer Prosjektdeltakelse [POST]
 
@@ -363,11 +317,7 @@ For registrering av vakter
 + Request (application/json)
            
             {
-                "Fornavn":"testing",
-                "Etternavn":"testing",
-                "Telefonnummer":"12312312",
-                "Email":"testing@testing.com",
-                "BekreftPassord":"123123123"
+                "ProsjektId":"15"
             }
         
 
@@ -381,11 +331,13 @@ For registrering av vakter
     + Body
     
              {
-                "Fornavn":"testing",
-                "Etternavn":"testing",
-                "Telefonnummer":"12312312",
-                "Email":"testing@testing.com",
-                "BekreftPassord":"123123123"
+                "MeldingId":0,
+                "Tid":"0001-01-01T00:00:00",
+                "ProsjektId":15,
+                "TilBruker":null,
+                "FraBruker":null,
+                "Prosjektnavn":null,
+                "Melding":null
             }
             
 + Response 404 (text/plain)
