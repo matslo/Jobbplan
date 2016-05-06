@@ -117,7 +117,6 @@ For registrering av vakter
 
     + Headers
     
-            
             Cache-Control: no-cache
             Pragma: no-cache
             Content-Length: 166
@@ -192,9 +191,51 @@ For registrering av vakter
 
         Kunne ikke ta vakt!
         
+## BrukerApi Collection [/api/BrukerApi/{id}]
 
 
-## Bruker Collection [/api/BrukerApi]
+### Hent alle brukere [GET]
+
+
++ Request (application/json)
+           
+        GET /api/BrukerApi/7 HTTP/1.1
+
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/BrukerApi/
+            
+            
+    + Body
+    
+             [
+                {
+                    "ProsjektId":0,
+                    "ProsjektDeltakerId":7,
+                    "Navn":"Gordo løkken",
+                    "Brukernavn":"gordo@hotmail.com",
+                    "BrukerId":3,
+                    "Admin":false
+                },
+                {
+                    "ProsjektId":0,
+                    "ProsjektDeltakerId":8,
+                    "Navn":"Mats Løkken",
+                    "Brukernavn":"mats_loekken@hotmail.com",
+                    "BrukerId":1,
+                    "Admin":true
+                }
+            ]
+            
++ Response 404 (text/plain)
+
+        Kunne ikke oprette bruker!
+
+## BrukerApi Collection [/api/BrukerApi]
 
 
 ### Legg til en ny bruker [POST]
@@ -232,34 +273,27 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
-## Prosjekt Collection [/api/ProsjektApi]
+## Prosjekt Collection [/api/ProsjektApi/]
 
-### Se alle brukere [GET]
+### Se alle prosjekter [GET]
+
++ Request (application/json)
+           
+            GET /api/ProsjektApi/
 
 + Response 200 (application/json)
 
         [
-            {  
-                "start":"2016-04-16T07:15:00",
-                 "end":"2016-04-16T15:15:00",
-                 "title":"",
-                 "color":null,
-                 "VaktId":3,
-                 "ProsjektId":0,
-                 "Brukernavn":"mats_loekken@hotmail.com",
-                 "Ledig":false,
-                 "Beskrivelse":null
+            {
+                "Id":7,
+                "Arbeidsplass":"TestButikk"
             },
             {   
-                "start":"2016-04-29T13:52:00",
-                "end":"2016-04-29T18:52:00",
-                "title":"",
-                "color":null,
-                "VaktId":21,
-                "ProsjektId":0,
-                "Brukernavn":"mats_loekken@hotmail.com",
-                "Ledig":false,
-                "Beskrivelse":null
+                "Id":9,
+                "Arbeidsplass":"Beste jobben"
+            },
+            {
+                "Id":10,"Arbeidsplass":"testets"
             }
         ]
 
