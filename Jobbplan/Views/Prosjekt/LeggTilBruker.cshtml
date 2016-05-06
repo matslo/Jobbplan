@@ -21,8 +21,9 @@
     function slettBrukerFraProsjekt() {
         $("body").on('click', '#slettBruker', function () {
 
-           var ProsjektDeltakerId = $(this).attr("value")
-           if (confirm('Du er i ferd med å slette '+ +'. Du vil miste all data tilknyttet denne jobben')) {
+            var ProsjektDeltakerId = $(this).attr("value");
+            var Navn = $(this).closest('td').attr('id');
+           if (confirm('Du er i ferd med å slette '+ Navn+'. Brukeren vil miste all data tilknyttet denne jobben')) {
             $.ajax({
                 url: '/api/ProsjektDeltakelseApi/' + ProsjektDeltakerId,
                 type: 'DELETE',
@@ -160,12 +161,12 @@
             {
                 knapp = "<button type='button' id='FjernadminTilgang' class='btn btn-danger' value=" + p.BrukerId + "><span class='glyphicon glyphicon-minus' aria-hidden='true'></span> Administrator</button>";
             }
-            strResult += "<tr><td>" + p.Navn + "</td><td>" + knapp + "</td><td><button type='button' class='btn btn-danger' id='slettBruker' value=" + p.ProsjektDeltakerId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
+            strResult += "<tr><td>" + p.Navn + "</td><td>" + knapp + "</td><td id='"+p.Navn+"'><button type='button' class='btn btn-danger' id='slettBruker' value=" + p.ProsjektDeltakerId + "><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Slett</button></td></tr>";
         });
         $(".brukere").html(strResult);
     }
     function selOnChange() {
-        $('#selectProsjekt').on('change', function () {
+        $(document).on('change', '#selectProsjekt', function () {
             HentBrukere();
             HentRequester();
             ErBrukerAdmin();
@@ -200,16 +201,44 @@
         }
 
     };
+    function HentProsjekter() {
+        $.ajax({
+            url: '/api/ProsjektApi/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                VisAlleProsjekter(data);
+                HentRequester();
+                ErBrukerAdmin();
+                HentBrukere();
+            },
+            error: function (x, y, z) {
+                $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen bedrifter enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>denne siden</a> for å legge til en jobb</div>");
+
+            }
+        });
+
+    };
+    function VisAlleProsjekter(prosjekter) {
+        var strResult = "<select class='form-control input-sm' id='selectProsjekt'>";
+        $.each(prosjekter, function (i, p) {
+            strResult += "<option value='" + p.Id + "'>" + p.Arbeidsplass + "</option>";
+        });
+        strResult += "</select>";
+        $("#prosjektM").html(strResult);
+        //$("input:radio[name=prosjekter]:first").attr('checked', true);
+    }
     $(document).ready(function () {
         sendRequest();
-        HentBrukere();
+        
         selOnChange();
         GiAdminTilgang();
-        HentRequester();
+        HentProsjekter();
+       
         slettBrukerFraProsjekt();
         slettRequest();
         FjernAdminTilgang();
-        ErBrukerAdmin();
+       
         $("#leggTilBruker").click(function () {
             var text = $("#sendemeldingSkjema");
             if (text.is(':hidden')) {
@@ -225,11 +254,9 @@
 
 <div id="brukerprosjekt"></div>
         <div class="row">
-            <div class='col-sm-3'>
-                <p>Velg jobb</p>
-                <select class="form-control" id="selectProsjekt">
-                    @{Html.RenderAction("prosjektMeny", "Prosjekt");}
-                </select>
+            <p>Velg jobb</p>
+            <div class='col-sm-3' id="prosjektM">
+               
             </div>
         </div>
 <br />

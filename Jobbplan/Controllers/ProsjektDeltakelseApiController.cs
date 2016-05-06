@@ -9,7 +9,7 @@ using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class ProsjektDeltakelseApiController : ApiController
     {
         private IProsjektLogikk _ProsjektBLL;

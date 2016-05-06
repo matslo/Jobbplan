@@ -1,8 +1,9 @@
 ﻿ <script type="text/javascript">
 
      $(document).ready(function() {
-         Hentvakter();
+         
          selOnChange();
+         HentProsjekter();
      });
     
      function ProId() {
@@ -14,7 +15,7 @@
      }
 
      function selOnChange() {
-         $('#selectProsjekt').on('change', function() {
+         $(document).on('change', '#selectProsjekt', function () {
              Hentvakter();
          });
      };
@@ -49,15 +50,38 @@
          strResult += "</table>";
          $("#timeliste").html(strResult);
      }
+     function HentProsjekter() {
+         $.ajax({
+             url: '/api/ProsjektApi/',
+             type: 'GET',
+             dataType: 'json',
+             success: function (data) {
+                 VisAlleProsjekter(data);
+                 Hentvakter();
+             },
+             error: function (x, y, z) {
+                 $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen bedrifter enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>denne siden</a> for å legge til en jobb</div>");
+
+             }
+         });
+
+     };
+     function VisAlleProsjekter(prosjekter) {
+         var strResult = "<select class='form-control input-sm' id='selectProsjekt'>";
+         $.each(prosjekter, function (i, p) {
+             strResult += "<option value='" + p.Id + "'>" + p.Arbeidsplass + "</option>";
+         });
+         strResult += "</select>";
+         $("#prosjektM").html(strResult);
+        
+     }
  </script>
 
 
 <div class='col-sm-2' style="margin-bottom:14px;">
     <p>Velg jobb</p>
-    <select class="form-control input-sm" id="selectProsjekt">
-        @{Html.RenderAction("prosjektMeny", "Prosjekt");}
-    </select>
+   <div id="prosjektM"></div>
 </div>
-
+<div id="feil"></div>
 <div id="timeliste"></div>
 <div id="ingenTimeliste"></div>

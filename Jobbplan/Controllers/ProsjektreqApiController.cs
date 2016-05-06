@@ -8,9 +8,10 @@ using Jobbplan.BLL;
 using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
-{
+{  [Authorize]
     public class ProsjektreqApiController : ApiController
     {
+      
         private IProsjektLogikk _ProsjektBLL;
 
         public ProsjektreqApiController()

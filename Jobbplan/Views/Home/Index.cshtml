@@ -1,84 +1,99 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
 <html lang="no">
-<head>
-    
+<head>   
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title -  ASP.NET Application</title>
+    <title>Jobbplan</title>
     <meta charset='utf-8' />
     <link href="~/Content/InnloggingStil.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="~/Fullcalendar/lib/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="icon"
+          type="image/png"
+          href="~/Content/favicon-16x16.png">
 </head>
 <body>
-    <div class="alert alert-warning alert-dismissible" role="alert" style="width:200px; float:right;">
-        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-        <strong>Denne siden bruker cookies!</strong> Ved å logge inn aksepterer du vilkårene.
-    </div>
-   <!--<p class="cookieAlert">Denne siden bruker cookies. Ved å logge deg inn aksepterer du vilkårene</p>-->
-<script type="text/javascript">
-        $(document).ready(function () {
-            loggInn();
-        
-        });
-       
-        function loggInn() {
-            $("body").on('click', '#LogginnKnapp', function () {     
-                var $this = $(this);
-                $this.attr('disabled', 'disabled').html("Logger inn...");
-                var loggInn = {
-                    Brukernavn: $('#brukernavntxt').val(),
-                    Passord: $('#passordtxt').val()
-                };
-                $.ajax({
-                    url: '/api/Authenticate/',
-                    type: 'POST',
-                    data: JSON.stringify(loggInn),
-                    contentType: "application/json;charset=utf-8",
-                    success: function (data) {                     
-                        location.href = "/Vakt/Index";
-                    },
-                    error: function (data) {
-                        $('#loggeinn').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span>&times;</span></button>Brukernavn eller passord er feil. Prøv på nytt.</div>");
-                        $this.removeAttr('disabled').html('Logg inn');
-
+   
+        <div id="cookieW" class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            <strong>Denne siden bruker cookies!</strong> Ved å logge inn aksepterer du vilkårene.
+        </div>
+        <!--<p class="cookieAlert">Denne siden bruker cookies. Ved å logge deg inn aksepterer du vilkårene</p>-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                loggInn();
+                $("#passordtxt").keyup(function (event) {
+                    if (event.keyCode == 13) {
+                        $("#LogginnKnapp").click();
                     }
                 });
-            })
-        };
-      
-</script>
-    <div id="loggeinn"></div>
-<div class="container" id="LogoDiv">
-    <!-- <span class="glyphicon glyphicon-cloud" id="skyLogo"></span>-->
-</div>
-   <!--<h1 id="JobbPlanLogo"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>JobbPlan</h1>-->
-<div class="container" id="logginnskjema"> 
-    <div class="row" >
-        <h1 id="JpLogo">Jobbplan</h1>
-      <!--  <img src="~/Content/jp.jpg" class="img-circle" alt="Logo" id="Logo" width="250" height="250"/>  -->
-    </div>       
-   
-    <div class="row">   
-        <label for="brukernavntxt" style="color:white">Brukernavn</label>
-       <input class="form-control" type="text" id="brukernavntxt" placeholder="Brukernavn(E-post)" />
-    </div>
-   
-     <div class="row">
-         <label for="passordtxt" style="color:white">Passord</label>
-        <input class="form-control" type="password" label="Passord" id="passordtxt" placeholder="Passord" />
-    </div>
-    <br />
-    <div class="row">
-        <a id="registrer" class="btn btn-primary" href="~/Bruker/RegistrerAPI">Registrer deg</a>
-        <button id="LogginnKnapp" class="btn btn-primary" style="color: wheat;"><span class="glyphicon glyphicon-log-in" ></span> Logg inn</button>
-    </div>
-</div>
+
+            });
+
+            function loggInn() {
+                $("body").on('click', '#LogginnKnapp', function () {
+                    var $this = $(this);
+                    $this.attr('disabled', 'disabled').html("Logger inn...");
+                    var loggInn = {
+                        Brukernavn: $('#brukernavntxt').val(),
+                        Passord: $('#passordtxt').val()
+                    };
+                    $.ajax({
+                        url: '/api/Authenticate/',
+                        type: 'POST',
+                        data: JSON.stringify(loggInn),
+                        contentType: "application/json;charset=utf-8",
+                        success: function (data) {
+                            location.href = "/Vakt/Index";
+                        },
+                        error: function (data) {
+                            $('#loggeinn').html("<div class='alert alert-danger' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span>&times;</span></button>Brukernavn eller passord er feil. Prøv på nytt.</div>");
+                            $this.removeAttr('disabled').html('Logg inn');
+
+                        }
+                    });
+                })
+            };
+
+        </script>
+        <div id="loggeinn"></div>
+        <div class="container" id="LogoDiv">
+            <!-- <span class="glyphicon glyphicon-cloud" id="skyLogo"></span>-->
+        </div>
+        <!--<h1 id="JobbPlanLogo"><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>JobbPlan</h1>-->
+        <div class="container" id="logginnskjema">
+            <div class="row">
+                <h1 id="JpLogo">Jobbplan</h1>
+                <div id="sirkel"></div>
+                <!--  <img src="~/Content/jp.jpg" class="img-circle" alt="Logo" id="Logo" width="250" height="250"/>  -->
+            </div>
+
+            <div class="row">
+                <label id="lBnavn" for="brukernavntxt" style="color:white">Brukernavn</label>
+                <input class="form-control" type="text" id="brukernavntxt" placeholder="Brukernavn(E-post)" />
+            </div>
+
+            <div class="row">
+                <label id="lPass" for="passordtxt" style="color:white">Passord</label>
+                <input class="form-control" type="password" label="Passord" id="passordtxt" placeholder="Passord" />
+            </div>
+            <br />
+            <div class="row">
+                 <button id="LogginnKnapp" class="btn btn-primary" style="color: wheat;"><span class="glyphicon glyphicon-log-in"></span> Logg inn</button>
+            </div>
+            <br />
+            <div class="row">
+
+               <a id="registrer" href="~/Bruker/RegistrerAPI">Er du ny? Registrer deg her</a>
+
+            </div>
+       </div>
 </body>
 </html>
-@{
-    Layout = null;
-}
+
 

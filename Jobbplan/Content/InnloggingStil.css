@@ -1,25 +1,24 @@
 ﻿body {
-    background-image: url("background.jpg");
-    background-size:100%;
-    background-color: #cccccc;
+     font-family: 'Segoe WP SemiLight';
+      background-color:rgb(36,39,48);
 }
-
-#JobbPlanLogo {
-   text-shadow: 2px 2px #ffffff;
-    /*color: rgb(230,71,89);*/
-    color: rgb(28,168,221);
-    font-size: 500px;
-    font-family:'Century Gothic';
-    text-align:center;
-    
+#cookieW{
+     width:200px; 
+     float:right;
+   position:fixed;
 }
-#innhold{
-   background-color:rgb(35,39,47);
+#lPass{
+ font-family: 'Segoe WP SemiLight';
+ font-weight: normal !important;
+}
+#lBnavn{
+ font-family: 'Segoe WP SemiLight';
+ font-weight: normal !important;
 }
 #passordtxt,#brukernavntxt{
     background-color:rgb(45,49,57);
     border:1px solid;
-    border-color: white; 
+    border-color: lightskyblue; 
 }
 input, select, textarea{
     color: white;
@@ -28,17 +27,14 @@ input, select, textarea{
    
 }
 
-#Logo{
-
-}
 #brukernavntxt{
-    color:wheat;
+    color:lightskyblue;
     margin-bottom:16px;
     width:350px;
     height:40px;
 }
 #passordtxt{
-    color:wheat;
+    color:lightskyblue;
    width:350px;
    height:40px;
 }
@@ -62,108 +58,40 @@ input, select, textarea{
     
 }
 #LogginnKnapp{
-    background-color:rgb(35,39,47);
-    color:white;
     border:none;
     font-size:15px;
     font-family:Arial;
-  
+  margin-left:120px;
 }
-#registrerbruker{
-    text-align:center;
-    
-     border:solid 2px;
+#registrer{
+    text-align:center;   
+      margin-left:90px;
+     
 }
 
 #logginnskjema{
-   margin-top:80px;
+  margin-top:150px;
     position:static;
     width:400px; 
     
 }
-LogoDiv
-{
-    margin-right:500px;
-    
-    width:400px; 
-}
+
 #JpLogo{
-    font-family: Gabriola;
-    margin-bottom:15px;
-    font-size:9vw; 
+    font-family: 'Segoe WP SemiLight';
+    margin-bottom:70px;
+    font-size:45px; 
+    color:rgb(36,39,48);
+    margin-left:83px;
     
-    color:rgb(66,139,202);
 }
-#skyLogo{
-    margin-top:48px;
-    margin-left:380px;
+#sirkel{
+ background-color:rgb(28,162,221);
+    border-radius: 50%;
+	width: 230px;
+	height: 230px; 
     position:absolute;
-    z-index:-1; 
-    color:rgb(35,39,47);
-    font-size:20vw;
-}
-.cookieAlert 
-{
-position: relative;
-width: 265px;
-height: 120px;
-padding: 0px;
-background: #EAE9EA;
--webkit-border-radius: 50px;
--moz-border-radius: 50px;
-border-radius: 50px;
-border: #1D7F7F solid 4px;
+    z-index:-1;
+    margin-top: -220px;
+    margin-left:55px;
 }
 
-.cookieAlert:after 
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 15px 15px 0;
-border-color: #EAE9EA transparent;
-display: block;
-width: 0;
-z-index: 1;
-bottom: -15px;
-left: 160px;
-}
-
-.cookieAlert:before 
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 18px 18px 0;
-border-color: #1D7F7F transparent;
-display: block;
-width: 0;
-z-index: 0;
-bottom: -22px;
-left: 157px;
-}
- .test + .tooltip > .tooltip-inner {
-      background-color: #73AD21; 
-      color: #FFFFFF; 
-      border: 1px solid green; 
-      padding: 15px;
-      font-size: 20px;
-  }
-  /* Tooltip on top */
-  .test + .tooltip.top > .tooltip-arrow {
-      border-top: 5px solid green;
-  }
-  /* Tooltip on bottom */
-  .test + .tooltip.bottom > .tooltip-arrow {
-      border-bottom: 5px solid blue;
-  }
-  /* Tooltip on left */
-  .test + .tooltip.left > .tooltip-arrow {
-      border-left: 5px solid red;
-  }
-  /* Tooltip on right */
-  .test + .tooltip.right > .tooltip-arrow {
-      border-right: 5px solid black;
-  }
-.red-tooltip + .tooltip > .tooltip-inner {background-color: #f00;}
-.red-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:#f00; 

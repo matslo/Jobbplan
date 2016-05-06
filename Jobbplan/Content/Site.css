@@ -53,11 +53,9 @@ li a {
     margin:auto;  
 }
 
-#vaktNed{
-    
-  
+.fc-time, .fc-title{
+     cursor:pointer;
 }
-
 /* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top:60px;

@@ -10,6 +10,7 @@ using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class ProsjektApiController : ApiController 
     {
         private IProsjektLogikk _ProsjektBLL;

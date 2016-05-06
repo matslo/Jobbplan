@@ -7,6 +7,7 @@ using System.Web.Security;
 
 namespace Jobbplan.Controllers
 {
+
     public class HomeController : Controller
     {
         // GET: Home 

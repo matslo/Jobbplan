@@ -137,6 +137,7 @@ function SlettVakt() {
         })
     }
 function VisKnapper() {
+   
         var text = $("#vaktEndring");
         var text2 = $("#visKnapp")
         if (text.is(':hidden')) {
@@ -148,22 +149,15 @@ function VisKnapper() {
            }
     };
 function ProId() {
-        var prosjektid =  $('#selectProsjekt').val();
-        if ($("#selectProsjekt:selected").length) {
-            prosjektid = ($(this).find(":selected").val()); 
-           
-        }
-        
+        var prosjektid =  $('#selectProsjekt').val();      
         return prosjektid;
     }   
 function ProIdTEST() {
-        var prosjektid = $("#radioProsjekt :radio:checked").val();
-        if ($("#radioProsjekt:checked").length) {
-            prosjektid = $("#radioProsjekt :radio:checked").val();
-
-        }
-
-        return prosjektid;
+    var prosjektid = $('#selectProsjekt').val();
+    if ($("#selectProsjekt:selected").length) {
+        prosjektid = ($(this).find(":selected").val());
+    }
+    return prosjektid;
     }
 var kalendere = {
     Absoluttalle: {
@@ -172,7 +166,6 @@ var kalendere = {
         dataType: 'json'
         ,
         error: function () {
-            $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen bedrifter enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>denne siden</a> for å legge til en jobb</div>");
             $('#script-warning').show();
         }
 
@@ -183,12 +176,10 @@ var kalendere = {
             dataType: 'json',
             data: function () { // a function that returns an object
                 return {
-                    id: $('#selectProsjekt').val()
+                    id:  $("#selectProsjekt option:selected").val()
                 };
             },
             error: function () {
-                $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
-
                 $('#script-warning').show();
             }
 
@@ -199,12 +190,11 @@ var kalendere = {
             dataType: 'json',
             data: function () { // a function that returns an object
                 return {
-                    id: $('#selectProsjekt').val()
+                    id: $("#selectProsjekt option:selected").val()
                 };
             },
             error: function () {
-                $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
-
+              
                 $('#script-warning').show();
             }
         },
@@ -214,12 +204,11 @@ var kalendere = {
         dataType: 'json',
         data: function () { // a function that returns an object
         return {
-            id: $('#selectProsjekt').val()
+            id: $("#selectProsjekt option:selected").val()
         };
     },
     error: function () {
-        $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen jobber enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>Jobb</a> for å legge til en jobb</div>");
-
+        
         $('#script-warning').show();
     }
 
@@ -235,8 +224,7 @@ function fullcal() {
             editable: false,
             displayEventEnd: true,
             eventLimit: true, // allow "more" link when too many events
-            eventSources: [kalendere.alle, kalendere.brukers],
-
+            eventSources: [kalendere.alle],
             loading: function (bool) {
                 $('.loading').toggle(bool);
             },
@@ -261,14 +249,16 @@ function fullcal() {
                 // $("#fullCalModal").html("");
                 // change the border color just for fun
                 $(this).css('border-color', 'red');
+                
 
             }
         });
     };
 function selOnChange() {
-    $('#selectProsjekt').on('change', function () {
+    $(document).on('change', '#selectProsjekt', function () {
         HentBrukere();
         ErBrukerAdmin();
+        HentMaler();
         $('#calendar').fullCalendar('refetchEvents');
     });
 };
@@ -334,19 +324,25 @@ function HentProsjekter() {
         dataType: 'json',
         success: function (data) {
             VisAlleProsjekter(data);
+            fullcal();
+            ErBrukerAdmin();
+            HentBrukere();
+            HentMaler();
         },
         error: function (x, y, z) {
+            $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen bedrifter enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>denne siden</a> for å legge til en jobb</div>");
 
         }
     });
 
 };
 function VisAlleProsjekter(prosjekter) {
-    var strResult = "";
+    var strResult = "<select class='form-control input-sm' id='selectProsjekt'>";
     $.each(prosjekter, function (i, p) {
-        strResult += "<input type='radio' name='prosjekter' value="+ p.Id+" checked>"+ p.Arbeidsplass + "<br>";
+        strResult += "<option value='"+p.Id+"'>" + p.Arbeidsplass + "</option>";
     });
-    $(".prosjekterTest").html(strResult);
+    strResult += "</select>";
+    $("#prosjektM").html(strResult);
     //$("input:radio[name=prosjekter]:first").attr('checked', true);
 }
 function Heldags() {
@@ -392,38 +388,40 @@ function ErBrukerAdmin() {
 };
 function DisplayVaktreg(admin) {
     var text = $("#mer");
-   
+    var text2 = $("#malReg");
+    var text3 = $("#vaktRegistrering");
+    var knapp = $("#malKnapp");
     if (admin == true)
     {
         if (text.is(':hidden')) {
             text.slideDown('500');
-
         }
     }
     else {
         text.slideUp('500');
+        text2.slideUp('500');
+        text3.slideUp('500');
+        knapp.slideUp('500');
     }
   
 };
 $(document).ready(function () {
+    HentProsjekter();
     selMalOnChange();
     OpprettVakt();
-    HentBrukere();
+  
     selOnChange();
     taLedigVakt();
     EndreVakt();
-    SlettVakt();
-    HentProsjekter();
-    fullcal();
+    SlettVakt();  
     Heldags();
     EndreHeldags();
     OpprettMal();
-    HentMaler();
-    ErBrukerAdmin();
+   
+   
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
     $('#calendar').fullCalendar('refetchEvents');
-   // selOnChangeTEST();
-    
+ 
     $("#visAlleVakter").click(function () {
         $('#visAlleVakter').prop('disabled', true);
         $('#mineVakter').prop('disabled', false);

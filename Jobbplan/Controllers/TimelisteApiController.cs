@@ -9,7 +9,7 @@ using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
-    
+    [Authorize]
     public class TimelisteApiController : ApiController
     {
         private IBrukerLogikk _BrukerBLL;

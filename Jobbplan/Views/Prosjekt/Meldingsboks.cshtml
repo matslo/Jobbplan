@@ -51,7 +51,7 @@
             antallMeldinger += antallMeldinger + 1;
             var s = new Date(Date.parse(m.Tid));
             var sendt = s.toLocaleString();
-            strResult += "<tr><th>Sendt</th><th>Fra</th><th>Jobbinvitasjon</th><th>Bedrift</th><th></th></tr><tr><td> " + sendt + "</td><td> " + m.FraBruker + "</td><td>" + m.Melding + "</td><td> " + m.Prosjektnavn + "</td><td> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button> <button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button></td></tr>";
+            strResult += "<tr><th>Sendt</th><th>Fra</th><th>Jobbinvitasjon</th><th></th></tr><tr><td> " + sendt + "</td><td> " + m.FraBruker + "</td><td>" + m.Melding + "<strong> " + m.Prosjektnavn + "</strong></td><td> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button> <button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button></td></tr>";
         });
         var invitasjon = "jobbinvitasjoner";
         if (antallMeldinger == 1)

@@ -9,6 +9,7 @@ using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class ProfilController : ApiController
     {
         private IBrukerLogikk _BrukerBLL;

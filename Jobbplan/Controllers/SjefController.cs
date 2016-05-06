@@ -10,6 +10,7 @@ using Jobbplan.Model;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class SjefController : ApiController
     {
         private IBrukerLogikk _BrukerBLL;

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class TimelisteController : Controller
     {
         // GET: Timeliste

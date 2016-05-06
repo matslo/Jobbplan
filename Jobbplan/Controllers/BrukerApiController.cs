@@ -11,6 +11,7 @@ using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class BrukerApiController : ApiController
     {
         private IBrukerLogikk _BrukerBLL;

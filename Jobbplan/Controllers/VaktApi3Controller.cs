@@ -9,6 +9,7 @@ using Jobbplan.BLL;
 
 namespace Jobbplan.Controllers
 {
+    [Authorize]
     public class VaktApi3Controller : ApiController
     {
         private IVaktLogikk _VaktBLL;

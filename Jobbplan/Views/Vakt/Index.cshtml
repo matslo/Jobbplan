@@ -16,8 +16,6 @@
 <div class="container" id="malReg" style="display: none;">
 
     <div class="row" id="Maler">
-        
-
         <div class='col-sm-2'>
             <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span><label for="MalTittel">Vakt tittel:</label>
             <input type='text' class="form-control input-sm" id='MalTittel'/>
@@ -128,10 +126,8 @@
 
 <div class="row" style="margin-top: 25px; margin-left: 168px;">
     <p style="margin-left: 15px;"><strong>Velg arbeidsplass:</strong></p>
-    <div class='col-sm-2'>
-        <select class="form-control input-sm" id="selectProsjekt">
-            @{Html.RenderAction("prosjektMeny", "Prosjekt");}
-        </select>
+    <div class='col-sm-2' id="prosjektM">
+       
     </div>
     <div style="margin-left: 275px;">
         <button class="btn btn-primary btn-sm" id="alleMineVakter">For alle jobber</button>
@@ -146,7 +142,8 @@
 <img src="~/Content/ajax_loader_gray.gif" class="loading" alt="Loading" style="position: absolute;top: 50%;
   left: 50%;
   margin-top: -50px;
-  margin-left: -100px; width: 220px; height: 220px;">
+  margin-left: -100px; width: 220px; height: 220px;
+  z-index:100;">
 <div id='calendar'></div>
 
 <div id="fullCalModal" class="modal fade">
