@@ -3,9 +3,10 @@ HOST: http://polls.apiblueprint.org/
 
 # Jobbplanapi
 
-For registrering av vakter
+Api beskrivelse for jobbplan
 
-## Vakt Collection [/api/VaktApi/{id}]
+## VaktApi Collection [/api/VaktApi/{id}]
+
 ### Se alle vakter for prosjektId[GET]
 
 + Response 200 (application/json)
@@ -32,9 +33,9 @@ For registrering av vakter
                 "title":"Dagvakt: Atle Aspelien"
             }
         ]
+
+
 ### Ta ledig vakt [PUT]
-
-
 
 + Request (application/json)
            
@@ -55,6 +56,7 @@ For registrering av vakter
         
 
 ### Slett vakt [DELETE]
+
 + Request (application/json)
 
             DELETE /api/VaktApi/15
@@ -70,7 +72,9 @@ For registrering av vakter
 + Response 404 (text/plain)
 
         Kunne ikke slette vakt!
-## Vakt Collection [/api/VaktApi/]
+
+## VaktApi Collection [/api/VaktApi/]
+
 ### Se alle vakter for bruker[GET]
 
 + Response 200 (application/json)
@@ -97,7 +101,9 @@ For registrering av vakter
                 "title":"Dagvakt: Mats Løkken"
             }
         ]
+
 ### Legg til en ny vakt [POST]
+
 + Request (application/json)
            
             {
@@ -148,7 +154,8 @@ For registrering av vakter
         
 
 
-## Vakt2 Collection [/api/VaktApi2/]
+## VaktApi2 Collection [/api/VaktApi2/]
+
 ### Endre vakt [PUT]
 
 + Request (application/json)
@@ -193,7 +200,6 @@ For registrering av vakter
         
 ## BrukerApi Collection [/api/BrukerApi/{id}]
 
-
 ### Hent alle brukere [GET]
 
 
@@ -235,11 +241,10 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
+
 ## BrukerApi Collection [/api/BrukerApi]
 
-
 ### Legg til en ny bruker [POST]
-
 
 + Request (application/json)
            
@@ -273,7 +278,8 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
-## Prosjekt Collection [/api/ProsjektApi/]
+
+## ProsjektApi Collection [/api/ProsjektApi/]
 
 ### Se alle prosjekter [GET]
 
@@ -297,8 +303,8 @@ For registrering av vakter
             }
         ]
 
-### Legg til en ny bruker [POST]
 
+### Legg til en ny bruker [POST]
 
 + Request (application/json)
            
@@ -332,7 +338,7 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
-## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi]
+## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi/{id}]
 
 ### Er Admin [GET]
 
@@ -344,6 +350,8 @@ For registrering av vakter
 + Response 200 (application/json)
 
                 true
+
+## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi]
 
 ### Registrer Prosjektdeltakelse [POST]
 
