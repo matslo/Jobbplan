@@ -385,3 +385,50 @@ Api beskrivelse for jobbplan
 + Response 404 (text/plain)
 
         Kunne ikke oprette bruker!
+        
+
+## Sjef Collection [/api/Sjef]
+
+### Gi bruker Admintilgang [POST]
+
++ Request (application/json)
+        
+            {
+                "BrukerId":"8",
+                "ProsjektId":"7"
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/Sjef/
+
+    + Body
+    
+            {
+                "BrukerId":8,
+                "ProsjektId":7,
+                "Tittel":null
+            }
+
+### FjernAdminTilgang [PUT]
+
++ Request (application/json)
+           
+        {
+            "BrukerId":"8",
+            "ProsjektId":"7"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/VaktApi/15
+            
+    + Body
+    
++ Response 404 (text/plain)
+
+        Kunne ikke ta vakt!
