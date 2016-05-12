@@ -386,6 +386,17 @@ Api beskrivelse for jobbplan
 
         Kunne ikke oprette bruker!
         
+## Sjef Collection [/api/Sjef/{id}]
+
+### SlettRequestSomAdmin [DELETE]
+
++ Request (application/json)
+        
+            DELETE /api/Sjef/10 HTTP/1.1
+
+
++ Response 201 (application/json)
+
 
 ## Sjef Collection [/api/Sjef]
 
@@ -422,3 +433,84 @@ Api beskrivelse for jobbplan
         }
 
 + Response 201 (application/json)
+
+
+## ProsjektReq Collection [/api/ProsjektreqApi/{id}]
+
+### VisRequesterForProsjekt [GET]
+
++ Request (application/json)
+           
+            GET /api/ProsjektreqApi/7 HTTP/1.1
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "MeldingId":10,
+                "Tid":"2016-05-12T09:23:03.57",
+                "ProsjektId":0,
+                "TilBruker":"gordo@hotmail.com",
+                "FraBruker":null,
+                "Prosjektnavn":null,
+                "Melding":null
+            }
+        ]
+
+### SlettRequest [DELETE]
+
++ Request (application/json)
+           
+        {
+            "BrukerId":"8",
+            "ProsjektId":"7"
+        }
+
++ Response 201 (application/json)
+
+## ProsjektReq Collection [/api/ProsjektreqApi]
+
+### VisRequester [GET]
+
++ Request (application/json)
+           
+            GET /api/ProsjektreqApi HTTP/1.1
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "MeldingId":0,
+                "Tid":"2016-05-10T09:22:01.337",
+                "ProsjektId":17,
+                "TilBruker":"mats_loekken@hotmail.com",
+                "FraBruker":"sofie_ao@hotmail.com",
+                "Prosjektnavn":"Prosjektet",
+                "Melding":" har invitert deg til å bli medlem av: "
+            }
+        ]
+
+
+### LeggTilBrukerRequest [POST]
+
++ Request (application/json)
+        
+           {
+                "TilBruker":"gordo@hotmail.com",
+                "ProsjektId":"7"
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/ProsjektreqApi
+
+    + Body
+    
+            {
+                "TilBruker":"gordo@hotmail.com",
+                "ProsjektId":7
+            }
