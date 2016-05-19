@@ -3,9 +3,10 @@ HOST: http://polls.apiblueprint.org/
 
 # Jobbplanapi
 
-For registrering av vakter
+Api beskrivelse for jobbplan
 
-## Vakt Collection [/api/VaktApi/{id}]
+## VaktApi Collection [/api/VaktApi/{id}]
+
 ### Se alle vakter for prosjektId[GET]
 
 + Response 200 (application/json)
@@ -32,9 +33,9 @@ For registrering av vakter
                 "title":"Dagvakt: Atle Aspelien"
             }
         ]
+
+
 ### Ta ledig vakt [PUT]
-
-
 
 + Request (application/json)
            
@@ -55,6 +56,7 @@ For registrering av vakter
         
 
 ### Slett vakt [DELETE]
+
 + Request (application/json)
 
             DELETE /api/VaktApi/15
@@ -70,7 +72,9 @@ For registrering av vakter
 + Response 404 (text/plain)
 
         Kunne ikke slette vakt!
-## Vakt Collection [/api/VaktApi/]
+
+## VaktApi Collection [/api/VaktApi/]
+
 ### Se alle vakter for bruker[GET]
 
 + Response 200 (application/json)
@@ -97,7 +101,9 @@ For registrering av vakter
                 "title":"Dagvakt: Mats Løkken"
             }
         ]
+
 ### Legg til en ny vakt [POST]
+
 + Request (application/json)
            
             {
@@ -148,7 +154,8 @@ For registrering av vakter
         
 
 
-## Vakt2 Collection [/api/VaktApi2/]
+## VaktApi2 Collection [/api/VaktApi2/]
+
 ### Endre vakt [PUT]
 
 + Request (application/json)
@@ -193,7 +200,6 @@ For registrering av vakter
         
 ## BrukerApi Collection [/api/BrukerApi/{id}]
 
-
 ### Hent alle brukere [GET]
 
 
@@ -235,11 +241,10 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
+
 ## BrukerApi Collection [/api/BrukerApi]
 
-
 ### Legg til en ny bruker [POST]
-
 
 + Request (application/json)
            
@@ -273,7 +278,8 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
-## Prosjekt Collection [/api/ProsjektApi/]
+
+## ProsjektApi Collection [/api/ProsjektApi/]
 
 ### Se alle prosjekter [GET]
 
@@ -297,8 +303,8 @@ For registrering av vakter
             }
         ]
 
-### Legg til en ny bruker [POST]
 
+### Legg til en ny bruker [POST]
 
 + Request (application/json)
            
@@ -332,7 +338,7 @@ For registrering av vakter
 
         Kunne ikke oprette bruker!
 
-## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi]
+## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi/{id}]
 
 ### Er Admin [GET]
 
@@ -344,6 +350,8 @@ For registrering av vakter
 + Response 200 (application/json)
 
                 true
+
+## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi]
 
 ### Registrer Prosjektdeltakelse [POST]
 
@@ -377,3 +385,132 @@ For registrering av vakter
 + Response 404 (text/plain)
 
         Kunne ikke oprette bruker!
+        
+## Sjef Collection [/api/Sjef/{id}]
+
+### SlettRequestSomAdmin [DELETE]
+
++ Request (application/json)
+        
+            DELETE /api/Sjef/10 HTTP/1.1
+
+
++ Response 201 (application/json)
+
+
+## Sjef Collection [/api/Sjef]
+
+### Gi bruker Admintilgang [POST]
+
++ Request (application/json)
+        
+            {
+                "BrukerId":"8",
+                "ProsjektId":"7"
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/Sjef/
+
+    + Body
+    
+            {
+                "BrukerId":8,
+                "ProsjektId":7,
+                "Tittel":null
+            }
+
+### FjernAdminTilgang [PUT]
+
++ Request (application/json)
+           
+        {
+            "BrukerId":"8",
+            "ProsjektId":"7"
+        }
+
++ Response 201 (application/json)
+
+
+## ProsjektReq Collection [/api/ProsjektreqApi/{id}]
+
+### VisRequesterForProsjekt [GET]
+
++ Request (application/json)
+           
+            GET /api/ProsjektreqApi/7 HTTP/1.1
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "MeldingId":10,
+                "Tid":"2016-05-12T09:23:03.57",
+                "ProsjektId":0,
+                "TilBruker":"gordo@hotmail.com",
+                "FraBruker":null,
+                "Prosjektnavn":null,
+                "Melding":null
+            }
+        ]
+
+### SlettRequest [DELETE]
+
++ Request (application/json)
+           
+        {
+            "BrukerId":"8",
+            "ProsjektId":"7"
+        }
+
++ Response 201 (application/json)
+
+## ProsjektReq Collection [/api/ProsjektreqApi]
+
+### VisRequester [GET]
+
++ Request (application/json)
+           
+            GET /api/ProsjektreqApi HTTP/1.1
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "MeldingId":0,
+                "Tid":"2016-05-10T09:22:01.337",
+                "ProsjektId":17,
+                "TilBruker":"mats_loekken@hotmail.com",
+                "FraBruker":"sofie_ao@hotmail.com",
+                "Prosjektnavn":"Prosjektet",
+                "Melding":" har invitert deg til å bli medlem av: "
+            }
+        ]
+
+
+### LeggTilBrukerRequest [POST]
+
++ Request (application/json)
+        
+           {
+                "TilBruker":"gordo@hotmail.com",
+                "ProsjektId":"7"
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /api/ProsjektreqApi
+
+    + Body
+    
+            {
+                "TilBruker":"gordo@hotmail.com",
+                "ProsjektId":7
+            }
