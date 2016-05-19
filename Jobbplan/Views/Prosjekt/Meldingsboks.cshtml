@@ -1,4 +1,6 @@
-﻿<script type="text/javascript">
+﻿<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script>
+<script src="~/Fullcalendar/lang/nb.js"></script>
+<script type="text/javascript">
     $(document).ready(function () {
           HentMelding();    
           godkjenn();
@@ -45,13 +47,10 @@
         
         var strResult = "";
         var antallMeldinger = 0;
-        var d = new Date();
+       
         $.each(melding, function (i, m) {
-            var d = new Date(Date.parse(m.Tid));
-            antallMeldinger += antallMeldinger + 1;
-            var s = new Date(Date.parse(m.Tid));
-            var sendt = s.toLocaleString();
-            strResult += "<tr><th>Sendt</th><th>Fra</th><th>Jobbinvitasjon</th><th></th></tr><tr><td> " + sendt + "</td><td> " + m.FraBruker + "</td><td>" + m.Melding + "<strong> " + m.Prosjektnavn + "</strong></td><td> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button> <button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button></td></tr>";
+            var s = moment(m.Tid).format('LLL');
+            strResult += "<tr><th>Sendt</th><th>Fra</th><th>Jobbinvitasjon</th><th></th></tr><tr><td> " + s + "</td><td> " + m.FraBruker + "</td><td>" + m.Melding + "<strong> " + m.Prosjektnavn + "</strong></td><td> <button class='Godkjenn btn btn-success' value=" + m.ProsjektId + " >Godta</button> <button class='Avslag btn btn-danger' value=" + m.ProsjektId + " >Avslå</button></td></tr>";
         });
         var invitasjon = "jobbinvitasjoner";
         if (antallMeldinger == 1)
@@ -131,20 +130,16 @@
     }
     function VisAlleVaktReq(melding) {
         var antallMeldinger = 0;
-        var d = new Date();
-        var d1 = new Date();
-        var sendt = new Date();
-
+        
         var strResult = "<table class='table table-hover table-bordered meldinger'>";
         $.each(melding, function (i, m) {
-            var s = new Date(Date.parse(m.Tid));
-            var d = new Date(Date.parse(m.start));
-            var d1 = new Date(Date.parse(m.end));
+            
+            var s = moment(m.Tid).format('LLL');
+            var d = moment(m.start).format('LLL');
+            var d1 = moment(m.end).format('LLL');
             antallMeldinger += antallMeldinger + 1;
-            var sendt = s.toLocaleString();
-            var date = d.toLocaleString();
-            var date2 = d1.toLocaleString();
-            strResult += "<th>Sendt</th><th>Fra</th><th>Vaktforespørsel</th><th>Bedrift</th><th> </th><tr><td> " + sendt + "</td><td> " + m.FraBruker + "</td><td> " + m.Melding + " " + date +"<strong>-</strong>" +date2 + " <td>" + m.Prosjektnavn +
+          
+            strResult += "<th>Sendt</th><th>Fra</th><th>Vaktforespørsel</th><th>Bedrift</th><th> </th><tr><td> " + s + "</td><td> " + m.FraBruker + "</td><td> " + m.Melding + " " + d +"<strong>-</strong>" +d1 + " <td>" + m.Prosjektnavn +
                 "</td><td> <button class='GodkjennVakt btn btn-success' id='GodtaVakt' value=" + m.MeldingId + " >Godta</button>   <button class='Avslag btn btn-danger' id='SlettReq' value="
                 + m.MeldingId + " >Avslå</button></td></tr>";
         });
