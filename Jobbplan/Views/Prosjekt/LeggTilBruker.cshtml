@@ -153,7 +153,7 @@
        
         var strResult = "<tr id='sendemeldingSkjema' style='display: none;'><td><input class='form-control' type='text' id='TilTxt' placeholder='E-post'/></td>"+
         "<td><button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button></td>"+
-        "<td><button type='button'id='sendReq' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button></td>"+
+        "<td><button type='button'id='avbrytReq' class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button></td>" +
         "</tr>";
         $.each(brukere, function (i, p) {
             var knapp = "<button type='button' id='adminTilgang' class='btn btn-info' value=" + p.BrukerId + "><span class='glyphicon glyphicon-plus' aria-hidden='true'></span> Administrator</button>";
@@ -171,6 +171,12 @@
             HentRequester();
             ErBrukerAdmin();
            });
+    };
+    function avbrytReq() {
+        $(document).on('click', '#avbrytReq', function () {
+            var text = $("#sendemeldingSkjema");
+                text.fadeOut(300);
+        });
     };
     function ErBrukerAdmin() {
 
@@ -229,12 +235,11 @@
         //$("input:radio[name=prosjekter]:first").attr('checked', true);
     }
     $(document).ready(function () {
-        sendRequest();
-        
+        sendRequest();        
         selOnChange();
         GiAdminTilgang();
         HentProsjekter();
-       
+        avbrytReq();
         slettBrukerFraProsjekt();
         slettRequest();
         FjernAdminTilgang();
@@ -242,13 +247,13 @@
         $("#leggTilBruker").click(function () {
             var text = $("#sendemeldingSkjema");
             if (text.is(':hidden')) {
-                text.fadeIn(300);
+                text.slideDown(300);
             }
             else {
                 text.fadeOut(300);
                 
             }
-        });
+        });    
     });
 </script>
 
@@ -265,7 +270,7 @@
         <span class="visb glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Legg til bruker
     </button>
     <table class="visb brukere table class='table table-hover table-bordered" role="presentation" >
-        <tr id="sendemeldingSkjema" style='display: none;'>
+        <tr id="sendemeldingSkjema">
             <td>
                 <input class='form-control' type='text' id='TilTxt' placeholder='E-post' />
             </td>
@@ -273,7 +278,7 @@
                 <button id='sendReq' class='btn btn-primary'><span class='glyphicon glyphicon-send' aria-hidden='true'></span> Send forespørsel</button>
             </td>
             <td>
-                <button type='button' id="sendReq" class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button>
+                <button type='button' id="avbrytReq" class='btn btn-danger'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Avbryt</button>
             </td>
         </tr>
 

@@ -237,8 +237,8 @@ function fullcal() {
                     event.Brukernavn = "Ledig vakt";
                     $('#tavakt').html("<button value='" + event.VaktId + "' class='btn btn-primary btnTavakt'>Ta vakt</button>");
                 }
-
-              
+                else { $('#tavakt').html(""); }
+            
                 $('#modalBody').append(start.format(" HH:mm" + "-"));
                 $('#modalBody').append(end.format("HH:mm"));
 
@@ -266,11 +266,13 @@ function selMalOnChange() {
     $('#maler').on('change', function () {
         var end = $(this).find(":selected").attr('id');
         var start = $(this).find(":selected").val();
+        var tittel = $(this).find(":selected").text();
         if (start == 0) {
             start = "";
         }
         $('#timepicker6').val(start);
         $('#timepicker7').val(end);
+        $('#Tittel').val(tittel);
     });
 };
 function HentBrukere() {
@@ -331,7 +333,7 @@ function HentProsjekter() {
         },
         error: function (x, y, z) {
             $('#feil').html("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Du er ikke medlem av noen bedrifter enda!</strong> Gå til <a href='/Prosjekt/Index' class='alert-link'>denne siden</a> for å legge til en jobb</div>");
-
+            fullcal();
         }
     });
 
@@ -391,17 +393,29 @@ function DisplayVaktreg(admin) {
     var text2 = $("#malReg");
     var text3 = $("#vaktRegistrering");
     var knapp = $("#malKnapp");
+    var endre = $("#EndreVakt");
+    var slett = $("#slettvakt");
     if (admin == true)
     {
+        if (endre.is(':hidden')) {
+            endre.slideDown('500');
+        }
+      
+        if (slett.is(':hidden')) {
+            slett.slideDown('500');
+        }
+        
         if (text.is(':hidden')) {
             text.slideDown('500');
         }
     }
     else {
+        slett.slideUp('500');
         text.slideUp('500');
         text2.slideUp('500');
         text3.slideUp('500');
         knapp.slideUp('500');
+        endre.slideUp('500');
     }
   
 };
@@ -409,7 +423,6 @@ $(document).ready(function () {
     HentProsjekter();
     selMalOnChange();
     OpprettVakt();
-  
     selOnChange();
     taLedigVakt();
     EndreVakt();
@@ -417,7 +430,7 @@ $(document).ready(function () {
     Heldags();
     EndreHeldags();
     OpprettMal();
-   
+    
    
     $('#calendar').fullCalendar('removeEventSource', kalendere.brukers);
     $('#calendar').fullCalendar('refetchEvents');

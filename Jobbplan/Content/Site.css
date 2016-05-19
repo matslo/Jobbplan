@@ -11,8 +11,15 @@ body {
     color: blue;*/
     margin-bottom: 60px;
 }
-
-
+.fc-event-container{
+     cursor:pointer;
+}
+.btnEndreVakt{
+    display:none;
+}
+.btnSlettVakt{
+    display:none;
+}
 footer{
     z-index:1;
     position: fixed;
@@ -31,8 +38,7 @@ li a {
      margin-top:200px;
 }
 #calendar{
-    width:70%;
-    height:70%;
+    width:799px;
     margin:auto;
     background-color:white;
     color:black;

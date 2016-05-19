@@ -256,8 +256,7 @@ namespace Jobbplan.DAL
                 NyEndreVakt.BrukerId = EndreVakt.BrukerId;
                 NyEndreVakt.start = dt1;
                 NyEndreVakt.end = dt2;
-                NyEndreVakt.title = EndreVakt.title;             
-
+                NyEndreVakt.title = EndreVakt.title;
                if (LedigVakt(EndreVakt))
                 {
                     NyEndreVakt.Ledig = true;

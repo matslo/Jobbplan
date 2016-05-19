@@ -1,4 +1,5 @@
-﻿ <script type="text/javascript">
+﻿<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js"></script> 
+<script type="text/javascript">
 
      $(document).ready(function() {
          
@@ -40,11 +41,12 @@
          var slutt = new Date();
 
          $.each(vakter, function (i, p) {
-             var d = new Date(Date.parse(p.PeriodeStart));
-             var d1 = new Date(Date.parse(p.PeriodeSlutt));
+            // var d = new Date(Date.parse(p.PeriodeStart));
+             //var d1 = new Date(Date.parse(p.PeriodeSlutt));
+             moment.locale();
+             var date = moment(p.PeriodeStart).format('LLL');
+             var date2 = moment(p.PeriodeSlutt).format('LLL')
             
-             var date = d.toLocaleString();
-             var date2 = d1.toLocaleString();
              strResult += "<tr><td><strong> Fra:</strong> "+ date+"</td><td><strong>Til:</strong> "+ date2 +"</td><td><button type='button' class='btn btn-warning'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span> Endre</button></td></tr>";
          }); 
          strResult += "</table>";

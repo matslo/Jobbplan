@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Http;
 using Jobbplan.Model;
 using Jobbplan.BLL;
+using System.Web.Script.Serialization;
+using System.Text;
 
 namespace Jobbplan.Controllers
 {
@@ -23,12 +25,30 @@ namespace Jobbplan.Controllers
         {
             _ProsjektBLL = moq;
         }
-        public List<ProsjektVis> Get()
+        public HttpResponseMessage Get()
         {
            string userName = User.Identity.Name;
-           return _ProsjektBLL.HentProsjekter(userName);
+            
+            var liste = _ProsjektBLL.HentProsjekter(userName);
+
+            var Json = new JavaScriptSerializer();
+            string JsonString = Json.Serialize(liste);
+            if (liste.Count()>0)
+            {
+                return new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonString, Encoding.UTF8, "application/json"),
+                    StatusCode = HttpStatusCode.OK
+                };
+              
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.NotFound,
+                Content = new StringContent("Kunne ikke hente prosjekter")
+            };
         }
-        public virtual HttpResponseMessage Post(Prosjekt prosjektInn)
+        public HttpResponseMessage Post(Prosjekt prosjektInn)
         {
             string userName = User.Identity.Name;
             if (ModelState.IsValid)
