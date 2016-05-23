@@ -5,6 +5,60 @@ HOST: http://polls.apiblueprint.org/
 
 Api beskrivelse for jobbplan
 
+## Maler Collection [/api/Maler/{id}]
+
+### Se alle maler for prosjekt[GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "ProsjektId":0,
+                "Tittel":"d1",
+                "startTid":"17:39",
+                "sluttTid":"21:39"
+            }
+        ]
+        
+## Maler Collection [/api/Maler/]
+
+### Legg til en ny mal [POST]
+
++ Request (application/json)
+           
+            {   
+                "startTid":"17:39",
+                "sluttTid":"21:39",
+                "Tittel":"d1",
+                "ProsjektId":"7"
+            }
+        
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Expires: -1
+            Location: http://jobbplan2016.azurewebsites.net/api/Maler
+
+
+    + Body
+    
+            {
+                "Tittel":"d1",
+                "startTid":"17:39",
+                "sluttTid":"21:39",
+                "ProsjektId":7
+            }
+            
++ Response 404 (text/plain)
+
+        Kunne ikke sette inn databasen
+        
+
+
+
+
 ## VaktApi Collection [/api/VaktApi/{id}]
 
 ### Se alle vakter for prosjektId[GET]
@@ -303,6 +357,9 @@ Api beskrivelse for jobbplan
             }
         ]
 
++ Response 404 (text/plain)
+
+        Kunne ikke hente prosjekter
 
 ### Legg til en ny bruker [POST]
 
@@ -337,6 +394,25 @@ Api beskrivelse for jobbplan
 + Response 404 (text/plain)
 
         Kunne ikke oprette bruker!
+        
+## ProsjektApi Collection [/api/ProsjektApi/{id}]
+
+### Slett Prosjekt [DELETE]
+
++ Request (application/json)
+
+            DELETE /api/ProsjektApi/18 
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            
+    + Body
+            
++ Response 404 (text/plain)
+
+        Kunne ikke slette prosjekt
 
 ## ProsjektDeltakelseApi Collection [/api/ProsjektDeltakelseApi/{id}]
 
@@ -514,3 +590,44 @@ Api beskrivelse for jobbplan
                 "TilBruker":"gordo@hotmail.com",
                 "ProsjektId":7
             }
+            
+            
+            
+## Timeliste Collection [/api/TimelisteApi/{id}]
+
+### Se timeliste for prosjekt[GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "BrukerId":0,
+                "Timer":0.0,
+                "Fornavn":null,
+                "Etternavn":null,
+                "PeriodeStart":"2016-05-05T16:57:00",
+                "PeriodeSlutt":"2016-05-05T20:57:00",
+                "Sum":0.0,
+                "ProsjektId":0
+            },
+            {
+                "BrukerId":0,
+                "Timer":0.0,
+                "Fornavn":null,
+                "Etternavn":null,
+                "PeriodeStart":"2016-05-05T23:19:00",
+                "PeriodeSlutt":"2016-05-05T23:23:00",
+                "Sum":0.0,
+                "ProsjektId":0
+            },
+            {
+                "BrukerId":0,
+                "Timer":0.0,
+                "Fornavn":null,
+                "Etternavn":null,
+                "PeriodeStart":"2016-05-11T09:49:00",
+                "PeriodeSlutt":"2016-05-11T19:49:00",
+                "Sum":0.0,
+                "ProsjektId":0
+            }
+        ]
