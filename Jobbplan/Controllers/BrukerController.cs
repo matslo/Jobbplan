@@ -15,6 +15,7 @@ namespace Jobbplan.Controllers
         {
             return View();
         }
+    
         public ActionResult RegistrerAPI()
         {
             return View();
@@ -23,8 +24,7 @@ namespace Jobbplan.Controllers
         {
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
-        }        
-       
+        }         
         [ChildActionOnly]
         public ActionResult LoggetInn()// meny
         {

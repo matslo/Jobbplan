@@ -10,7 +10,6 @@ namespace Jobbplan.BLL
     public class BrukerBLL : IBrukerLogikk
     {
         private InterfaceDbTBruker _repository;
-
         public BrukerBLL()
         {
             _repository = new DbTransaksjonerBruker();

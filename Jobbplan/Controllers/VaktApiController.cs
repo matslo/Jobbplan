@@ -13,7 +13,6 @@ namespace Jobbplan.Controllers
     public class VaktApiController : ApiController
     {
         private IVaktLogikk _VaktBLL;
-
         public VaktApiController()
         {
             _VaktBLL = new VaktBLL();
@@ -22,8 +21,6 @@ namespace Jobbplan.Controllers
         {
             _VaktBLL = moq;
         }
-
-
         //Get api/KalenderApi
         public List<Vaktkalender> Get()
         {
